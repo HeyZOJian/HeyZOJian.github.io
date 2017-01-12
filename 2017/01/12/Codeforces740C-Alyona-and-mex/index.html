@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      [Codeforces740C]Alyona and mex | ZOJian&#39;Blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="zojian">
+    
+    
+
+    <meta name="description" content="传送门
+题意给定长度为n的数组，m个区间，要求构造一个数组（元素大于等于0），求出mex的最小值。mex：区间里没有出现的最小元素（大于等于0）并使mex尽量大
+思路一个重要的特点： 一个数组的mex取决于给定区间的长度，数组中最小的mex等于给定区间的最短长度。证明：要尽量使mex尽量大，最短区间的数字只能从0开始递增，这时mex的值就为区间的长度
+因此原数组只要照[0,1,…,mex-1]的规">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Codeforces740C]Alyona and mex | ZOJian'Blog">
+<meta property="og:url" content="http://yoursite.com/2017/01/12/Codeforces740C-Alyona-and-mex/index.html">
+<meta property="og:site_name" content="ZOJian'Blog">
+<meta property="og:description" content="传送门
+题意给定长度为n的数组，m个区间，要求构造一个数组（元素大于等于0），求出mex的最小值。mex：区间里没有出现的最小元素（大于等于0）并使mex尽量大
+思路一个重要的特点： 一个数组的mex取决于给定区间的长度，数组中最小的mex等于给定区间的最短长度。证明：要尽量使mex尽量大，最短区间的数字只能从0开始递增，这时mex的值就为区间的长度
+因此原数组只要照[0,1,…,mex-1]的规">
+<meta property="og:updated_time" content="2017-01-12T13:08:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Codeforces740C]Alyona and mex | ZOJian'Blog">
+<meta name="twitter:description" content="传送门
+题意给定长度为n的数组，m个区间，要求构造一个数组（元素大于等于0），求出mex的最小值。mex：区间里没有出现的最小元素（大于等于0）并使mex尽量大
+思路一个重要的特点： 一个数组的mex取决于给定区间的长度，数组中最小的mex等于给定区间的最短长度。证明：要尽量使mex尽量大，最短区间的数字只能从0开始递增，这时mex的值就为区间的长度
+因此原数组只要照[0,1,…,mex-1]的规">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">ZOJian&#39;Blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">[Codeforces740C]Alyona and mex</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-01-12" class="post-meta__date date">2017-01-12</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CodeForces/">CodeForces</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p><a href="http://codeforces.com/contest/740/problem/C" target="_blank" rel="external">传送门</a></p>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定长度为n的数组，m个区间，要求构造一个数组（元素大于等于0），求出mex的最小值。<br>mex：区间里没有出现的最小元素（大于等于0）<br>并使mex尽量大</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p><strong>一个重要的特点</strong>： 一个数组的mex取决于给定区间的长度，数组中最小的mex等于给定区间的最短长度。<br><strong>证明</strong>：要尽量使mex尽量大，最短区间的数字只能从0开始递增，这时mex的值就为区间的长度</p>
+<p>因此原数组只要照[0,1,…,mex-1]的规则从左至右构造下去即可，这样就使得给定的每组区间的mex相等且mex尽量大</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">int</span> n, m, l, r, k = INF;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; l &gt;&gt; r;</div><div class="line">		k = min(r - l + <span class="number">1</span>, k);</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; k &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; i % k &lt;&lt; <span class="string">" "</span>;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
