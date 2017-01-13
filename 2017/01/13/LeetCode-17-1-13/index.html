@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      LeetCode(Easy)-17/1/13 | ZOJian&#39;Blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="zojian">
+    
+    
+
+    <meta name="description" content="409. Longest Palindrome
+题意：给定一些字符，问能构成的最长的回文串长度是多少
+思路：每两个相同的字符就可以增加回文串2长度，如果有单个字符，则可以将其放在回文串的中间
+
+代码
+1234567891011121314151617public int longestPalindrome(String s) &amp;#123;        int ans = 0;        ch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode(Easy)-17/1/13 | ZOJian'Blog">
+<meta property="og:url" content="http://yoursite.com/2017/01/13/LeetCode-17-1-13/index.html">
+<meta property="og:site_name" content="ZOJian'Blog">
+<meta property="og:description" content="409. Longest Palindrome
+题意：给定一些字符，问能构成的最长的回文串长度是多少
+思路：每两个相同的字符就可以增加回文串2长度，如果有单个字符，则可以将其放在回文串的中间
+
+代码
+1234567891011121314151617public int longestPalindrome(String s) &amp;#123;        int ans = 0;        ch">
+<meta property="og:updated_time" content="2017-01-13T13:16:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode(Easy)-17/1/13 | ZOJian'Blog">
+<meta name="twitter:description" content="409. Longest Palindrome
+题意：给定一些字符，问能构成的最长的回文串长度是多少
+思路：每两个相同的字符就可以增加回文串2长度，如果有单个字符，则可以将其放在回文串的中间
+
+代码
+1234567891011121314151617public int longestPalindrome(String s) &amp;#123;        int ans = 0;        ch">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">ZOJian&#39;Blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">LeetCode(Easy)-17/1/13</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-01-13" class="post-meta__date date">2017-01-13</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/LeetCode/">LeetCode</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h4 id="409-Longest-Palindrome"><a href="#409-Longest-Palindrome" class="headerlink" title="409. Longest Palindrome"></a>409. Longest Palindrome</h4><ul>
+<li>题意：给定一些字符，问能构成的最长的回文串长度是多少</li>
+<li>思路：每两个相同的字符就可以增加回文串2长度，如果有单个字符，则可以将其放在回文串的中间</li>
+</ul>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">        <span class="keyword">char</span> c;</div><div class="line">        Set set = <span class="keyword">new</span> HashSet();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; s.length();i++)&#123;</div><div class="line">            c = s.charAt(i);</div><div class="line">            <span class="keyword">if</span>(!set.contains(c))&#123;</div><div class="line">                set.add(c);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;<span class="comment">//有两个相同的c</span></div><div class="line">                set.remove(c);</div><div class="line">                ans += <span class="number">2</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(set.size()!=<span class="number">0</span>) ans++;<span class="comment">//有单个字符</span></div><div class="line">        <span class="keyword">return</span> ans;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="217-Contains-Duplicate"><a href="#217-Contains-Duplicate" class="headerlink" title="217. Contains Duplicate"></a>217. Contains Duplicate</h4><ul>
+<li>题意：判断数组中的每个数字是不是只出现一次</li>
+<li>思路：利用的set的性质就可以了，判断一下set的大小是不是等于数组长度</li>
+</ul>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        Set s = <span class="keyword">new</span> HashSet();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; nums.length;i++)</div><div class="line">            s.add(nums[i]);</div><div class="line">        <span class="keyword">return</span> s.size()!=nums.length;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="231-Power-of-Two"><a href="#231-Power-of-Two" class="headerlink" title="231. Power of Two"></a>231. Power of Two</h4><ul>
+<li>题意：判断一个数是否是2的乘方</li>
+<li>思路：</li>
+</ul>
+<ol>
+<li>利用n&amp;(n-1)==0,例如00100 &amp; 00011 = 00000</li>
+<li>利用对数函数的换底公式<code>2^x=N</code>-&gt;<code>log2(N)=X</code>-&gt;<code>log10(N)/log10(2)=X</code>,所以只要判X是不是整数就行了</li>
+</ol>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPowerOfTwo</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="comment">// if(n&lt;=0)</span></div><div class="line">        <span class="comment">//     return false;</span></div><div class="line">        <span class="comment">// return (n&amp;(n-1))==0;</span></div><div class="line">        <span class="keyword">return</span> (Math.log10(n)/Math.log10(<span class="number">2</span>))%<span class="number">1</span>==<span class="number">0</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="326-Power-of-Three"><a href="#326-Power-of-Three" class="headerlink" title="326. Power of Three"></a>326. Power of Three</h4><ul>
+<li>题意：不使用循环或递归判断一个数是不是3的乘方</li>
+<li>思路：</li>
+</ul>
+<ol>
+<li>预处理int范围内最大的3的乘方</li>
+<li>利用对数函数的换底公式</li>
+</ol>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPowerOfThree</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">       <span class="comment">//1.先求出3^19</span></div><div class="line">       <span class="comment">//return n &gt; 0 &amp;&amp; (1162261467 % n == 0);</span></div><div class="line">       <span class="comment">//2.log10(n)/log10(3)是不是整数</span></div><div class="line">       <span class="keyword">return</span> (Math.log10(n) / Math.log10(<span class="number">3</span>)) % <span class="number">1</span> == <span class="number">0</span>;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h4 id="342-Power-of-Four"><a href="#342-Power-of-Four" class="headerlink" title="342. Power of Four"></a>342. Power of Four</h4><ul>
+<li>题意：不使用循环或递归判断一个数是不是4的乘方</li>
+<li>思路：</li>
+</ul>
+<ol>
+<li>对数函数换底公式</li>
+<li>位运算判断大于0，是2的倍数，且1只在偶数位上，0x55555555=01010101010101010101010101010101</li>
+</ol>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPowerOfFour</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">         <span class="comment">//return (Math.log10(num)/Math.log10(4))%1==0;</span></div><div class="line">         <span class="keyword">return</span> num &gt; <span class="number">0</span> &amp;&amp; (num&amp;(num-<span class="number">1</span>)) == <span class="number">0</span> &amp;&amp; (num &amp; <span class="number">0x55555555</span>) != <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="191-Number-of-1-Bits"><a href="#191-Number-of-1-Bits" class="headerlink" title="191. Number of 1 Bits"></a>191. Number of 1 Bits</h4><ul>
+<li>题意：求一个数的二进制数1的位数</li>
+<li>思路：通过移位，每次判断最后一个位是不是1，<code>&gt;&gt;&gt;</code>无符号右移，即高位补0</li>
+</ul>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingWeight</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    System.out.println(Integer.toBinaryString(n)); </div><div class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(n!=<span class="number">0</span>) &#123;</div><div class="line">        ans += (n &amp; <span class="number">1</span>);</div><div class="line">        n &gt;&gt;&gt;= <span class="number">1</span>;</div><div class="line">        System.out.println(Integer.toBinaryString(n));</div><div class="line">    &#125;</div><div class="line">	<span class="keyword">return</span> ans;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>Integer.bitCount源码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">bitCount</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</div><div class="line">    i = i - ((i &gt;&gt;&gt; <span class="number">1</span>) &amp; <span class="number">0x55555555</span>);</div><div class="line">    i = (i &amp; <span class="number">0x33333333</span>) + ((i &gt;&gt;&gt; <span class="number">2</span>) &amp; <span class="number">0x33333333</span>);</div><div class="line">    i = (i + (i &gt;&gt;&gt; <span class="number">4</span>)) &amp; <span class="number">0x0f0f0f0f</span>;    </div><div class="line">    i = i + (i &gt;&gt;&gt; <span class="number">8</span>);</div><div class="line">    i = i + (i &gt;&gt;&gt; <span class="number">16</span>);</div><div class="line">    <span class="keyword">return</span> i &amp; <span class="number">0x3f</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
