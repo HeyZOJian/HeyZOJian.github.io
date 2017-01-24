@@ -250,16 +250,8 @@
                 
     <!-- Paradox Post Header -->
     
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://wx4.sinaimg.cn/mw690/7afe6825gy1fc1nqklcrwj21kw0vyk5w.jpg)">
     
             <p class="article-headline-p">
                 MVC架构初涉
@@ -371,9 +363,8 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><em>图片转载至<a href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html" target="_blank" rel="external">阮一峰</a>,<a href="http://mp.weixin.qq.com/s?__biz=MzA4NTQwNDcyMA==&amp;mid=2650662435&amp;idx=1&amp;sn=ac153834b82e16abb31d5f140a408857&amp;chksm=87d13b7cb0a6b26aeabf9925f482d8836ba9ef61eb4df87e949c84e8a8af9db7ff8be0531d7f#rd" target="_blank" rel="external">公众号AndroidDeveloper</a></em></p>
-<h2 id="三层模型"><a href="#三层模型" class="headerlink" title="三层模型"></a>三层模型</h2><p><img src="http://mmbiz.qpic.cn/mmbiz_png/159icnNTXChNjfIqoaickceXFOvVs0RWiblwUvY0o0vSn2aFX2eBgXTE8Kxw0ARpax4FvdVrmsysMaWEhEJ2QDdWQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""><br>首先对用户来说，浏览器就是表示层，它主要是与用户交互的页面，根据用户的输入与事件，处理并显示返回的特定数据。我们知道数据是一切应用程序的基础，如果没有数据，那么没有任何意义，所以 Server 端必须要一个强大的数据库来存储所有用户交互产生的数据，而对这些数据的处理，包括增、删、改、查就属于数据访问层。那么连接表示层与数据访问层的就是业务逻辑层，这包括后端程序中模型设计、验证、业务规则、各种计算等。</p>
-<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p><img src="http://mmbiz.qpic.cn/mmbiz_png/159icnNTXChNjfIqoaickceXFOvVs0RWiblrwk0zgvAqZsQZhsFstQOzqrpM3jf2PictEvTSexLzPAb5ib9VEv1QfAA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+        <h2 id="三层模型"><a href="#三层模型" class="headerlink" title="三层模型"></a>三层模型</h2><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1485841135&amp;di=03a2b7114b335da8c03843a62692a02b&amp;imgtype=jpg&amp;er=1&amp;src=http%3A%2F%2Fimg4.07net01.com%2Fupload%2Fimages%2F2016%2F12%2F19%2F117255191805342.png" alt=""><br>首先对用户来说，浏览器就是表示层，它主要是与用户交互的页面，根据用户的输入与事件，处理并显示返回的特定数据。我们知道数据是一切应用程序的基础，如果没有数据，那么没有任何意义，所以 Server 端必须要一个强大的数据库来存储所有用户交互产生的数据，而对这些数据的处理，包括增、删、改、查就属于数据访问层。那么连接表示层与数据访问层的就是业务逻辑层，这包括后端程序中模型设计、验证、业务规则、各种计算等。</p>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1485246440111&amp;di=94308140a46130a0401abbc4be4ade81&amp;imgtype=0&amp;src=http%3A%2F%2Fstatic.open-open.com%2Flib%2FuploadImg%2F20161214%2F20161214113303_96.png" alt=""></p>
 <h3 id="模型-MODEL（数据保存）"><a href="#模型-MODEL（数据保存）" class="headerlink" title="模型 MODEL（数据保存）"></a>模型 MODEL（数据保存）</h3><p>应用程序的<strong>数据</strong>和用于控制，访问，修改这些数据的<strong>业务规则</strong></p>
 <ul>
 <li><strong>模型</strong>发生改变时，它会通知<strong>视图</strong>，并为<strong>视图</strong>提供查询<strong>模型</strong>相关状态的能力</li>
@@ -388,14 +379,12 @@
 <li>为来自视图的用户要求进行解释，并把这些要求映射成相应的行为，这些行为由模型负责实现</li>
 <li>根据用户请求和模型行为的结果，控制器选择一个视图作为用户请求的应答</li>
 </ul>
-<h2 id="处理过程"><a href="#处理过程" class="headerlink" title="处理过程"></a>处理过程</h2><h3 id="1-直接通过controller接受指令"><a href="#1-直接通过controller接受指令" class="headerlink" title="1.直接通过controller接受指令"></a>1.直接通过controller接受指令</h3><p><img src="http://image.beekka.com/blog/2015/bg2015020107.png" alt=""></p>
-<ol>
+<h2 id="处理过程"><a href="#处理过程" class="headerlink" title="处理过程"></a>处理过程</h2><h3 id="1-直接通过controller接受指令"><a href="#1-直接通过controller接受指令" class="headerlink" title="1.直接通过controller接受指令"></a>1.直接通过controller接受指令</h3><ol>
 <li>控制器接收用户请求，并决定调用哪个模型来进行处理</li>
 <li>模型根据用户请求进行相应的业务逻辑处理，并返回数据</li>
 <li>控制器调用相应的视图格式化<strong>模型返回的数据</strong>，并通过视图呈现给用户</li>
 </ol>
-<h3 id="2-通过-View-接受指令，传递给-Controller"><a href="#2-通过-View-接受指令，传递给-Controller" class="headerlink" title="2.通过 View 接受指令，传递给 Controller"></a>2.通过 View 接受指令，传递给 Controller</h3><p><img src="http://image.beekka.com/blog/2015/bg2015020106.png" alt=""></p>
-<h3 id="3-更灵活的方式"><a href="#3-更灵活的方式" class="headerlink" title="3.更灵活的方式"></a>3.更灵活的方式</h3><p>以 Backbone.js 为例<br><img src="http://image.beekka.com/blog/2015/bg2015020108.png" alt=""></p>
+<h3 id="2-通过-View-接受指令，传递给-Controller"><a href="#2-通过-View-接受指令，传递给-Controller" class="headerlink" title="2.通过 View 接受指令，传递给 Controller"></a>2.通过 View 接受指令，传递给 Controller</h3><h3 id="3-更灵活的方式"><a href="#3-更灵活的方式" class="headerlink" title="3.更灵活的方式"></a>3.更灵活的方式</h3><p>以 Backbone.js 为例</p>
 <ol>
 <li>用户可以向 View 发送指令（DOM 事件），再由 View 直接要求 Model 改变状态。</li>
 <li>用户也可以直接向 Controller 发送指令（改变 URL 触发 hashChange 事件），再由 Controller 发送给 View。</li>
