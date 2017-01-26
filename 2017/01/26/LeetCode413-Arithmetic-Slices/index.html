@@ -10,7 +10,7 @@
     
     <title>
         
-            about | 
+            LeetCode413. Arithmetic Slices | 
         
         ZOJian&#39;Blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="about | ZOJian&#39;Blog">
+    <meta property="og:title" content="LeetCode413. Arithmetic Slices | ZOJian&#39;Blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -202,6 +202,41 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题意"><span class="post-toc-number">1.</span> <span class="post-toc-text">题意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#思路"><span class="post-toc-number">2.</span> <span class="post-toc-text">思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码"><span class="post-toc-number">3.</span> <span class="post-toc-text">代码</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
@@ -215,19 +250,11 @@
                 
     <!-- Paradox Post Header -->
     
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://okc9ihakz.bkt.clouddn.com/jytmx26ybca-zhang-dayong.jpg)">
     
             <p class="article-headline-p">
-                about
+                LeetCode413. Arithmetic Slices
             </p>
         </div>
 
@@ -246,7 +273,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>zojian</strong>
-        <span>1月 11, 2017</span>
+        <span>1月 26, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -270,7 +297,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="/tags/LeetCode/">LeetCode</a>
     </ul>
     
 
@@ -297,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=about&url=http://yoursite.com//about/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=LeetCode413. Arithmetic Slices&url=http://yoursite.com//2017/01/26/LeetCode413-Arithmetic-Slices/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -312,7 +339,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com//about/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com//2017/01/26/LeetCode413-Arithmetic-Slices/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -336,7 +363,15 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        
+        <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定一个数组，求满足连续的相邻的元素的差值一样的子序列（至少3个元素）有多少个？<br>[1,2,3,4]-&gt;[1,2,3],[2,3,4],[1,2,3,4] 3个</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>预处理数组相邻元素的差值</li>
+<li>遍历找差值一样的片段</li>
+</ol>
+<p>例如数组A为<code>[1,2,3,4,6,7,8]</code><br>预处理后得到数组<code>[1,1,1,2,1,1]</code><br>找到两个值相同的片段<code>[1,1,1]</code>,<code>[1,1]</code>，长度分别为3和2<br>长度为<code>n</code>的片段代表有<code>n+1</code>个连续的元素差值相同，则长度大于等于3的子序列有<code>∑(n-1)</code>种</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>第一次写的版本<br>缺陷：修改了原数组<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberOfArithmeticSlices</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> cnt = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; A.length-<span class="number">1</span>;i++)&#123;</div><div class="line">            A[i]=A[i+<span class="number">1</span>]-A[i];</div><div class="line">            <span class="keyword">if</span>(i!=<span class="number">0</span> &amp;&amp; A[i]==A[i-<span class="number">1</span>]) cnt++;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">if</span>(cnt&gt;=<span class="number">2</span>) ans+=(cnt*(cnt-<span class="number">1</span>))/<span class="number">2</span>;</div><div class="line">                cnt = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(cnt&gt;=<span class="number">2</span>) ans+=(cnt*(cnt-<span class="number">1</span>))/<span class="number">2</span>;</div><div class="line">        <span class="keyword">return</span> ans;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>优化版本<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberOfArithmeticSlices</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> curr = <span class="number">0</span>, sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;A.length; i++)</div><div class="line">        <span class="keyword">if</span> (A[i]-A[i-<span class="number">1</span>] == A[i-<span class="number">1</span>]-A[i-<span class="number">2</span>]) &#123;</div><div class="line">            curr += <span class="number">1</span>;</div><div class="line">            sum += curr;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            curr = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
     
 
     
@@ -365,8 +400,8 @@
     <!-- 多说评论框 start -->
     <div class="ds-thread"
         data-thread-key=""
-        data-url="http://yoursite.com/about/index.html"
-        data-title="about">
+        data-url="http://yoursite.com/2017/01/26/LeetCode413-Arithmetic-Slices/"
+        data-title="LeetCode413. Arithmetic Slices">
     </div>
     <!-- 多说评论框 end -->
 </div>
@@ -387,6 +422,14 @@
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2017/01/25/LeetCode338-Counting-Bits/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 
@@ -582,6 +625,14 @@ It will not impact the appearance and can give developers a lot of support :)
 </aside>
 
                     
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
 
                     
 
