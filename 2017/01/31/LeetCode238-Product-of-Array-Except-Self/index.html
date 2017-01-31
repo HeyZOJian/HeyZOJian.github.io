@@ -10,7 +10,7 @@
     
     <title>
         
-            tags | 
+            LeetCode238. Product of Array Except Self | 
         
         ZOJian&#39;Blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="tags | ZOJian&#39;Blog">
+    <meta property="og:title" content="LeetCode238. Product of Array Except Self | ZOJian&#39;Blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -202,60 +202,241 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题意"><span class="post-toc-number">1.</span> <span class="post-toc-text">题意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#思路"><span class="post-toc-number">2.</span> <span class="post-toc-text">思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码"><span class="post-toc-number">3.</span> <span class="post-toc-text">代码</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
-    <!-- Tags Cloud -->
-    <style>
-    #bottom{
-        position: relative;
-    }
+    <!-- Post Module -->
+    <div class="material-post_container">
 
-    @media screen and (max-width: 480px) {
-        .material-tagscloud{
-            margin: 6em 2em 0;
-        }
-    }
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
 
-    .material-tagscloud a{
-        text-decoration:none;
-        padding: 1px 9px;
-        margin: 9px 1px;
-        line-height: 40px;
-        white-space: nowrap;
-        transition: .6s;
-        opacity: .85;
-    }
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://okc9ihakz.bkt.clouddn.com/52p1k0d0eum-austris-augusts.jpg?imageslim)">
+    
+            <p class="article-headline-p">
+                LeetCode238. Product of Array Except Self
+            </p>
+        </div>
 
-    .material-tagscloud a:hover{
-        transition: .6s;
-        opacity: 1;
-        background: #FAFAFA;
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-    }
-</style>
 
-<div class=" material-tagscloud">
-    <div class="material-post mdl-grid">
-        <a href="/tags/CodeForces/" style="font-size: 25.5px; color: #4b4b4b">CodeForces</a> <a href="/tags/DP/" style="font-size: 16px; color: #757575">DP</a> <a href="/tags/Java/" style="font-size: 16px; color: #757575">Java</a> <a href="/tags/LeetCode/" style="font-size: 35px; color: #212121">LeetCode</a> <a href="/tags/MVC/" style="font-size: 16px; color: #757575">MVC</a> <a href="/tags/math/" style="font-size: 16px; color: #757575">math</a> <a href="/tags/mysql/" style="font-size: 16px; color: #757575">mysql</a> <a href="/tags/数据结构/" style="font-size: 16px; color: #757575">数据结构</a> <a href="/tags/杂/" style="font-size: 16px; color: #757575">杂</a>
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
     </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>zojian</strong>
+        <span>1月 31, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/Java/">Java</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/LeetCode/">LeetCode</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+        
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
+        
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=LeetCode238. Product of Array Except Self&url=http://yoursite.com//2017/01/31/LeetCode238-Product-of-Array-Except-Self/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com//2017/01/31/LeetCode238-Product-of-Array-Except-Self/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个数组A，生成一个数组B，<code>B[i] = A[0] x A[1] x..x A[i-1] x A[i+1] x..x A[n]</code><br>时间复杂度O(N)，不能使用除法</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>仔细看一下，其实每次计算B[i]就是前面i-1个元素相乘，乘上后面i+1个元素相乘。<br>所以只要预处理前缀积和后缀积即可。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><ol>
+<li><p>版本1  O(N)，S(N)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    	<span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">        	<span class="keyword">int</span>[] pre = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];<span class="comment">//前缀积</span></div><div class="line">        	<span class="keyword">int</span>[] sub = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];<span class="comment">//后缀积</span></div><div class="line">        	<span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line">        	pre[<span class="number">0</span>] = nums[<span class="number">0</span>];</div><div class="line">        	sub[nums.length-<span class="number">1</span>]=nums[nums.length-<span class="number">1</span>];</div><div class="line">        	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;nums.length;i++)</div><div class="line">            	pre[i] = pre[i-<span class="number">1</span>]*nums[i];</div><div class="line">        	<span class="keyword">for</span>(<span class="keyword">int</span> i = nums.length-<span class="number">2</span>;i&gt;=<span class="number">0</span>;i--)</div><div class="line">            	sub[i] = sub[i+<span class="number">1</span>]*nums[i];</div><div class="line">        	ans[<span class="number">0</span>] = sub[<span class="number">1</span>];</div><div class="line">        	ans[nums.length-<span class="number">1</span>]=pre[nums.length-<span class="number">2</span>];</div><div class="line">        	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;nums.length-<span class="number">1</span>;i++)</div><div class="line">            	ans[i] = pre[i-<span class="number">1</span>]*sub[i+<span class="number">1</span>];<span class="comment">//前i-1个的积*后i+1个的积</span></div><div class="line">        	<span class="keyword">return</span> ans;</div><div class="line">    	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>版本2 O(N),S(1)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">		<span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">    		<span class="keyword">int</span> n = nums.length;</div><div class="line">    		<span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">    		res[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">    		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)</div><div class="line">        		res[i] = res[i - <span class="number">1</span>] * nums[i - <span class="number">1</span>];<span class="comment">//res[i]保存的是前i-1个数的积</span></div><div class="line">    		<span class="keyword">int</span> right = <span class="number">1</span>;</div><div class="line">    		<span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">        		res[i] *= right;<span class="comment">//当前的right值为后i+1个数的积</span></div><div class="line">        		right *= nums[i];<span class="comment">//更新为后i个数的积</span></div><div class="line">    		&#125;</div><div class="line">    		<span class="keyword">return</span> res;</div><div class="line">		&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+
+    
+
+    
 </div>
 
 
-<script>
-    var adjustFooter = function() {
-        if( ($('#bottom').offset().top + $('#bottom').outerHeight() ) < $(window).height() ) {
-            var footerBottom = $(window).height() - $('#bottom').outerHeight() - $('#bottom').offset().top;
-            $('#bottom').css('bottom', '-' + footerBottom + 'px');
-        }
-    };
+                
 
-    $(document).ready(function() {
-        adjustFooter();
-    });
-</script>
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread"
+        data-thread-key=""
+        data-url="http://yoursite.com/2017/01/31/LeetCode238-Product-of-Array-Except-Self/"
+        data-title="LeetCode238. Product of Array Except Self">
+    </div>
+    <!-- 多说评论框 end -->
+</div>
 
 
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/01/27/Happy-New-Year-2017/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
 
 
 
@@ -446,6 +627,14 @@ It will not impact the appearance and can give developers a lot of support :)
 </aside>
 
                     
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
 
                     
 
