@@ -10,7 +10,7 @@
     
     <title>
         
-            LeetCode343.Integer Break | 
+            浅析KMP算法(看毛片？) | 
         
         ZOJian&#39;Blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="LeetCode343.Integer Break | ZOJian&#39;Blog">
+    <meta property="og:title" content="浅析KMP算法(看毛片？) | ZOJian&#39;Blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -226,7 +226,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题意"><span class="post-toc-number">1.</span> <span class="post-toc-text">题意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#思路"><span class="post-toc-number">2.</span> <span class="post-toc-text">思路</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#A-DP解法-O-N"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">A. DP解法(O(N))</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#B-数学解法-O-logN"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">B. 数学解法(O(logN))</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码"><span class="post-toc-number">3.</span> <span class="post-toc-text">代码</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-什么是“看毛片算法”？"><span class="post-toc-number">1.</span> <span class="post-toc-text">1.什么是“看毛片算法”？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-之前是如何暴力查找的？"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.之前是如何暴力查找的？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-KMP如何改进的？"><span class="post-toc-number">3.</span> <span class="post-toc-text">3.KMP如何改进的？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#思想"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">思想</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#部分匹配表"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">部分匹配表</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#next数组"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">next数组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#递推算出next数组"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">递推算出next数组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基于next数组进行模式匹配"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">基于next数组进行模式匹配</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -251,10 +251,10 @@
     <!-- Paradox Post Header -->
     
         <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://okc9ihakz.bkt.clouddn.com/ioe3krezq08-dan-rinon.jpg?imageslim)">
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://okc9ihakz.bkt.clouddn.com/ugqoo2nznz8-joao-silas.jpg?imageslim)">
     
             <p class="article-headline-p">
-                LeetCode343.Integer Break
+                浅析KMP算法(看毛片？)
             </p>
         </div>
 
@@ -273,7 +273,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>zojian</strong>
-        <span>2月 04, 2017</span>
+        <span>2月 09, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -297,7 +297,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/Java/">Java</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/LeetCode/">LeetCode</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Math/">Math</a>
+        <a class="post_tag-link" href="/tags/Algorithm/">Algorithm</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/KMP/">KMP</a>
     </ul>
     
 
@@ -324,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=LeetCode343.Integer Break&url=http://yoursite.com//2017/02/04/LeetCode343-Integer-Break/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=浅析KMP算法(看毛片？)&url=http://yoursite.com//2017/02/09/浅析看毛片算法-KMP/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -339,7 +339,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com//2017/02/04/LeetCode343-Integer-Break/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com//2017/02/09/浅析看毛片算法-KMP/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -363,22 +363,37 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个n(2≤n≤58),求相加等于n且乘积最大的一组整数的积。</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="A-DP解法-O-N"><a href="#A-DP解法-O-N" class="headerlink" title="A. DP解法(O(N))"></a>A. DP解法(O(N))</h3><p>dp[i]维护数字i拆分后最大的积，由于有些数字不拆分比拆分后的积大，例如3<br>所以<strong>状态转移方程</strong>为 <code>dp[i] = max{ max(dp[i-k],i-k) * max(dp[k],k) }(1≤k&lt;i)</code></p>
-<h3 id="B-数学解法-O-logN"><a href="#B-数学解法-O-logN" class="headerlink" title="B. 数学解法(O(logN))"></a>B. 数学解法(O(logN))</h3><ol>
-<li><strong>平方平均数</strong>: <img src="https://imgsa.baidu.com/baike/s%3D253/sign=dbf4ee1fbb389b503cffe757b635e5f1/bd3eb13533fa828b4b3b69e2ff1f4134970a5a93.jpg" alt=""></li>
-<li></li>
-<li><p><strong>算术平均数</strong>: <img src="http://c.hiphotos.baidu.com/baike/s%3D153/sign=ed674d0b0b46f21fcd345a56c5256b31/5882b2b7d0a20cf40b00fd2f77094b36adaf99a9.jpg" alt=""></p>
+        <h2 id="1-什么是“看毛片算法”？"><a href="#1-什么是“看毛片算法”？" class="headerlink" title="1.什么是“看毛片算法”？"></a>1.什么是“看毛片算法”？</h2><p>一种字符串查找算法，在一个<strong>主文本字符串S</strong>内查找一个<strong>词W</strong>的出现位置。<br>其实说“看毛片算法”显得不尊重老前辈<br><a href="https://zh.wikipedia.org/wiki/%E5%85%8B%E5%8A%AA%E6%96%AF-%E8%8E%AB%E9%87%8C%E6%96%AF-%E6%99%AE%E6%8B%89%E7%89%B9%E7%AE%97%E6%B3%95" target="_blank" rel="external">WIKI解释</a></p>
+<h2 id="2-之前是如何暴力查找的？"><a href="#2-之前是如何暴力查找的？" class="headerlink" title="2.之前是如何暴力查找的？"></a>2.之前是如何暴力查找的？</h2><ol>
+<li><p>从两个串的第一个元素开始比较，直到有一个字符不相同<br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-1.png" alt=""></p>
 </li>
-<li><p><strong>几何平均数</strong>: <img src="https://imgsa.baidu.com/baike/s%3D250/sign=53940a8da40f4bfb88d09951334e788f/4d086e061d950a7bd39e2bd60ad162d9f2d3c97d.jpg" alt=""> </p>
-</li>
-<li><p><strong>调和平均数</strong>: <img src="https://imgsa.baidu.com/baike/s%3D166/sign=2c4d480bceef7609380b9d9918dca301/5d6034a85edf8db1ebaa30f20c23dd54574e749b.jpg" alt=""></p>
+<li><p>模式串向后移一位，继续比较<br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-2.png" alt=""></p>
 </li>
 </ol>
-<p><strong>调和平均数 ≤ 几何平均数 ≤ 算术平均数 ≤ 平方平均数</strong></p>
-<p>所以把n拆分成几个相等的数时它们的积最大。<br>假设每一个数为x,则一共有n/x个数。<br>他们的积f(x) = x<sup>n/x</sup>,现在问题变为x为何值时，函数取得最大值。求导！<br>f’(x) = (n/x<sup>2</sup>)  <em>  x<sup>(n/x)</sup>  </em> (1-lnx),得x为e时，取得极大值。<br>e = 2.71828…,所以取3时，所得的积最大。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>A<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">integerBreak</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>];</div><div class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt; i; k++)</div><div class="line">                dp[i] = Math.max(dp[i], Math.max(dp[i - k],i-k) * Math.max(k,dp[k]));</div><div class="line">        <span class="keyword">return</span> dp[n];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>B<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">integerBreak</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(n==<span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(n==<span class="number">3</span>) <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> product = <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(n&gt;<span class="number">4</span>)&#123;</div><div class="line">            product*=<span class="number">3</span>;</div><div class="line">            n-=<span class="number">3</span>;</div><div class="line">        &#125;</div><div class="line">        product*=n;  </div><div class="line">        <span class="keyword">return</span> product;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>很黄很暴力，当空格与D不匹配时，你其实比较过前面六个字符是”ABCDAB”。每次都往后移一位就没有利用到这个信息了。</p>
+<h2 id="3-KMP如何改进的？"><a href="#3-KMP如何改进的？" class="headerlink" title="3.KMP如何改进的？"></a>3.KMP如何改进的？</h2><h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>设法利用这个已知信息，不要把”搜索位置”移回已经比较过的位置，继续把它向后移，这样就提高了效率。</p>
+<h3 id="部分匹配表"><a href="#部分匹配表" class="headerlink" title="部分匹配表"></a>部分匹配表</h3><p><strong>“前缀”和”后缀”的最长的共有元素的长度</strong><br>以模式串<strong>ABCDABD</strong>为例<br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-3.png" alt=""><br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-4.png" alt=""></p>
+<p>上面那个例子，查表可知最后一个匹配的字符‘B’对应的值为2，意思为前面有一段长度为2的字符串和后面一个段长度为2的字符串匹配，既“AB”==“AB”，所以这时候可以直接跳到第二个AB继续匹配。<br>所以得出公式</p>
+<blockquote>
+<p>移动位数 = 已匹配的字符数 - 最后一个匹配字符对应的部分匹配值</p>
+</blockquote>
+<p><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-1.png" alt=""></p>
+<p>第一个”AB”向后移动4位（字符串长度[6]-部分匹配值[2]），就可以来到第二个”AB”的位置。<br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-5.png" alt=""></p>
+<p>以此类推，因为空格与Ｃ不匹配，搜索词还要继续往后移。这时，已匹配的字符数为2（”AB”），对应的”部分匹配值”为0。所以，移动位数 = 2 - 0，结果为 2，于是将搜索词向后移2位。<br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-6.png" alt=""><br><strong>特殊情况</strong><br>第一个字符不匹配时，公式不适用，直接往后移一位。</p>
+<h3 id="next数组"><a href="#next数组" class="headerlink" title="next数组"></a>next数组</h3><p>相当于<strong>部分匹配表</strong>向右移一位，第一位-1补上<br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-7.jpg" alt=""></p>
+<blockquote>
+<p>移动位数 = 失配字符所在位置 - 失配字符对应的next值</p>
+</blockquote>
+<p><strong>next数组和部分匹配表得出来的移动位数是一样的</strong><br><strong>证明</strong>：从0开始计数，<strong>失配字符所在位置</strong>= =<strong>已匹配的字符数</strong>。next数组是由部分匹配表向右移一位构造的，所以<strong>失配字符对应的next值</strong>= =<strong>最后一个匹配字符对应的部分匹配值</strong></p>
+<h3 id="递推算出next数组"><a href="#递推算出next数组" class="headerlink" title="递推算出next数组"></a>递推算出next数组</h3><ol>
+<li><p>若p[k] == p[j]，则 next[ j + 1 ] = next [j] + 1 = k + 1；<br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-8.jpg" alt=""></p>
+</li>
+<li><p>若p[k] ≠ p[j]，递归前缀索引<strong>k = next[k]</strong>，直到p[k’] == p[j],从而 next [j + 1] = k’ + 1 = next [k’] + 1<br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-10.png" alt=""><br>四个蓝色的区域表示相同的字符串</p>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">GetNext</span><span class="params">(<span class="keyword">char</span>* p,<span class="keyword">int</span> next[])</span></span>&#123;  </div><div class="line">    <span class="keyword">int</span> pLen = <span class="built_in">strlen</span>(p);  </div><div class="line">    next[<span class="number">0</span>] = <span class="number">-1</span>;  </div><div class="line">    <span class="keyword">int</span> k = <span class="number">-1</span>;  </div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;  </div><div class="line">    <span class="keyword">while</span> (j &lt; pLen - <span class="number">1</span>)&#123;  </div><div class="line">        <span class="comment">//p[k]表示前缀，p[j]表示后缀  </span></div><div class="line">        <span class="keyword">if</span> (k == <span class="number">-1</span> || p[j] == p[k])&#123;  </div><div class="line">            ++k;  </div><div class="line">            ++j;  </div><div class="line">            next[j] = k;  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">else</span></div><div class="line">            k = next[k];</div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="基于next数组进行模式匹配"><a href="#基于next数组进行模式匹配" class="headerlink" title="基于next数组进行模式匹配"></a>基于next数组进行模式匹配</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">KmpSearch</span><span class="params">(<span class="keyword">char</span>* s, <span class="keyword">char</span>* p)</span></span>&#123;<span class="comment">//p是模式串</span></div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> sLen = <span class="built_in">strlen</span>(s);</div><div class="line">	<span class="keyword">int</span> pLen = <span class="built_in">strlen</span>(p);</div><div class="line">	<span class="keyword">while</span> (i &lt; sLen &amp;&amp; j &lt; pLen)&#123;</div><div class="line">		<span class="comment">//①j = -1表示第一个字符不相同当</span></div><div class="line">		<span class="keyword">if</span> (j == <span class="number">-1</span> || s[i] == p[j])&#123;</div><div class="line">			i++;</div><div class="line">			j++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span>&#123;    </div><div class="line">			<span class="comment">//递归前缀索引      </span></div><div class="line">			j = next[j];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (j == pLen)</div><div class="line">		<span class="keyword">return</span> i - j;<span class="comment">//返回出现的位置</span></div><div class="line">	<span class="keyword">else</span></div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="external">阮一峰《字符串匹配的KMP算法》</a><br><a href="http://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="external">v_JULY_v《从头到尾彻底理解KMP》</a></p>
 
     
 
@@ -408,8 +423,8 @@
     <!-- 多说评论框 start -->
     <div class="ds-thread"
         data-thread-key=""
-        data-url="http://yoursite.com/2017/02/04/LeetCode343-Integer-Break/"
-        data-title="LeetCode343.Integer Break">
+        data-url="http://yoursite.com/2017/02/09/浅析看毛片算法-KMP/"
+        data-title="浅析KMP算法(看毛片？)">
     </div>
     <!-- 多说评论框 end -->
 </div>
@@ -425,21 +440,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/02/09/浅析看毛片算法-KMP/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2017/02/01/Codeforces761B-Dasha-and-friends/" id="post_nav-older" class="next-content">
+        <a href="/2017/02/04/LeetCode343-Integer-Break/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
