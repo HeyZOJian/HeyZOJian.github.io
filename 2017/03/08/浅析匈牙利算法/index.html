@@ -10,7 +10,7 @@
     
     <title>
         
-            [CodeVs3278]最小m 段和问题 | 
+            浅析匈牙利算法 | 
         
         ZOJian&#39;Blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="[CodeVs3278]最小m 段和问题 | ZOJian&#39;Blog">
+    <meta property="og:title" content="浅析匈牙利算法 | ZOJian&#39;Blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -226,7 +226,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题意"><span class="post-toc-number">1.</span> <span class="post-toc-text">题意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析"><span class="post-toc-number">2.</span> <span class="post-toc-text">分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码"><span class="post-toc-number">3.</span> <span class="post-toc-text">代码</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二分图"><span class="post-toc-number">1.</span> <span class="post-toc-text">二分图</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-什么是二分图"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.什么是二分图</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-如何判断一个图是二分图"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2.如何判断一个图是二分图</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#匈牙利算法-二分图的最大匹配"><span class="post-toc-number">2.</span> <span class="post-toc-text">匈牙利算法-二分图的最大匹配</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-匹配是什么"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1.匹配是什么</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-交替路"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.交替路</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-增广路"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">3.增广路</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现"><span class="post-toc-number">3.</span> <span class="post-toc-text">实现</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -251,10 +251,10 @@
     <!-- Paradox Post Header -->
     
         <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://okc9ihakz.bkt.clouddn.com/p2389388246.jpg?imageslim)">
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://okc9ihakz.bkt.clouddn.com/jamie-street-103061.jpg?slimimage)">
     
             <p class="article-headline-p">
-                [CodeVs3278]最小m 段和问题
+                浅析匈牙利算法
             </p>
         </div>
 
@@ -273,7 +273,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>zojian</strong>
-        <span>9月 20, 2016</span>
+        <span>3月 08, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -297,7 +297,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/CodeVs/">CodeVs</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/DP/">DP</a>
+        <a class="post_tag-link" href="/tags/匈牙利算法/">匈牙利算法</a>
     </ul>
     
 
@@ -324,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=[CodeVs3278]最小m 段和问题&url=http://yoursite.com//2016/09/20/CodeVs3278-最小m-段和问题/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=浅析匈牙利算法&url=http://yoursite.com//2017/03/08/浅析匈牙利算法/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -339,7 +339,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com//2016/09/20/CodeVs3278-最小m-段和问题/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com//2017/03/08/浅析匈牙利算法/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -363,11 +363,25 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><a href="http://codevs.cn/problem/3278/" target="_blank" rel="external">题目传送门</a></p>
-<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定 n 个整数(不一定是正整数)组成的序列，现在要求将序列分割为 m 段，每段子序列中的数在原序列 中连续排列。如何分割才能使这 m 段子序列的和的最大值达到最小？</p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>dp[i][j]维护i结尾，分成j段的最大值</p>
-<p>dp[i][j] = min(dp[i][j], max(dp[k][j - 1],dp[i][1]-dp[k][1]));</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 1005</span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> dp[MAXN][MAXN];</div><div class="line"><span class="keyword">int</span> sum[MAXN];</div><div class="line"><span class="keyword">int</span> num;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> n, m;</div><div class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m) &#123;</div><div class="line">		<span class="keyword">if</span> (n == <span class="number">0</span> &amp;&amp; m == <span class="number">0</span>) &#123;</div><div class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"0"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">memset</span>(sum, <span class="number">0</span>, <span class="keyword">sizeof</span>(sum));</div><div class="line">		<span class="built_in">memset</span>(dp, <span class="number">0x7f</span>, <span class="keyword">sizeof</span>(dp));</div><div class="line">		dp[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">			<span class="built_in">cin</span> &gt;&gt; num;</div><div class="line">			dp[i][<span class="number">1</span>] = dp[i - <span class="number">1</span>][<span class="number">1</span>] + num;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">2</span>; j &lt;= m; j++) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt; i; k++) &#123;</div><div class="line">					dp[i][j] = min(dp[i][j], max(dp[k][j - <span class="number">1</span>],dp[i][<span class="number">1</span>]-dp[k][<span class="number">1</span>]));</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; dp[n][m] &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h2 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h2><h3 id="1-什么是二分图"><a href="#1-什么是二分图" class="headerlink" title="1.什么是二分图"></a>1.什么是二分图</h3><ul>
+<li>将无向图G=<v,e>的顶点集V分为两个子集V<sub>1</sub>和V<sub>2</sub></v,e></li>
+<li>G中的任意一条边的两个端点一个属于V<sub>1</sub>，另一个属于V<sub>2</sub></li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/mw690/7afe6825gw1f261swoly7j208l08caad.jpg" alt=""></p>
+<h3 id="2-如何判断一个图是二分图"><a href="#2-如何判断一个图是二分图" class="headerlink" title="2.如何判断一个图是二分图"></a>2.如何判断一个图是二分图</h3><p>染色法：开始对任意一未染色的顶点染色，之后判断其相邻的顶点中，若未染色则将其染上和相邻顶点不同的颜色， 若已经染色且颜色和相邻顶点的颜色相同则说明不是二分图，若颜色不同则继续判断。</p>
+<h2 id="匈牙利算法-二分图的最大匹配"><a href="#匈牙利算法-二分图的最大匹配" class="headerlink" title="匈牙利算法-二分图的最大匹配"></a>匈牙利算法-二分图的最大匹配</h2><h3 id="1-匹配是什么"><a href="#1-匹配是什么" class="headerlink" title="1.匹配是什么"></a>1.匹配是什么</h3><p>在图论中，一个<strong>匹配</strong>（matching）是一个边的集合，其中任意两条边都没有公共顶点。所以最大匹配也就是拥有边数最多的那个集合。</p>
+<h3 id="2-交替路"><a href="#2-交替路" class="headerlink" title="2.交替路"></a>2.交替路</h3><p>从一个未匹配的点出发，依次经过非匹配边，匹配边，非匹配边…形成的路径</p>
+<h3 id="3-增广路"><a href="#3-增广路" class="headerlink" title="3.增广路"></a>3.增广路</h3><p>1.定义：从一个未匹配点出发，走交替路，如果途径另一个未匹配点，则这条交替路称为增广路<br>2.特点：</p>
+<ul>
+<li>非匹配边比匹配边多一条（因为起始和终止都是非匹配边）</li>
+<li>起点和终点都是当前未匹配的点，其他的点都是已匹配的点</li>
+<li>整条路径都没有重复的点</li>
+<li>把增广路径上的所有第奇数条边加入到原匹配中去，并把增广路径中的所有第偶数条边从原匹配中删除（这个操作称为增广路径的取反），则新的匹配数就比原匹配数增加了1个</li>
+</ul>
+<p>####4.匈牙利算法的步骤<br><strong>情景假设</strong>：今晚有个舞会，四个男生，四个女生。男生可以邀请女生一起跳舞，并且男生开始前已经有心仪的对象（图中连线代表对该女生有意思）</p>
+<p><img src="http://ww1.sinaimg.cn/mw690/7afe6825gw1f277w0vcg9j20cs09uwet.jpg" alt=""><br>将实线改成虚线，表示现在还没有人邀请成功。<br><img src="http://ww1.sinaimg.cn/mw690/7afe6825gw1f277w2qmtpj20bw093t90.jpg" alt=""><br>第一个男生有两个心仪的女生（芙蓉，赵四），按照顺序，他先邀请了第一个心仪女生（芙蓉），而该女生此时还没有接受其他人的邀请，此时邀请成功，并将该女生的搭档记录为该男生<br><img src="http://ww2.sinaimg.cn/mw690/7afe6825gw1f277w370k8j20c40950t1.jpg" alt=""><br>接下来轮到第二个男生，按照刚才的步骤成功邀请到翠花<br><img src="http://ww3.sinaimg.cn/mw690/7afe6825gw1f277w3i0j0j20c1095aad.jpg" alt=""><br>轮到第三个男生的时候出现了点小状况，他心仪的第一个对象已经被其他人邀请走了（翠花已经个俊杰搭档），此时第三个男生尝试去说服翠花接受他的邀请，翠花只能去问她当前的搭档俊杰，让他去找其他女生，但是俊杰心仪的对象只有一个，就是翠花，俊杰不同意，最后翠花只能拒绝了进进的邀请。</p>
+<p>第三个男生尝试去邀请他的第二个心仪对象，发现该女生也被其他人邀请走了（芙蓉和朝钧搭档），按照老套路，芙蓉去跟朝钧协商，朝钧去邀请他第二个心仪的女生，发现该女生还没有搭档，因此朝钧答应了不再和芙蓉搭档而是和赵四搭档，此时芙蓉就可以和进进搭档了。<br><img src="http://ww4.sinaimg.cn/mw690/7afe6825gw1f277w5ay7vj20bt090jrp.jpg" alt=""><br>更新搭档关系<br><img src="http://ww3.sinaimg.cn/mw690/7afe6825gw1f277w5p5w4j20c1098wer.jpg" alt=""><br><img src="http://ww3.sinaimg.cn/mw690/7afe6825gw1f277w71q0bj20bz09aq38.jpg" alt=""></p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//二维数组实现</span></div><div class="line"></div><div class="line">===============================================</div><div class="line"></div><div class="line"><span class="keyword">int</span> ans;</div><div class="line"></div><div class="line"><span class="keyword">int</span> k,n,m;</div><div class="line"></div><div class="line"><span class="keyword">int</span> vis[MAXN];</div><div class="line"></div><div class="line"><span class="keyword">int</span> link[MAXN];</div><div class="line"></div><div class="line"><span class="keyword">int</span> Graph[MAXN][MAXN];</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">FindPath</span><span class="params">(<span class="keyword">int</span> u)</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> v=<span class="number">1</span>;v&lt;=n;v++)&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(Graph[u][v]==<span class="number">1</span>&amp;&amp;vis[v]==<span class="number">0</span>)&#123;</div><div class="line"></div><div class="line">            vis[v]=<span class="number">1</span>;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(link[v]==<span class="number">-1</span>||FindPath(link[v]))&#123;</div><div class="line"></div><div class="line">                link[v]=u;</div><div class="line"></div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">hungary</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="built_in">memset</span>(link,<span class="number">-1</span>,<span class="keyword">sizeof</span>(link));</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</div><div class="line"></div><div class="line">        <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(FindPath(i))</div><div class="line"></div><div class="line">          ans++;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> ans;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">==================================================</div><div class="line"></div><div class="line"><span class="comment">//邻接表优化</span></div><div class="line"></div><div class="line"><span class="keyword">int</span> ans;</div><div class="line"></div><div class="line"><span class="keyword">int</span> k,n,m;</div><div class="line"></div><div class="line"><span class="keyword">int</span> vis[MAXN];</div><div class="line"></div><div class="line"><span class="keyword">int</span> link[MAXN];</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; Graph[MAXN];</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;MAXN;i++)</div><div class="line"></div><div class="line">      Graph[i].clear();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">FindPath</span><span class="params">(<span class="keyword">int</span> u)</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;Graph[u].size();i++)&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> v = Graph[u][i];</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(vis[v]==<span class="number">0</span>)&#123;</div><div class="line"></div><div class="line">            vis[v]=<span class="number">1</span>;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(link[v]==<span class="number">-1</span>||FindPath(link[v]))&#123;</div><div class="line"></div><div class="line">                link[v]=u;</div><div class="line"></div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">hungary</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="built_in">memset</span>(link,<span class="number">-1</span>,<span class="keyword">sizeof</span>(link));</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</div><div class="line"></div><div class="line">        <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(FindPath(i))</div><div class="line"></div><div class="line">          ans++;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> ans;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
     
 
@@ -397,8 +411,8 @@
     <!-- 多说评论框 start -->
     <div class="ds-thread"
         data-thread-key=""
-        data-url="http://yoursite.com/2016/09/20/CodeVs3278-最小m-段和问题/"
-        data-title="[CodeVs3278]最小m 段和问题">
+        data-url="http://yoursite.com/2017/03/08/浅析匈牙利算法/"
+        data-title="浅析匈牙利算法">
     </div>
     <!-- 多说评论框 end -->
 </div>
@@ -414,21 +428,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2016/09/20/CodeVs1058-合唱队形/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2016/07/28/Codeforces701b-Cells-Not-Under-Attack/" id="post_nav-older" class="next-content">
+        <a href="/2017/02/24/关系数据库-范式/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
