@@ -10,7 +10,7 @@
     
     <title>
         
-            Mysql安装(Mac) | 
+            [读薄系列]Java并发编程的艺术笔记 | 
         
         ZOJian&#39;Blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Mysql安装(Mac) | ZOJian&#39;Blog">
+    <meta property="og:title" content="[读薄系列]Java并发编程的艺术笔记 | ZOJian&#39;Blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -226,7 +226,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-官网下载最新的社区版"><span class="post-toc-number">1.</span> <span class="post-toc-text">1.官网下载最新的社区版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-安装"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-配置"><span class="post-toc-number">3.</span> <span class="post-toc-text">4.配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-启动"><span class="post-toc-number">4.</span> <span class="post-toc-text">5.启动</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6-修改密码"><span class="post-toc-number">5.</span> <span class="post-toc-text">6.修改密码</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-并发编程的挑战"><span class="post-toc-number">1.</span> <span class="post-toc-text">1.并发编程的挑战</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是上下文切换"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">什么是上下文切换</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何减少上下文切换"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">如何减少上下文切换</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何避免死锁"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">如何避免死锁</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-Java并发机制底层实现原理"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.Java并发机制底层实现原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#volatile"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">volatile</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#背景"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">背景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现原理"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">实现原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用优化"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">使用优化</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#synchronized"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">synchronized</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原子操作"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">原子操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CPU实现原子操作"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">CPU实现原子操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#总线锁定"><span class="post-toc-number">2.3.1.1.</span> <span class="post-toc-text">总线锁定</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#缓存锁定"><span class="post-toc-number">2.3.1.2.</span> <span class="post-toc-text">缓存锁定</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Java实现原子操作"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">Java实现原子操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#循环CAS（CompareAndSet-CompareAndSwap）"><span class="post-toc-number">2.3.2.1.</span> <span class="post-toc-text">循环CAS（CompareAndSet|CompareAndSwap）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#锁"><span class="post-toc-number">2.3.2.2.</span> <span class="post-toc-text">锁</span></a></li></ol></li></ol></li></ol></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -251,10 +251,10 @@
     <!-- Paradox Post Header -->
     
         <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://okc9ihakz.bkt.clouddn.com/j4uuknn43_m-alex-knight.jpg?imageslim)">
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://okc9ihakz.bkt.clouddn.com/caspar-rubin-224229.jpg?slimimage)">
     
             <p class="article-headline-p">
-                Mysql安装(Mac)
+                [读薄系列]Java并发编程的艺术笔记
             </p>
         </div>
 
@@ -273,7 +273,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>zojian</strong>
-        <span>1月 16, 2017</span>
+        <span>5月 06, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -297,7 +297,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/mysql/">mysql</a>
+        <a class="post_tag-link" href="/tags/Java/">Java</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Java并发/">Java并发</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/读薄系列/">读薄系列</a>
     </ul>
     
 
@@ -324,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Mysql安装(Mac)&url=http://yoursite.com//2017/01/16/Mysql安装-Mac/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=[读薄系列]Java并发编程的艺术笔记&url=http://yoursite.com//2017/05/06/Java并发编程的艺术笔记/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -339,7 +339,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com//2017/01/16/Mysql安装-Mac/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com//2017/05/06/Java并发编程的艺术笔记/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -363,13 +363,70 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="1-官网下载最新的社区版"><a href="#1-官网下载最新的社区版" class="headerlink" title="1.官网下载最新的社区版"></a>1.官网下载最新的社区版</h2><p>地址：<a href="http://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">http://dev.mysql.com/downloads/mysql/</a><br>dmg格式是最方便的</p>
-<h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h2><p>双击mysql-5.7.17-osx10.12-x86_64.dmg文件，加载镜像<br>双击mysql-5.7.17-osx10.12-x86_64.pkg，开始安装<br>一路下一步，即可安装成功<br><strong>注意</strong>：安装完成之后会弹出一个对话框，告诉我们生成了一个root账户的临时密码。</p>
-<h2 id="4-配置"><a href="#4-配置" class="headerlink" title="4.配置"></a>4.配置</h2><p>修改<code>.bash</code>文件：为Path路径附加MySQL的bin目录<br>PATH=”$PATH”:/usr/local/mysql/bin</p>
-<h2 id="5-启动"><a href="#5-启动" class="headerlink" title="5.启动"></a>5.启动</h2><p>系统偏好设置-&gt;mysql-&gt;start Mysql Server</p>
-<h2 id="6-修改密码"><a href="#6-修改密码" class="headerlink" title="6.修改密码"></a>6.修改密码</h2><blockquote>
-<p>mysql -u root -p<br>use mysql<br>set password for ‘root’@’localhost’=password(‘新密码’);</p>
+        <h1 id="1-并发编程的挑战"><a href="#1-并发编程的挑战" class="headerlink" title="1.并发编程的挑战"></a>1.并发编程的挑战</h1><h2 id="什么是上下文切换"><a href="#什么是上下文切换" class="headerlink" title="什么是上下文切换"></a>什么是上下文切换</h2><p>CPU通过时间片分配算法循环执行任务[线程]，当任务执行完一个时间片后会切换到下一个任务，在切换前会保存上一个任务的状态，以便下次切换回来时可以再加载这个任务的状态。所以任务从<strong>保存</strong>到<strong>加载</strong>的过程就是一次上下文切换。</p>
+<h2 id="如何减少上下文切换"><a href="#如何减少上下文切换" class="headerlink" title="如何减少上下文切换"></a>如何减少上下文切换</h2><ol>
+<li>无锁并发编程：如数据取模分段，不同线程处理不同数据</li>
+<li>CAS算法：Atomic包使用CAS算法来更新数据， 而不需要加锁</li>
+<li>使用最少线程：避免创建不必要的线程，使得大多数线程处于等待状态</li>
+<li>协程：在单线程里实现多任务调度，并在单线程里维持多个任务的切换</li>
+</ol>
+<h2 id="如何避免死锁"><a href="#如何避免死锁" class="headerlink" title="如何避免死锁"></a>如何避免死锁</h2><ol>
+<li>避免一个线程同时获得多个锁</li>
+<li>避免一个锁同时占用多个资源</li>
+<li>限制加锁顺序</li>
+<li>尝试使用定时锁 lock.tryLock(timeout)</li>
+<li>对应数据库锁，加锁和解锁必须在同一个数据库连接里</li>
+</ol>
+<h1 id="2-Java并发机制底层实现原理"><a href="#2-Java并发机制底层实现原理" class="headerlink" title="2.Java并发机制底层实现原理"></a>2.Java并发机制底层实现原理</h1><h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><blockquote>
+<p>轻量级的synchronized，在多处理器开发中保证了共享变量的“可见性”（当一个线程修改一个共享变量时，另一个线程能读到这个修改的值）<br>比synchronized的使用和执行成本低，因为它不会引起线程上下文的切换和调度</p>
 </blockquote>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>为了提高处理速度，CPU不直接和内存进行通信，而是将系统内存的数据读到内部缓存（L1,L2,L3）后再操作，但操作完不确定何时会写回内存。这样可能导致其他CPU不能获取到共享变量的最新值。</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>在x86处理器下通过工具获取JIT编译器生成的汇编指令来看看对Volatile进行写操作CPU</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java代码</td>
+<td><code>instance = new Singleton(); //instance是volatile变量</code></td>
+</tr>
+<tr>
+<td>汇编指令</td>
+<td><code>0x01a3de1d: movb $0x0,0x1104800(%esi);0x01a3de24: lock addl $0x0,(%esp);</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lock前缀的命令作两件事：</strong></p>
+<ol>
+<li>将当前CPU缓存行的数据写回到内存</li>
+<li>令其他CPU里缓存了该内存地址的数据失效</li>
+</ol>
+<p><strong>缓存一致性协议</strong><br>每个CPU通过嗅探在总线中传播的数据来检查自己的缓存的值是否过期，当CPU发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当CPU对这个数据进行修改操作时，会重新从系统内存中把数据读到CPU缓存中。</p>
+<h3 id="使用优化"><a href="#使用优化" class="headerlink" title="使用优化"></a>使用优化</h3><p>LinkedTransferQueue部分源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** head of the queue */</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">final</span> PaddedAtomicReference &lt; QNode &gt; head;</div><div class="line"></div><div class="line"><span class="comment">/** tail of the queue */</span></div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">final</span> PaddedAtomicReference &lt; QNode &gt; tail;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">PaddedAtomicReference</span> &lt; <span class="title">T</span> &gt; <span class="keyword">extends</span> <span class="title">AtomicReference</span> &lt; <span class="title">T</span> &gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// enough padding for 64bytes with 4byte refs </span></div><div class="line">    Object p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, pa, pb, pc, pd, pe;</div><div class="line"></div><div class="line">    PaddedAtomicReference(T r) &#123;</div><div class="line"></div><div class="line">        <span class="keyword">super</span>(r);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AtomicReference</span> &lt; <span class="title">V</span> &gt; <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> V value;</div><div class="line"></div><div class="line">    <span class="comment">//省略其他代码 ｝</span></div></pre></td></tr></table></figure></p>
+<p>因为缓存行是64个字节且不支持部分填充缓存，这意味着，如果队头队尾不足64字节，有可能他们会读到同一个缓存行中，那么有可能在修改头结点时，会将整个缓存行锁定，使得其他CPU无法访问尾节点，导致效率低下。<br>在PaddedAtomicReference内部类中将共享变量追加到64字节，使得头结点和尾节点不会加载同一个缓存行，即不会互相锁定。</p>
+<p><strong>不适合使用这种优化的情景</strong></p>
+<ol>
+<li>缓存行非64字节的CPU</li>
+<li>共享变量不会被频繁地写</li>
+</ol>
+<h2 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h2><p><a href="http://www.cnblogs.com/paddix/p/5405678.html" target="_blank" rel="external">liuxiaopeng | Java并发编程：Synchronized底层优化（偏向锁、轻量级锁）
+</a></p>
+<h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><blockquote>
+<p>不可被中断的一个或一系列操作</p>
+</blockquote>
+<h3 id="CPU实现原子操作"><a href="#CPU实现原子操作" class="headerlink" title="CPU实现原子操作"></a>CPU实现原子操作</h3><h4 id="总线锁定"><a href="#总线锁定" class="headerlink" title="总线锁定"></a>总线锁定</h4><p>使用CPU提供的一个LOCK#信号，当一个CPU在总线上输出此信号时，其他CPU的请求将会被阻塞，那么该CPU就能独享共享内存了</p>
+<h4 id="缓存锁定"><a href="#缓存锁定" class="headerlink" title="缓存锁定"></a>缓存锁定</h4><p>内存区域如果被缓存在处理器的缓存行中，并且在Lock操作期间被锁定，那么当它执行锁操作回写到内存时，处理器不需要在总线上声言LOCK#信号，而是修改内部的内存地址，通过缓存一致性机制保证操作的原子性。<br>例外：当操作的数据不能被缓存在处理器内部，或操作的数据跨多个缓存行，处理器会调用总线锁定。或者处理器不支持缓存</p>
+<h3 id="Java实现原子操作"><a href="#Java实现原子操作" class="headerlink" title="Java实现原子操作"></a>Java实现原子操作</h3><h4 id="循环CAS（CompareAndSet-CompareAndSwap）"><a href="#循环CAS（CompareAndSet-CompareAndSwap）" class="headerlink" title="循环CAS（CompareAndSet|CompareAndSwap）"></a>循环CAS（CompareAndSet|CompareAndSwap）</h4><p>jvm中的CAS操作是基于处理器的CMPXCHG指令实现的，CAS存在三个问题：</p>
+<ol>
+<li>ABA问题（解决：使用版本号A-B-A变成1A-2B-3A）</li>
+<li>循环时间长开销大</li>
+<li>只能保证一个共享变量的原子操作（解决：AtomicReference类将多个变量放到一个对象中进行CAS操作）</li>
+</ol>
+<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><p>锁机制保证了只有获得锁的线程才能操作锁定的内存区域</p>
 
     
 
@@ -399,8 +456,8 @@
     <!-- 多说评论框 start -->
     <div class="ds-thread"
         data-thread-key=""
-        data-url="http://yoursite.com/2017/01/16/Mysql安装-Mac/"
-        data-title="Mysql安装(Mac)">
+        data-url="http://yoursite.com/2017/05/06/Java并发编程的艺术笔记/"
+        data-title="[读薄系列]Java并发编程的艺术笔记">
     </div>
     <!-- 多说评论框 end -->
 </div>
@@ -416,21 +473,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/01/18/MVC架构初涉/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2017/01/13/LeetCode-17-1-13/" id="post_nav-older" class="next-content">
+        <a href="/2017/05/03/Hibernate缓存小结/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
