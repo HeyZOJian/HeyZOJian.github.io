@@ -10,7 +10,7 @@
     
     <title>
         
-            [读薄系列]关系数据库范式 | 
+            关系数据理论 | 
         
         ZOJian&#39;Blog
     </title>
@@ -48,7 +48,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="[读薄系列]关系数据库范式 | ZOJian&#39;Blog">
+    <meta property="og:title" content="关系数据理论 | ZOJian&#39;Blog">
     <meta property="og:description" content="null">
 
     <!--[if lte IE 9]>
@@ -226,7 +226,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是范式"><span class="post-toc-number">1.</span> <span class="post-toc-text">什么是范式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目标"><span class="post-toc-number">2.</span> <span class="post-toc-text">目标</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#名词解释"><span class="post-toc-number">3.</span> <span class="post-toc-text">名词解释</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一、第一范式"><span class="post-toc-number">4.</span> <span class="post-toc-text">一、第一范式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#出现的问题"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">出现的问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二、第二范式"><span class="post-toc-number">5.</span> <span class="post-toc-text">二、第二范式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模式分解"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">模式分解</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#出现的问题-1"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">出现的问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#三、第三范式"><span class="post-toc-number">6.</span> <span class="post-toc-text">三、第三范式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">7.</span> <span class="post-toc-text">参考</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一-问题的提出"><span class="post-toc-number">1.</span> <span class="post-toc-text">一.问题的提出</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-数据冗余导致的问题"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.数据冗余导致的问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-模式分解导致的问题"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2.模式分解导致的问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二-函数依赖的定义"><span class="post-toc-number">2.</span> <span class="post-toc-text">二.函数依赖的定义</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-函数依赖"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1.函数依赖</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-平凡与非平凡函数依赖"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.平凡与非平凡函数依赖</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-完全函数依赖和部分函数依赖"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">3.完全函数依赖和部分函数依赖</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-传递函数依赖"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">4.传递函数依赖</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#三-范式"><span class="post-toc-number">3.</span> <span class="post-toc-text">三.范式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-目标"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">1.目标</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-第一范式-码"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">2.第一范式-码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#出现的问题"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">出现的问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-第二范式-全部是码"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">3.第二范式-全部是码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#模式分解"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">模式分解</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#出现的问题-1"><span class="post-toc-number">3.3.2.</span> <span class="post-toc-text">出现的问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-第三范式-仅仅是码"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">4.第三范式-仅仅是码</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -262,7 +262,7 @@
         
     
             <p class="article-headline-p">
-                [读薄系列]关系数据库范式
+                关系数据理论
             </p>
         </div>
 
@@ -305,7 +305,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/数据库/">数据库</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/读薄系列/">读薄系列</a>
+        <a class="post_tag-link" href="/tags/review/">review</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/数据库/">数据库</a>
     </ul>
     
 
@@ -332,7 +332,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=[读薄系列]关系数据库范式&url=http://yoursite.com//2017/02/24/关系数据库-范式/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关系数据理论&url=http://yoursite.com//2017/02/24/关系数据库-范式/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -371,18 +371,38 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="什么是范式"><a href="#什么是范式" class="headerlink" title="什么是范式"></a>什么是范式</h2><p>数据表的表结构设计标准的级别<br>第一范式(1NF)<br>第二范式(2NF)<br>第三范式(3NF)<br>BC范式</p>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ol>
+        <p>[TOC]</p>
+<h2 id="一-问题的提出"><a href="#一-问题的提出" class="headerlink" title="一.问题的提出"></a>一.问题的提出</h2><h3 id="1-数据冗余导致的问题"><a href="#1-数据冗余导致的问题" class="headerlink" title="1.数据冗余导致的问题"></a>1.数据冗余导致的问题</h3><ol>
+<li>冗余存储: 信息被重复存储</li>
+<li>更新异常: 当重复信息的一个副本被修改时,要对所有副本进行同样的修改</li>
+<li>插入异常: 只有当一些信息事先已经存放在数据库中时,另外一些信息才能存入数据库中</li>
+<li>删除异常: 删除某些信息时可能丢失其他信息</li>
+</ol>
+<h3 id="2-模式分解导致的问题"><a href="#2-模式分解导致的问题" class="headerlink" title="2.模式分解导致的问题"></a>2.模式分解导致的问题</h3><ol>
+<li>有损分解: 通过连接分解后的较小关系不能完全还原被分解关系的所有实例</li>
+<li>依赖丢失: 部分属性之间的依赖丢失</li>
+</ol>
+<h2 id="二-函数依赖的定义"><a href="#二-函数依赖的定义" class="headerlink" title="二.函数依赖的定义"></a>二.函数依赖的定义</h2><h3 id="1-函数依赖"><a href="#1-函数依赖" class="headerlink" title="1.函数依赖"></a>1.函数依赖</h3><blockquote>
+<p>关系模式中属性之间存在的一种约束关系</p>
+</blockquote>
+<p>设r(R)为关系模式,α⊆R,γ⊆R,对任意合法关系r及其中任意两个元祖t<sub>i</sub>和t<sub>j</sub>,i≠j,若t<sub>i</sub>[α]=t<sub>j</sub>[α],则t<sub>i</sub>[γ]=t<sub>j</sub>[γ],则称α函数确定γ,或γ函数依赖于α,记作α→γ<br>简单来说就像函数y=f(x),x唯一确定y<br><img src="http://okc9ihakz.bkt.clouddn.com/%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96.png" alt="函数依赖"></p>
+<h3 id="2-平凡与非平凡函数依赖"><a href="#2-平凡与非平凡函数依赖" class="headerlink" title="2.平凡与非平凡函数依赖"></a>2.平凡与非平凡函数依赖</h3><p><strong>非平凡函数依赖</strong>:若α→γ,但γ不是α的真子集,则称α→γ是非平凡函数依赖<br><img src="http://okc9ihakz.bkt.clouddn.com/%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96.png" alt="函数依赖"><br><strong>平凡函数依赖</strong>:如γ是α的真子集,则称α→γ是平凡函数依赖<br><img src="http://okc9ihakz.bkt.clouddn.com/%E5%B9%B3%E5%87%A1%E4%BE%9D%E8%B5%96.png" alt="平凡函数依赖"></p>
+<h3 id="3-完全函数依赖和部分函数依赖"><a href="#3-完全函数依赖和部分函数依赖" class="headerlink" title="3.完全函数依赖和部分函数依赖"></a>3.完全函数依赖和部分函数依赖</h3><blockquote>
+<p>对于任意γ⊂α,γ→β都不成立,则称α→β是完全函数依赖,否则称部分函数依赖</p>
+</blockquote>
+<p>部分函数依赖<br><img src="http://okc9ihakz.bkt.clouddn.com/%E9%83%A8%E5%88%86%E4%BE%9D%E8%B5%96.png" alt="部分函数依赖"></p>
+<h3 id="4-传递函数依赖"><a href="#4-传递函数依赖" class="headerlink" title="4.传递函数依赖"></a>4.传递函数依赖</h3><blockquote>
+<p>若α→β,β→γ,则必存在函数依赖α→γ</p>
+</blockquote>
+<p><img src="http://okc9ihakz.bkt.clouddn.com/%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96.png" alt="传递函数依赖"></p>
+<h2 id="三-范式"><a href="#三-范式" class="headerlink" title="三.范式"></a>三.范式</h2><blockquote>
+<p>基于函数依赖理论,关系模式可分成第一范式(1NF),第二范式(2NF),第三范式(3NF)和Boyce-Codd范式</p>
+</blockquote>
+<h3 id="1-目标"><a href="#1-目标" class="headerlink" title="1.目标"></a>1.目标</h3><ol>
 <li>减少数据冗余</li>
 <li>消除异常（插入异常，更新异常，删除异常）</li>
 </ol>
-<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><p><strong>函数依赖</strong>：若在一张表中，在属性（或属性组）X的值确定的情况下，必定能确定属性Y的值，那么就可以说Y函数依赖于X，写作 X → Y</p>
-<p><strong>完全函数依赖</strong>：在一张表中，若 X → Y，且对于 X 的任何一个真子集（假如属性组 X 包含超过一个属性的话），X ‘ → Y 不成立，那么我们称 Y 对于 X 完全函数依赖，记作 X F→ Y（F写在箭头上面）</p>
-<p><strong>部分函数依赖</strong>：假如 Y 函数依赖于 X，但同时 Y 并不完全函数依赖于 X，那么我们就称 Y 部分函数依赖于 X，记作 X  P→ Y（P写在箭头上面）</p>
-<p><strong>传递函数依赖</strong>：假如 Z 函数依赖于 Y，且 Y 函数依赖于 X （严格来说还有一个X 不包含于Y，且 Y 不函数依赖于Z的前提条件），那么我们就称 Z 传递函数依赖于 X ，记作 X T→ Z（Z写在箭头上面）</p>
-<p><strong>码</strong>：设 K 为某表中的一个属性或属性组，若除 K 之外的所有属性都完全函数依赖于 K（这个“完全”不要漏了），那么我们称 K 为候选码，简称为码。假如当 K 确定的情况下，该表除 K 之外的所有属性的值也就随之确定，那么 K 就是码</p>
-<p><strong>主属性</strong>：包含<strong>在</strong>任何一个码中的属性成为主属性</p>
-<h2 id="一、第一范式"><a href="#一、第一范式" class="headerlink" title="一、第一范式"></a>一、第一范式</h2><p><strong>每个属性都不可再分</strong></p>
+<h3 id="2-第一范式-码"><a href="#2-第一范式-码" class="headerlink" title="2.第一范式-码"></a>2.第一范式-码</h3><p><strong>每个属性都不可再分</strong></p>
 <table>
 <thead>
 <tr>
@@ -400,8 +420,8 @@
 </tr>
 </tbody>
 </table>
-<h3 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h3><p> <strong>1.插入异常</strong>：当出现新的系时，无法单独地添加系名与系主任的数据到数据表中<br> <strong>2.更新异常</strong>：当某个学生转系时，需要将与该学生有关的记录一起修改<br> <strong>3.删除异常</strong>：当某个系的所有学生删除时，该系也不复存在（一个系所有学生都没有了，并不表示这个系就没有了）<br> <strong>4.数据冗余</strong>：每一名学生的学号、姓名、系名、系主任这些数据重复多次</p>
-<h2 id="二、第二范式"><a href="#二、第二范式" class="headerlink" title="二、第二范式"></a>二、第二范式</h2><p><strong>消除非主属性对码的部分函数依赖</strong><br><strong>简单的说，是表中的属性必须完全依赖于全部主键，而不是部分主键</strong></p>
+<h4 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h4><p> <strong>1.插入异常</strong>：当出现新的系时，无法单独地添加系名与系主任的数据到数据表中<br> <strong>2.更新异常</strong>：当某个学生转系时，需要将与该学生有关的记录一起修改<br> <strong>3.删除异常</strong>：当某个系的所有学生删除时，该系也不复存在（一个系所有学生都没有了，并不表示这个系就没有了）<br> <strong>4.数据冗余</strong>：每一名学生的学号、姓名、系名、系主任这些数据重复多次</p>
+<h3 id="3-第二范式-全部是码"><a href="#3-第二范式-全部是码" class="headerlink" title="3.第二范式-全部是码"></a>3.第二范式-全部是码</h3><p><strong>消除非主属性对码的部分函数依赖</strong><br><strong>简单的说，是表中的属性必须完全依赖于全部主键，而不是部分主键</strong></p>
 <p><strong>判断是否符合2NF的方法</strong><br>上表为例</p>
 <ol>
 <li>确定码（学号，课名）</li>
@@ -409,7 +429,7 @@
 <li>查看是否存在非主属性对码的部分函数依赖{<br>对于<strong>（学号，课名） → 姓名</strong>，有 <strong>学号 → 姓名</strong>，存在非主属性 姓名 对码（学号，课名）的部分函数依赖。<br>对于<strong>（学号，课名） → 系名</strong>，有 <strong>学号 → 系名</strong>，存在非主属性 系名 对码（学号，课名）的部分函数依赖。<br>对于<strong>（学号，课名） → 系主任</strong>，有<strong>学号 → 系主任</strong>，存在非主属性 对码（学号，课名）的部分函数依赖。<br>}</li>
 </ol>
 <p>所以该表只符合1NF,不符合2NF</p>
-<h3 id="模式分解"><a href="#模式分解" class="headerlink" title="模式分解"></a>模式分解</h3><p>将上述表拆分成两个表</p>
+<h4 id="模式分解"><a href="#模式分解" class="headerlink" title="模式分解"></a>模式分解</h4><p>将上述表拆分成两个表</p>
 <table>
 <thead>
 <tr>
@@ -441,8 +461,8 @@
 </tbody>
 </table>
 <p>码：（学号）因为码只有一个属性，所以不可能存在非主属性对于码 的部分函数依赖，所以此表符合2NF的要求</p>
-<h3 id="出现的问题-1"><a href="#出现的问题-1" class="headerlink" title="出现的问题"></a>出现的问题</h3><p><strong>1.删除异常</strong>：删除某个系中所有的学生记录，该系的信息仍然全部丢失<br><strong>2.插入异常</strong>：无法插入一个尚无学生的新系的信息。因为学生表的码是学号，不能为空，所以此操作不被允许</p>
-<h2 id="三、第三范式"><a href="#三、第三范式" class="headerlink" title="三、第三范式"></a>三、第三范式</h2><p><strong>消除了非主属性对于码的传递函数依赖</strong></p>
+<h4 id="出现的问题-1"><a href="#出现的问题-1" class="headerlink" title="出现的问题"></a>出现的问题</h4><p><strong>1.删除异常</strong>：删除某个系中所有的学生记录，该系的信息仍然全部丢失<br><strong>2.插入异常</strong>：无法插入一个尚无学生的新系的信息。因为学生表的码是学号，不能为空，所以此操作不被允许</p>
+<h3 id="4-第三范式-仅仅是码"><a href="#4-第三范式-仅仅是码" class="headerlink" title="4.第三范式-仅仅是码"></a>4.第三范式-仅仅是码</h3><p><strong>消除了非主属性对于码的传递函数依赖</strong></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>作者：刘慰<br>链接：<a href="https://www.zhihu.com/question/24696366/answer/29189700" target="_blank" rel="external">https://www.zhihu.com/question/24696366/answer/29189700</a><br>来源：知乎</p>
 
     
@@ -474,7 +494,7 @@
     <div class="ds-thread"
         data-thread-key=""
         data-url="http://yoursite.com/2017/02/24/关系数据库-范式/"
-        data-title="[读薄系列]关系数据库范式">
+        data-title="关系数据理论">
     </div>
     <!-- 多说评论框 end -->
 </div>
