@@ -1,133 +1,143 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<!DOCTYPE HTML>
+<html>
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!--Description-->
-    
-        <meta name="description" content="排序基本思想分割将序列递归折半分割
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>[读薄系列]Merge Sort归并排序 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="排序基本思想分割将序列递归折半分割
 合并回溯将之前被分割的两个序列合并后排序
 排序过程原始序列 9 6 7 2 5 1 8 4 21234567891011121314151617分割9 6 7 2     |     5 1 8 4 29 6 | 7 2         5 1 | 8 4 29 ">
-    
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!--Author-->
-    
-        <meta name="author" content="John Doe">
-    
+  <meta property="og:title" content="[读薄系列]Merge Sort归并排序"/>
+  <meta property="og:site_name" content="Hexo"/>
 
-    <!--Open Graph Title-->
-    
-        <meta property="og:title" content="[读薄系列]Merge Sort归并排序"/>
-    
+  
+    <meta property="og:image" content="undefined"/>
+  
 
-    <!--Open Graph Description-->
-    
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-    <!--Open Graph Site Name-->
-    <meta property="og:site_name" content="Hexo"/>
+  <script src="/js/jquery-2.0.3.min.js"></script>
 
-    <!--Type page-->
-    
-        <meta property="og:type" content="article" />
-    
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-70812759-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
-    <!--Page Cover-->
-    
 
-    <meta name="twitter:card" content="summary" />
-    
 
-    <!-- Title -->
-    
-    <title>[读薄系列]Merge Sort归并排序 - Hexo</title>
-
-    <!-- Tachyons Core CSS -->
-    <link rel="stylesheet" href="//unpkg.com/tachyons/css/tachyons.min.css">
-
-    <!-- Custom Fonts -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Google Analytics -->
-    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?9fe8cb2deab9dc59dccf858801029c7e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
 
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Hexo</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
 
-<body>
+  <div class="container">
+  	<div class="content">
+    	 
 
-<!-- Main Content -->
-<!-- Banner -->
-<!-- Banner -->
-<div class="w-100 bg-1 ph5-ns ph3 text-light">
-    
-    <nav class="db dt-l w-100 mw8 center border-box pv3">
-        <a class="db dtc-l v-mid link dim w-100 w-25-l tc tl-l mb2 mb0-l white" href="/" title="Hexo">
-            <img src="http://www.codeblocq.com/assets/projects/hexo-theme-anodyne/assets/anodyne.svg" class="dib h3" alt="Hexo">
-        </a>
-        <div class="db dtc-l v-mid w-100 w-75-l tc tr-l">
-            
-                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
-                    href="/" 
-                    title="Home">
-                    Home
-                </a>
-            
-                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
-                    href="/archives" 
-                    title="Archives">
-                    Archives
-                </a>
-            
-        </div>
-    </nav>
 
-    <!-- Title -->
-    <div class="w-100 mw8 center vh-40 dt">
-        <div class="dtc v-mid white">
-            <h1 class="f1-l f2-m tc tc-m tl-ns">[读薄系列]Merge Sort归并排序</h1>
-            <p class="f4 fw3 pab-100px tc tc-m tl-ns">2017-03-10</p>
-        </div>
-    </div>
+	
+		<div class="page-header">
+			<h1> [读薄系列]Merge Sort归并排序</h1>
+		</div>
+	
 
-    <!-- Icon -->
-    <div class="relative w-100 mw8 center white dn dn-m db-ns">
-        <i class="header-icon fa fa-github-alt"></i>
-    </div>
-</div>
 
-<!-- Content -->
-<div class="w-100 ph2 ph4-m ph5-l mv5 mv6-l">
-    <div class="content">
-        <div class="mw8 center">
-            <div class="cf">
-                <div class="fl w-100 w-70-l mw7 left fw3 lh-copy pr4-ns pr0-m post-content">
-                    <!-- Tags Vertical -->
-                    
-                        <div class="tags-container-vertical">
-                            <div class="tags-sub-container">
-                                <a class="fw3 ph1 dib" href="/tags/读薄系列/">#读薄系列</a> <a class="fw3 ph1 dib" href="/tags/排序/">#排序</a> <a class="fw3 ph1 dib" href="/tags/笔记/">#笔记</a>
-                            </div>
-                        </div>
-                    
 
-                    <!-- Main Post Content -->
-                    <h2 id="排序基本思想"><a href="#排序基本思想" class="headerlink" title="排序基本思想"></a>排序基本思想</h2><h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将序列递归折半分割</p>
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="排序基本思想"><a href="#排序基本思想" class="headerlink" title="排序基本思想"></a>排序基本思想</h2><h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将序列递归折半分割</p>
 <h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><p>回溯将之前被分割的两个序列<strong>合并后排序</strong></p>
 <h3 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h3><p><strong>原始序列</strong> 9 6 7 2 5 1 8 4 2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">分割</div><div class="line">9 6 7 2     |     5 1 8 4 2</div><div class="line"></div><div class="line">9 6 | 7 2         5 1 | 8 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8 | 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8   4 | 2</div><div class="line"></div><div class="line">合并</div><div class="line">6 9 |  2 7        1 5 | 8 | 2 4</div><div class="line"></div><div class="line">2 6 7 9           1 5 | 2 4 8</div><div class="line"></div><div class="line">2 6 7 9           1 2 4 5 6</div><div class="line"></div><div class="line">1 2 2 4 5 6 7 8 9</div></pre></td></tr></table></figure></p>
 <h3 id="如何合并"><a href="#如何合并" class="headerlink" title="如何合并"></a>如何合并</h3><p><strong>目标</strong><br>将包含n1个元素的数组L以及包含n2个元素的数组R，合并到数组A中</p>
@@ -137,103 +147,128 @@
 <p><strong>空间复杂度</strong><br>由于合并需要复制到另一个数组，故空间复杂度为O(n)</p>
 <p><strong>稳定性</strong><br>在合并两个已经排序的序列时，如果遇到相同的元素，只有保证前半部分数组优于后半部分数组，相同元素的顺序就不会颠倒了，因此归并排序属于<strong>稳定</strong>的排序算法</p>
 <h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>C++<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 500000</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SENTINEL 0x3f3f3f3f <span class="comment">//标记</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> L[MAX/<span class="number">2</span>],R[MAX/<span class="number">2</span>+<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n, <span class="keyword">int</span> left,i nt mid, <span class="keyword">int</span> right)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> n1 = mid-left;</div><div class="line">    <span class="keyword">int</span> n2 = right-mid;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n1; i++) L[i] = A[left+i];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n2; i++) R[i] = A[mid+i];</div><div class="line">    L[n1] = R[n2] = SENTINEL;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = left; k &lt; right; k++)&#123;</div><div class="line">        <span class="keyword">if</span>(L[i] &lt;= R[i])&#123;<span class="comment">//保证稳定性</span></div><div class="line">            A[k] = L[i++];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            A[k] = R[j++];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(left+<span class="number">1</span> &lt; right)&#123;</div><div class="line">        <span class="keyword">int</span> mid = (left + right)/<span class="number">2</span>;</div><div class="line">        <span class="comment">//分割</span></div><div class="line">        mergeSort(A, n, left, mid);</div><div class="line">        mergeSort(A, n, mid, right);</div><div class="line">        <span class="comment">//合并</span></div><div class="line">        merge(A, n, left, mid, right);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+	  
+	</div>
 
-                    
-                    <!-- Tags Bottom -->
-                    
-                        <div class="tags-container-bottom">
-                            <i class="fa fa-tag pr3 text-main-color"></i><a class="fw3 ph1 dib" href="/tags/读薄系列/">#读薄系列</a> <a class="fw3 ph1 dib" href="/tags/排序/">#排序</a> <a class="fw3 ph1 dib" href="/tags/笔记/">#笔记</a>
-                        </div>
-                    
+	<div>
+  	<center>
+	<div class="pagination">
 
-                    <!-- Comments -->
-                    
-
-
-
-                </div>
-                <div class="fl w-100 w-30-l center fw3 lh-copy pl4-ns tl black-50">
-                    
-                    <hr class="dn-l mw4 black-50 mt5" />
-                    
-                    <!-- Widget 1: About -->
-                    <div class="mt5 mt0-l">
-    <article class="dt db-l mw8 mw8-m mw5-ns center ml0-l bg-white mv3">
-        <div class="dn dtc-m db-l v-mid tc pr4 pr0-l" style="min-width: 6rem;">
-            <img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fo89i5m0kyj30xc0xctb3.jpg" class="mb4-l br-100 h3 w3 h4-l w4-l dib" title="John Doe">
-        </div>
-        <div class="dtc db-l v-mid lh-copy measure center f6 black-50 tj">
-            <h2>zojian</h2>つよくなりたい
-        </div>
-    </article>
-</div>
-
-                    <hr class="dn-l mw4 black-50 mt5" />
-                    
-                    <!-- Widget 2: Categories -->
-                    
-
-                    <!-- Widget 3: Recent Posts -->
-                    <div class="mt5 tc tl-l">
-    <h3>Recent Posts</h3>
     
-        <p>
-            <a href="/2018/02/07/Django-RESTful-framework教程1：序列化/">Django RESTful framework教程1：序列化</a>
-        </p>
     
-        <p>
-            <a href="/2018/02/06/Django-RESTful-framework快速入门/">Django RESTful framework快速入门</a>
-        </p>
+    <a href="/2017/03/11/脑力游戏/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
     
-        <p>
-            <a href="/2018/01/07/数据库建模/">数据库建模</a>
-        </p>
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
     
-        <p>
-            <a href="/2017/05/21/乐观锁-悲观锁/">乐观锁-悲观锁</a>
-        </p>
+    <a href="/2017/03/09/未来火车站建设/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
     
-        <p>
-            <a href="/2017/05/10/Hibernate-NotNull-NotEmpty-NotBlank区别/">Hibernate NotNull NotEmpty NotBlank区别</a>
-        </p>
+
     
 </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+    <h2 class="title">留言</h2>
+
+    
+</section>
 
 
-<!-- Footer -->
-<div class="bg-1 ph2 ph5-ns pv5">
-        <div class="mv8">
-            <div class="center tc">
-                
-                    <div class="dib mh3">
-                        <a class="f3 f2-ns white dim" href="https://github.com/HeyZOJian" target="_blank">
-                            <i class="fa fa-github"></i>
-                        </a>
-                    </div>
-                
-                    <div class="dib mh3">
-                        <a class="f3 f2-ns white dim" href="/#" target="_blank">
-                            <i class="fa fa-rss"></i>
-                        </a>
-                    </div>
-                
-            </div>
-            <div class="f6 f5-ns center tc white pt5 fw3">
-                @Untitled. All right reserved | Design & Hexo <a class="link dim white" href="http://www.codeblocq.com/">Jonathan Klughertz</a>
-            </div>
-        </div>
-    </div>
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
 
-<!-- After Footer -->
-<!-- Disqus Comments -->
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-03-10 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li> <li><a href="/tags/排序/">排序<span>1</span></a></li> <li><a href="/tags/笔记/">笔记<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
 
 
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 John Doe
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
+     <br> Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
 
 </body>
-
-</html>
+   </html>
