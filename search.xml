@@ -3,7 +3,69 @@
   
     
     <entry>
-      <title><![CDATA[Django RESTful framework教程1：序列化]]></title>
+      <title><![CDATA[Django REST framework 教程2：请求和响应]]></title>
+      <url>/2018/02/08/Django-REST-framework-%E6%95%99%E7%A8%8B2%EF%BC%9A%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94/</url>
+      <content type="html"><![CDATA[<p>这一篇我们开始讲解RESTframework框架的核心内容。让我们介绍一些基本的构建模块。<br><a id="more"></a></p>
+<h2 id="Request对象"><a href="#Request对象" class="headerlink" title="Request对象"></a>Request对象</h2><p>REST framework引入了<code>Request</code>对象，它继承自常规的<code>HttpRequest</code>，并提供更加灵活的请求解析。<code>Request</code>对象的核心功能是<code>request.data</code>参数，类似于<code>request.POST</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">request.POST  <span class="comment"># 只能处理表单数据.  只能处理‘POST’请求</span></div><div class="line">request.data  <span class="comment"># 处理任何数据.  处理‘POST’,'PUT',‘PATCH’.</span></div></pre></td></tr></table></figure>
+<h2 id="Response对象"><a href="#Response对象" class="headerlink" title="Response对象"></a>Response对象</h2><p>REST framework也引入了<code>Response</code>对象，使用内容协商来决定返回给客户端的数据类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> Response(data)  <span class="comment"># 返回客户端请求的数据类型</span></div></pre></td></tr></table></figure>
+<h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><p>在视图中使用纯数字的HTTP状态码可读性差，并且不容易发现错误。REST framework为每个状态码提供了明确的标识符，例如<code>status</code>模块中的<code>HTTP_400_BAD_REQUEST</code>。</p>
+<h2 id="装饰API视图"><a href="#装饰API视图" class="headerlink" title="装饰API视图"></a>装饰API视图</h2><p>REST framework提供了两个可用于编写视图API的封装：</p>
+<ol>
+<li><code>@api_view</code>装饰视图函数</li>
+<li><code>APIView</code>类可用作视图的基类</li>
+</ol>
+<p>这些封装提供了一些额外的功能，例如确保了你的视图接受到<code>Request</code>实例，执行内容协商，并且把内容添加到<code>Response</code>对象中。</p>
+<p>也会适当得返回<code>405 Method Not Allowed</code>响应，以及处理<code>request.data</code>格式不正确的<code>ParseError</code>异常。</p>
+<h2 id="把他们整合在一起"><a href="#把他们整合在一起" class="headerlink" title="把他们整合在一起"></a>把他们整合在一起</h2><p>让我们继续使用这些新组件写一些视图函数。</p>
+<p>在<code>views.py</code>中我们不再需要<code>JSONResponse</code>类,所以删了它。完成后我们可以对我们的视图函数进行轻微的重构了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> status</div><div class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> api_view</div><div class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</div><div class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</div><div class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@api_view(['GET', 'POST'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">snippet_list</span><span class="params">(request)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    List all code snippets, or create a new snippet.</div><div class="line">    """</div><div class="line">    <span class="keyword">if</span> request.method == <span class="string">'GET'</span>:</div><div class="line">        snippets = Snippet.objects.all()</div><div class="line">        serializer = SnippetSerializer(snippets, many=<span class="keyword">True</span>)</div><div class="line">        <span class="keyword">return</span> Response(serializer.data)</div><div class="line"></div><div class="line">    <span class="keyword">elif</span> request.method == <span class="string">'POST'</span>:</div><div class="line">        serializer = SnippetSerializer(data=request.data)</div><div class="line">        <span class="keyword">if</span> serializer.is_valid():</div><div class="line">            serializer.save()</div><div class="line">            <span class="keyword">return</span> Response(serializer.data, status=status.HTTP_201_CREATED)</div><div class="line">        <span class="keyword">return</span> Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)</div></pre></td></tr></table></figure>
+<p>我们改进了之前的例子。变得更加简洁，代码风格也跟Forms API很像，同时使用了命名的状态码这使得响应内容更加明确。</p>
+<p>单个页面的视图函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@api_view(['GET', 'PUT', 'DELETE'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">snippet_detail</span><span class="params">(request, pk)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Retrieve, update or delete a code snippet.</div><div class="line">    """</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        snippet = Snippet.objects.get(pk=pk)</div><div class="line">    <span class="keyword">except</span> Snippet.DoesNotExist:</div><div class="line">        <span class="keyword">return</span> Response(status=status.HTTP_404_NOT_FOUND)</div><div class="line"></div><div class="line">    <span class="keyword">if</span> request.method == <span class="string">'GET'</span>:</div><div class="line">        serializer = SnippetSerializer(snippet)</div><div class="line">        <span class="keyword">return</span> Response(serializer.data)</div><div class="line"></div><div class="line">    <span class="keyword">elif</span> request.method == <span class="string">'PUT'</span>:</div><div class="line">        serializer = SnippetSerializer(snippet, data=request.data)</div><div class="line">        <span class="keyword">if</span> serializer.is_valid():</div><div class="line">            serializer.save()</div><div class="line">            <span class="keyword">return</span> Response(serializer.data)</div><div class="line">        <span class="keyword">return</span> Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)</div><div class="line"></div><div class="line">    <span class="keyword">elif</span> request.method == <span class="string">'DELETE'</span>:</div><div class="line">        snippet.delete()</div><div class="line">        <span class="keyword">return</span> Response(status=status.HTTP_204_NO_CONTENT)</div></pre></td></tr></table></figure>
+<p>应该感觉非常熟悉-这个普通的Django视图没什么不同。</p>
+<p>注意到，我们没有明确请求或响应的数据类型。<code>request.data</code>可以处理传进来的<code>json</code>请求，也可以处理其他数据格式。同样，我们返回包含数据的响应时，REST framework会将数据渲染成恰当的数据格式。</p>
+<h2 id="给URLs添加可选的格式后缀"><a href="#给URLs添加可选的格式后缀" class="headerlink" title="给URLs添加可选的格式后缀"></a>给URLs添加可选的格式后缀</h2><p>利用上面的特性，我们的响应可以返回多种数据类型，让我们为API端点添加格式后缀的支持。意味着我们的API可以出来这种URLs <a href="http://example.com/api/items/4.json" target="_blank" rel="external">http://example.com/api/items/4.json</a>.</p>
+<p>给所有的视图函数添加<code>format</code>关键字参数，就像</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">snippet_list</span><span class="params">(request, format=None)</span>:</span></div></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">snippet_detail</span><span class="params">(request, pk, format=None)</span>:</span></div></pre></td></tr></table></figure>
+<p>现在更新一下<code>snippets/urls.py</code>文件，将现有的URLs添加到一组<code>format_suffix_patterns</code>中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</div><div class="line"><span class="keyword">from</span> snippets <span class="keyword">import</span> views</div><div class="line"><span class="keyword">from</span> rest_framework.urlpatterns <span class="keyword">import</span> format_suffix_patterns</div><div class="line"></div><div class="line">urlpatterns = [</div><div class="line">    path(<span class="string">'snippets/'</span>, views.snippet_list),</div><div class="line">    path(<span class="string">'snippets/&lt;int:pk&gt;/'</span>, views.snippet_detail),</div><div class="line">]</div><div class="line"></div><div class="line">urlpatterns = format_suffix_patterns(urlpatterns)</div></pre></td></tr></table></figure>
+<p>它提供了一种简单的引用方式，因此我们不需要再添加额外的url模式。</p>
+<h2 id="看起来怎么样？"><a href="#看起来怎么样？" class="headerlink" title="看起来怎么样？"></a>看起来怎么样？</h2><p>继续在命令行中测试我们的API。一切好像没什么变化，除了我们发生无效的请求时多了一些很好的错误处理。</p>
+<p>我们可以像之前一样获得所有代码片段。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">http http://127.0.0.1:8000/snippets/</div><div class="line"></div><div class="line">HTTP/1.1 200 OK</div><div class="line">...</div><div class="line">[</div><div class="line">  &#123;</div><div class="line">    "id": 1,</div><div class="line">    "title": "",</div><div class="line">    "code": "foo = \"bar\"\n",</div><div class="line">    "linenos": false,</div><div class="line">    "language": "python",</div><div class="line">    "style": "friendly"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "id": 2,</div><div class="line">    "title": "",</div><div class="line">    "code": "print \"hello, world\"\n",</div><div class="line">    "linenos": false,</div><div class="line">    "language": "python",</div><div class="line">    "style": "friendly"</div><div class="line">  &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>使用<code>Accept</code>头部字段，我们可以控制响应的格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http http://127.0.0.1:8000/snippets/ Accept:application/json  # 请求JSON数据</div><div class="line">http http://127.0.0.1:8000/snippets/ Accept:text/html         # 请求HTML数据</div></pre></td></tr></table></figure>
+<p>或者添加格式后缀：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http http://127.0.0.1:8000/snippets.json  # JSON 后缀</div><div class="line">http http://127.0.0.1:8000/snippets.api   # Browsable API suffix</div></pre></td></tr></table></figure>
+<p>同样，也可以使用<code>Content-Type</code>头部字段设置我们所发送的数据的数据格式。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># POST 表单数据</div><div class="line">http --form POST http://127.0.0.1:8000/snippets/ code="print 123"</div><div class="line"></div><div class="line">&#123;</div><div class="line">  "id": 3,</div><div class="line">  "title": "",</div><div class="line">  "code": "print 123",</div><div class="line">  "linenos": false,</div><div class="line">  "language": "python",</div><div class="line">  "style": "friendly"</div><div class="line">&#125;</div><div class="line"></div><div class="line"># POST JSON数据</div><div class="line">http --json POST http://127.0.0.1:8000/snippets/ code="print 456"</div><div class="line"></div><div class="line">&#123;</div><div class="line">    "id": 4,</div><div class="line">    "title": "",</div><div class="line">    "code": "print 456",</div><div class="line">    "linenos": false,</div><div class="line">    "language": "python",</div><div class="line">    "style": "friendly"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果你在上面的<code>http</code>命令前添加<code>--debug</code>，你还能在请求头部看到请求类型。</p>
+<p>现在打开浏览器，访问 <a href="http://127.0.0.1:8000/snippets/" target="_blank" rel="external">http://127.0.0.1:8000/snippets/</a>.</p>
+<h3 id="Browsability"><a href="#Browsability" class="headerlink" title="Browsability"></a>Browsability</h3><p>API的响应类型取决于客户端的请求，但是默认情况下，当浏览器请求一个资源时会返回一个HTML格式的响应。</p>
+<p>拥有一个可浏览的API是一个巨大的可用性胜利，并且使开发和使用API更容易。它也大大降低了想要检查和使用您的API的其他开发人员的障碍</p>
+<p>想要了解更多可查阅<a href="http://www.django-rest-framework.org/topics/browsable-api/" target="_blank" rel="external">browsable api</a></p>
+<h2 id="下一步是什么？"><a href="#下一步是什么？" class="headerlink" title="下一步是什么？"></a>下一步是什么？</h2><p>在<a href="">教程3</a>，我们将会使用基于类的视图，并且学习如何通过视图减少大量的代码。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Django REST framework </tag>
+            
+            <tag> 翻译 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Django REST framework教程1：序列化]]></title>
       <url>/2018/02/07/Django-RESTful-framework%E6%95%99%E7%A8%8B1%EF%BC%9A%E5%BA%8F%E5%88%97%E5%8C%96/</url>
       <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这个教程将创建一套简单的代码高亮的pastebin的Web API。一路上我们会介绍许多构建<code>REST frmaework</code>的组件，并且让你有一个全面的认识，这些组件是如何组建在一起的。<br><a id="more"></a><br>这个教程相当’深奥’，在开始学习之前你大概需要准备一些饼干和一杯你最爱的啤酒。你如果只是想快速了解，你可以查看之前的<a href="http://zojian.cn/2018/02/06/Django-RESTful-framework%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" target="_blank" rel="external">快速入门</a>文档。</p>
 <blockquote>
@@ -95,7 +157,7 @@
             
             <tag> Django </tag>
             
-            <tag> Django RESTful framework </tag>
+            <tag> Django REST framework </tag>
             
             <tag> 翻译 </tag>
             
@@ -106,7 +168,7 @@
     <entry>
       <title><![CDATA[Django RESTful framework快速入门]]></title>
       <url>/2018/02/06/Django-RESTful-framework%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
-      <content type="html"><![CDATA[<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组</p>
+      <content type="html"><![CDATA[<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组<br><a id="more"></a></p>
 <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>创建一个新的Django项目<code>tutorial</code>，然后创建一个新的app<code>quickstart</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># Create the project directory</div><div class="line">mkdir tutorial</div><div class="line">cd tutorial</div><div class="line"></div><div class="line"># Create a virtualenv to isolate our package dependencies locally</div><div class="line">virtualenv env</div><div class="line">source env/bin/activate  # On Windows use `env\Scripts\activate`</div><div class="line"></div><div class="line"># Install Django and Django REST framework into the virtualenv</div><div class="line">pip install django</div><div class="line">pip install djangorestframework</div><div class="line"></div><div class="line"># Set up a new project with a single application</div><div class="line">django-admin.py startproject tutorial .  # Note the trailing &apos;.&apos; character</div><div class="line">cd tutorial</div><div class="line">django-admin.py startapp quickstart</div><div class="line">cd ..</div></pre></td></tr></table></figure></p>
 <p>项目的结果应该像这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$ pwd</div><div class="line">&lt;some path&gt;/tutorial</div><div class="line">$ find .</div><div class="line">.</div><div class="line">./manage.py</div><div class="line">./tutorial</div><div class="line">./tutorial/__init__.py</div><div class="line">./tutorial/quickstart</div><div class="line">./tutorial/quickstart/__init__.py</div><div class="line">./tutorial/quickstart/admin.py</div><div class="line">./tutorial/quickstart/apps.py</div><div class="line">./tutorial/quickstart/migrations</div><div class="line">./tutorial/quickstart/migrations/__init__.py</div><div class="line">./tutorial/quickstart/models.py</div><div class="line">./tutorial/quickstart/tests.py</div><div class="line">./tutorial/quickstart/views.py</div><div class="line">./tutorial/settings.py</div><div class="line">./tutorial/urls.py</div><div class="line">./tutorial/wsgi.py</div></pre></td></tr></table></figure></p>
 <p>这看起来可能有些不寻常，在项目目录中创建了应用程序。使用项目命名空间避免扩展模块的命名冲突。</p>
@@ -227,9 +289,9 @@
         
         <tags>
             
-            <tag> 数据库 </tag>
-            
             <tag> review </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
         
@@ -874,9 +936,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
         
         <tags>
             
-            <tag> 数据库 </tag>
-            
             <tag> review </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
         
@@ -1006,9 +1068,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
             
             <tag> Math </tag>
             
-            <tag> Java </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> Java </tag>
             
         </tags>
         
@@ -1059,9 +1121,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
         
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> Java </tag>
             
         </tags>
         
@@ -1085,9 +1147,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
         
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> Java </tag>
             
         </tags>
         

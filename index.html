@@ -136,7 +136,34 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" >Django RESTful framework教程1：序列化</a>
+			<a href="/2018/02/08/Django-REST-framework-教程2：请求和响应/" >Django REST framework 教程2：请求和响应</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2018-02-08  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>这一篇我们开始讲解RESTframework框架的核心内容。让我们介绍一些基本的构建模块。<br>
+	
+	</div>
+  <a type="button" href="/2018/02/08/Django-REST-framework-教程2：请求和响应/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" >Django REST framework教程1：序列化</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
@@ -177,35 +204,7 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组</p>
-<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>创建一个新的Django项目<code>tutorial</code>，然后创建一个新的app<code>quickstart</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># Create the project directory</div><div class="line">mkdir tutorial</div><div class="line">cd tutorial</div><div class="line"></div><div class="line"># Create a virtualenv to isolate our package dependencies locally</div><div class="line">virtualenv env</div><div class="line">source env/bin/activate  # On Windows use `env\Scripts\activate`</div><div class="line"></div><div class="line"># Install Django and Django REST framework into the virtualenv</div><div class="line">pip install django</div><div class="line">pip install djangorestframework</div><div class="line"></div><div class="line"># Set up a new project with a single application</div><div class="line">django-admin.py startproject tutorial .  # Note the trailing &apos;.&apos; character</div><div class="line">cd tutorial</div><div class="line">django-admin.py startapp quickstart</div><div class="line">cd ..</div></pre></td></tr></table></figure></p>
-<p>项目的结果应该像这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$ pwd</div><div class="line">&lt;some path&gt;/tutorial</div><div class="line">$ find .</div><div class="line">.</div><div class="line">./manage.py</div><div class="line">./tutorial</div><div class="line">./tutorial/__init__.py</div><div class="line">./tutorial/quickstart</div><div class="line">./tutorial/quickstart/__init__.py</div><div class="line">./tutorial/quickstart/admin.py</div><div class="line">./tutorial/quickstart/apps.py</div><div class="line">./tutorial/quickstart/migrations</div><div class="line">./tutorial/quickstart/migrations/__init__.py</div><div class="line">./tutorial/quickstart/models.py</div><div class="line">./tutorial/quickstart/tests.py</div><div class="line">./tutorial/quickstart/views.py</div><div class="line">./tutorial/settings.py</div><div class="line">./tutorial/urls.py</div><div class="line">./tutorial/wsgi.py</div></pre></td></tr></table></figure></p>
-<p>这看起来可能有些不寻常，在项目目录中创建了应用程序。使用项目命名空间避免扩展模块的命名冲突。</p>
-<p>现在第一次同步你的数据库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py migrate</div></pre></td></tr></table></figure></p>
-<p>我们还将创建一个初始用户<code>user</code>，密码是<code>password123</code>。在稍后的例子中我们会认证该用户。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py createsuperuser --email admin@example.com --username admin</div></pre></td></tr></table></figure></p>
-<p>一旦你建立一个数据库和一个初始用户并且已经准备好，打开app目录然后开始敲码…</p>
-<h2 id="序列化器"><a href="#序列化器" class="headerlink" title="序列化器"></a>序列化器</h2><p>首先我们会定义一些序列号器。让我创建一个新的模块<code>tutorial/quickstart/serializers.py</code>我们将会使用它们来表示我们的数据。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User, Group</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserSerializer</span><span class="params">(serializers.HyperlinkedModelSerializer)</span>:</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        model = User</div><div class="line">        fields = (<span class="string">'url'</span>, <span class="string">'username'</span>, <span class="string">'email'</span>, <span class="string">'groups'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GroupSerializer</span><span class="params">(serializers.HyperlinkedModelSerializer)</span>:</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        model = Group</div><div class="line">        fields = (<span class="string">'url'</span>, <span class="string">'name'</span>)</div></pre></td></tr></table></figure></p>
-<p>注意我们在这个例子中使用了超链接关系，通过<code>HyperlinkedModelSerializer</code>。你也可以使用主键和其他关系，但是超链接是良好的RESTful设计。</p>
-<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><p>是的，我们最好写一些视图。打开<code>tutorial/quickstart/views.py</code>然后输入：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User, Group</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> viewsets</div><div class="line"><span class="keyword">from</span> tutorial.quickstart.serializers <span class="keyword">import</span> UserSerializer, GroupSerializer</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserViewSet</span><span class="params">(viewsets.ModelViewSet)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    API endpoint that allows users to be viewed or edited.</div><div class="line">    """</div><div class="line">    queryset = User.objects.all().order_by(<span class="string">'-date_joined'</span>)</div><div class="line">    serializer_class = UserSerializer</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GroupViewSet</span><span class="params">(viewsets.ModelViewSet)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    API endpoint that allows groups to be viewed or edited.</div><div class="line">    """</div><div class="line">    queryset = Group.objects.all()</div><div class="line">    serializer_class = GroupSerializer</div></pre></td></tr></table></figure></p>
-<p>我们不是写许多视图，而是将所有常见的行为分组成类<code>ViewSets</code>。</p>
-<p>如果我们需要，我们可以很容易的把这些分解为单独的视图，但是使用viewsets维护视图逻辑易于管理也非常简洁。</p>
-<h2 id="URLs"><a href="#URLs" class="headerlink" title="URLs"></a>URLs</h2><p>Okay，现在让我将API接到URLs。打开<code>tutorial/urls.py</code>…<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url, include</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> routers</div><div class="line"><span class="keyword">from</span> tutorial.quickstart <span class="keyword">import</span> views</div><div class="line"></div><div class="line">router = routers.DefaultRouter()</div><div class="line">router.register(<span class="string">r'users'</span>, views.UserViewSet)</div><div class="line">router.register(<span class="string">r'groups'</span>, views.GroupViewSet)</div><div class="line"></div><div class="line"><span class="comment"># Wire up our API using automatic URL routing.</span></div><div class="line"><span class="comment"># Additionally, we include login URLs for the browsable API.</span></div><div class="line">urlpatterns = [</div><div class="line">    url(<span class="string">r'^'</span>, include(router.urls)),</div><div class="line">    url(<span class="string">r'^api-auth/'</span>, include(<span class="string">'rest_framework.urls'</span>, namespace=<span class="string">'rest_framework'</span>))</div><div class="line">]</div></pre></td></tr></table></figure></p>
-<p>因为我们使用viewsets代替普通的视图，所以通过简单地将viewsets注册为一个路由类，我们可以为我们API自动地生成URL配置。</p>
-<p>如果我们需要对API URLs有更多操作，我们可以使用普通的视图并且明确地编写URL配置文件。</p>
-<p>最后，我们通过browsable API包含了默认的登陆和注销视图。这是可选的，但是如果你的API需要认证功能和你想使用browsable API，这将非常有用。</p>
-<h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>把<code>rest_framework</code>添加到<code>INSTALLED_APPS</code>。设置模块在<code>tutorial/settings.py</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = (</div><div class="line">    ...</div><div class="line">    <span class="string">'rest_framework'</span>,</div><div class="line">)</div></pre></td></tr></table></figure>
-<p>Okay，我们完成了。</p>
-<hr>
-<h2 id="测试我们的API"><a href="#测试我们的API" class="headerlink" title="测试我们的API"></a>测试我们的API</h2><p>我们现在准备测试我们刚刚创建的API。让我们通过命令行启动服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py runserver</div></pre></td></tr></table></figure></p>
-<p>我们可以访问我们的API，通过命令行或者使用工具：curl…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">bash: curl -H &apos;Accept: application/json; indent=4&apos; -u admin:password123 http://127.0.0.1:8000/users/</div><div class="line">&#123;</div><div class="line">    &quot;count&quot;: 2,</div><div class="line">    &quot;next&quot;: null,</div><div class="line">    &quot;previous&quot;: null,</div><div class="line">    &quot;results&quot;: [</div><div class="line">        &#123;</div><div class="line">            &quot;email&quot;: &quot;admin@example.com&quot;,</div><div class="line">            &quot;groups&quot;: [],</div><div class="line">            &quot;url&quot;: &quot;http://127.0.0.1:8000/users/1/&quot;,</div><div class="line">            &quot;username&quot;: &quot;admin&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;email&quot;: &quot;tom@example.com&quot;,</div><div class="line">            &quot;groups&quot;: [                ],</div><div class="line">            &quot;url&quot;: &quot;http://127.0.0.1:8000/users/2/&quot;,</div><div class="line">            &quot;username&quot;: &quot;tom&quot;</div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>或者使用httpie，命令行工具…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">bash: http -a admin:password123 http://127.0.0.1:8000/users/</div><div class="line"></div><div class="line">HTTP/1.1 200 OK</div><div class="line">...</div><div class="line">&#123;</div><div class="line">    &quot;count&quot;: 2,</div><div class="line">    &quot;next&quot;: null,</div><div class="line">    &quot;previous&quot;: null,</div><div class="line">    &quot;results&quot;: [</div><div class="line">        &#123;</div><div class="line">            &quot;email&quot;: &quot;admin@example.com&quot;,</div><div class="line">            &quot;groups&quot;: [],</div><div class="line">            &quot;url&quot;: &quot;http://localhost:8000/users/1/&quot;,</div><div class="line">            &quot;username&quot;: &quot;paul&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;email&quot;: &quot;tom@example.com&quot;,</div><div class="line">            &quot;groups&quot;: [                ],</div><div class="line">            &quot;url&quot;: &quot;http://127.0.0.1:8000/users/2/&quot;,</div><div class="line">            &quot;username&quot;: &quot;tom&quot;</div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>或者直接使用浏览器访问<code>http://127.0.0.1:8000/users/</code>…<br><img src="http://www.django-rest-framework.org/img/quickstart.png" alt=""></p>
-<p>如果你使用浏览器，首先确保你已经通过右上角登陆。</p>
-<p>好的，就是这么简单！</p>
-<p>如果你想更深入了解，可以浏览<a href="http://www.django-rest-framework.org/#api-guide" target="_blank" rel="external">API guide</a></p>
-<p>原文：<a href="http://www.django-rest-framework.org/tutorial/quickstart/#quickstart" target="_blank" rel="external">http://www.django-rest-framework.org/tutorial/quickstart/#quickstart</a></p>
-
+		<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组<br>
 	
 	</div>
   <a type="button" href="/2018/02/06/Django-RESTful-framework快速入门/#more" class="btn btn-default more">阅读此文</a>
@@ -598,33 +597,6 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/03/24/读薄系列-并查集/" >[读薄系列]并查集</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-03-24  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="什么是并查集"><a href="#什么是并查集" class="headerlink" title="什么是并查集"></a>什么是并查集</h2>
-	
-	</div>
-  <a type="button" href="/2017/03/24/读薄系列-并查集/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -674,45 +646,45 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/翻译/">翻译<span>1</span></a></li>
+			<li><a href="/tags/杂/">杂<span>2</span></a></li>
+		
+			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
+		
+			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
+		
+			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
 		
 			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
 		
-			<li><a href="/tags/review/">review<span>2</span></a></li>
-		
 			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
 		
-			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
+			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
 		
-			<li><a href="/tags/匈牙利算法/">匈牙利算法<span>1</span></a></li>
+			<li><a href="/tags/review/">review<span>2</span></a></li>
 		
-			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
+			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>2</span></a></li>
 		
-			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
-		
-			<li><a href="/tags/杂/">杂<span>2</span></a></li>
-		
-			<li><a href="/tags/DP/">DP<span>7</span></a></li>
-		
-			<li><a href="/tags/Java/">Java<span>4</span></a></li>
+			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
 		
 			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
 		
-			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
+			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
 		
-			<li><a href="/tags/Algorithm/">Algorithm<span>1</span></a></li>
-		
-			<li><a href="/tags/并查集/">并查集<span>1</span></a></li>
-		
-			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
+			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
 		
 			<li><a href="/tags/Django-RESTful-framewo/">Django RESTful framewo<span>1</span></a></li>
 		
-			<li><a href="/tags/ST/">ST<span>1</span></a></li>
+			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
 		
-			<li><a href="/tags/Hibernate/">Hibernate<span>2</span></a></li>
+			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
 		
-			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
+			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
+		
+			<li><a href="/tags/并查集/">并查集<span>1</span></a></li>
+		
+			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
+		
+			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>35</span></a></li>
@@ -728,7 +700,11 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
   <ul class="entry list-unstyled">
     
       <li>
-        <a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" ><i class="fa fa-file-o"></i>Django RESTful framework教程1...</a>
+        <a href="/2018/02/08/Django-REST-framework-教程2：请求和响应/" ><i class="fa fa-file-o"></i>Django REST framework 教程2：请...</a>
+      </li>
+    
+      <li>
+        <a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" ><i class="fa fa-file-o"></i>Django REST framework教程1：序列化</a>
       </li>
     
       <li>
@@ -741,10 +717,6 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     
       <li>
         <a href="/2017/05/21/乐观锁-悲观锁/" ><i class="fa fa-file-o"></i>乐观锁-悲观锁</a>
-      </li>
-    
-      <li>
-        <a href="/2017/05/10/Hibernate-NotNull-NotEmpty-NotBlank区别/" ><i class="fa fa-file-o"></i>Hibernate NotNull NotEmpty ...</a>
       </li>
     
   </ul>

@@ -9,8 +9,7 @@
   <title>Django RESTful framework快速入门 | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="快速入门我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组
-创建项目创建一个新的Django项目tutorial，然后创建一个新的appquickstart。1234567891011121314151617# Create the project directorymkdir t">
+  <meta name="description" content="快速入门我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -136,7 +135,7 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组</p>
+	  <h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组<br><a id="more"></a></p>
 <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>创建一个新的Django项目<code>tutorial</code>，然后创建一个新的app<code>quickstart</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># Create the project directory</div><div class="line">mkdir tutorial</div><div class="line">cd tutorial</div><div class="line"></div><div class="line"># Create a virtualenv to isolate our package dependencies locally</div><div class="line">virtualenv env</div><div class="line">source env/bin/activate  # On Windows use `env\Scripts\activate`</div><div class="line"></div><div class="line"># Install Django and Django REST framework into the virtualenv</div><div class="line">pip install django</div><div class="line">pip install djangorestframework</div><div class="line"></div><div class="line"># Set up a new project with a single application</div><div class="line">django-admin.py startproject tutorial .  # Note the trailing &apos;.&apos; character</div><div class="line">cd tutorial</div><div class="line">django-admin.py startapp quickstart</div><div class="line">cd ..</div></pre></td></tr></table></figure></p>
 <p>项目的结果应该像这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$ pwd</div><div class="line">&lt;some path&gt;/tutorial</div><div class="line">$ find .</div><div class="line">.</div><div class="line">./manage.py</div><div class="line">./tutorial</div><div class="line">./tutorial/__init__.py</div><div class="line">./tutorial/quickstart</div><div class="line">./tutorial/quickstart/__init__.py</div><div class="line">./tutorial/quickstart/admin.py</div><div class="line">./tutorial/quickstart/apps.py</div><div class="line">./tutorial/quickstart/migrations</div><div class="line">./tutorial/quickstart/migrations/__init__.py</div><div class="line">./tutorial/quickstart/models.py</div><div class="line">./tutorial/quickstart/tests.py</div><div class="line">./tutorial/quickstart/views.py</div><div class="line">./tutorial/settings.py</div><div class="line">./tutorial/urls.py</div><div class="line">./tutorial/wsgi.py</div></pre></td></tr></table></figure></p>
 <p>这看起来可能有些不寻常，在项目目录中创建了应用程序。使用项目命名空间避免扩展模块的命名冲突。</p>
@@ -221,7 +220,7 @@ var _hmt = _hmt || [];
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Django/">Django<span>2</span></a></li> <li><a href="/tags/Django-RESTful-framewo/">Django RESTful framewo<span>1</span></a></li>
+  <li><a href="/tags/Django/">Django<span>3</span></a></li> <li><a href="/tags/Django-RESTful-framewo/">Django RESTful framewo<span>1</span></a></li>
     </ul>
 	</div>
 		
