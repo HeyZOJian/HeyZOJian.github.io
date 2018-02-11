@@ -9,10 +9,7 @@
   <title>[CodeVs3278]最小m 段和问题 | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="题目传送门
-题意给定 n 个整数(不一定是正整数)组成的序列，现在要求将序列分割为 m 段，每段子序列中的数在原序列 中连续排列。如何分割才能使这 m 段子序列的和的最大值达到最小？
-分析dp[i][j]维护i结尾，分成j段的最大值
-dp[i][j] = min(dp[i][j], max(dp[k">
+  <meta name="description" content="题目传送门">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -138,7 +135,7 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <p><a href="http://codevs.cn/problem/3278/" target="_blank" rel="external">题目传送门</a></p>
+	  <p><a href="http://codevs.cn/problem/3278/" target="_blank" rel="external">题目传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定 n 个整数(不一定是正整数)组成的序列，现在要求将序列分割为 m 段，每段子序列中的数在原序列 中连续排列。如何分割才能使这 m 段子序列的和的最大值达到最小？</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>dp[i][j]维护i结尾，分成j段的最大值</p>
 <p>dp[i][j] = min(dp[i][j], max(dp[k][j - 1],dp[i][1]-dp[k][1]));</p>

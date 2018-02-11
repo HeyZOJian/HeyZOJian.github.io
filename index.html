@@ -136,6 +136,58 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/" >Django REST framework  教程3：基于类的视图</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2018-02-08  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/"><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fobp94yddvj31480k879i.jpg" alt="Django REST framework  教程3：基于类的视图"  class="nofancybox"></a>
+           
+		</div>
+	
+	
+		<p>我们也可以写类视图，而不是方法视图。我们将看到一个强大的模式，该模式允许我们复用公共功能，并且保持代码的DRY（Don’t repeat yourself）。</p>
+<h2 id="使用基于类的视图重新我们的API"><a href="#使用基于类的视图重新我们的API" class="headerlink" title="使用基于类的视图重新我们的API"></a>使用基于类的视图重新我们的API</h2><p>使用类视图重构<code>views.py</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</div><div class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</div><div class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> Http404</div><div class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</div><div class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> status</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetList</span><span class="params">(APIView)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    List all snippets, or create a new snippet.</div><div class="line">    """</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, format=None)</span>:</span></div><div class="line">        snippets = Snippet.objects.all()</div><div class="line">        serializer = SnippetSerializer(snippets, many=<span class="keyword">True</span>)</div><div class="line">        <span class="keyword">return</span> Response(serializer.data)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, format=None)</span>:</span></div><div class="line">        serializer = SnippetSerializer(data=request.data)</div><div class="line">        <span class="keyword">if</span> serializer.is_valid():</div><div class="line">            serializer.save()</div><div class="line">            <span class="keyword">return</span> Response(serializer.data, status=status.HTTP_201_CREATED)</div><div class="line">        <span class="keyword">return</span> Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)</div></pre></td></tr></table></figure>
+<p>目前看来还不错。感觉跟之前的例子很像，但是我们现在把两种不同的HTTP方法分成两个函数了。我们继续重构单个代码片段的视图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetDetail</span><span class="params">(APIView)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Retrieve, update or delete a snippet instance.</div><div class="line">    """</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_object</span><span class="params">(self, pk)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">return</span> Snippet.objects.get(pk=pk)</div><div class="line">        <span class="keyword">except</span> Snippet.DoesNotExist:</div><div class="line">            <span class="keyword">raise</span> Http404</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, pk, format=None)</span>:</span></div><div class="line">        snippet = self.get_object(pk)</div><div class="line">        serializer = SnippetSerializer(snippet)</div><div class="line">        <span class="keyword">return</span> Response(serializer.data)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, pk, format=None)</span>:</span></div><div class="line">        snippet = self.get_object(pk)</div><div class="line">        serializer = SnippetSerializer(snippet, data=request.data)</div><div class="line">        <span class="keyword">if</span> serializer.is_valid():</div><div class="line">            serializer.save()</div><div class="line">            <span class="keyword">return</span> Response(serializer.data)</div><div class="line">        <span class="keyword">return</span> Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, request, pk, format=None)</span>:</span></div><div class="line">        snippet = self.get_object(pk)</div><div class="line">        snippet.delete()</div><div class="line">        <span class="keyword">return</span> Response(status=status.HTTP_204_NO_CONTENT)</div></pre></td></tr></table></figure>
+<p>看起来跟之前差不多。<br>继续，我们还要重构我们的<code>snippets/urls.py</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</div><div class="line"><span class="keyword">from</span> rest_framework.urlpatterns <span class="keyword">import</span> format_suffix_patterns</div><div class="line"><span class="keyword">from</span> snippets <span class="keyword">import</span> views</div><div class="line"></div><div class="line">urlpatterns = [</div><div class="line">    path(<span class="string">'snippets/'</span>, views.SnippetList.as_view()),</div><div class="line">    path(<span class="string">'snippets/&lt;int:pk&gt;/'</span>, views.SnippetDetail.as_view()),</div><div class="line">]</div><div class="line"></div><div class="line">urlpatterns = format_suffix_patterns(urlpatterns)</div></pre></td></tr></table></figure>
+<p>Okay，完成了。现在启动服务器，一切还是跟原来一样</p>
+<h2 id="使用mixins"><a href="#使用mixins" class="headerlink" title="使用mixins"></a>使用mixins</h2><p>使用类视图最大的好处之一就是我们可以轻松地编写可复用的行为。</p>
+<p>REST framework的mixin类实现了常用的创建/检索/更新/删除操作。</p>
+<p>看一下如何使用mixin类编写视图。这儿还是<code>views.py</code>模块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</div><div class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> mixins</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> generics</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetList</span><span class="params">(mixins.ListModelMixin,</span></span></div><div class="line">                  mixins.CreateModelMixin,</div><div class="line">                  generics.GenericAPIView):</div><div class="line">    queryset = Snippet.objects.all()</div><div class="line">    serializer_class = SnippetSerializer</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.list(request, *args, **kwargs)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.create(request, *args, **kwargs)</div></pre></td></tr></table></figure>
+<p>我们的视图继承了<code>GenericAPIView</code>和<code>ListModelMixin</code>，<code>CreateModelMixin</code>。</p>
+<p>这些基类提供了核心的功能，mixin类还提供了<code>.list（）</code>和<code>.create（）</code>行为。我们将<code>get</code>和<code>post</code>方法绑定合适的行文上。多么简单！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetDetail</span><span class="params">(mixins.RetrieveModelMixin,</span></span></div><div class="line">                    mixins.UpdateModelMixin,</div><div class="line">                    mixins.DestroyModelMixin,</div><div class="line">                    generics.GenericAPIView):</div><div class="line">    queryset = Snippet.objects.all()</div><div class="line">    serializer_class = SnippetSerializer</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.retrieve(request, *args, **kwargs)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.update(request, *args, **kwargs)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.destroy(request, *args, **kwargs)</div></pre></td></tr></table></figure>
+<p>我们再次使用<code>GenericAPIView</code>类来提供一些核心功能，并且添加mixins来提供<code>.retrieve（）</code>，<code>.update（）</code>和<code>。destroy（）</code>行为。</p>
+<h2 id="使用通用的基于类的视图"><a href="#使用通用的基于类的视图" class="headerlink" title="使用通用的基于类的视图"></a>使用通用的基于类的视图</h2><p>使用mixin类可以使我们的视图代码更简洁，但我们可以更进一步，REST framework提供了一系列混合过的通用类，使得我们的<code>views.py</code>模块更加简洁！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</div><div class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> generics</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetList</span><span class="params">(generics.ListCreateAPIView)</span>:</span></div><div class="line">    queryset = Snippet.objects.all()</div><div class="line">    serializer_class = SnippetSerializer</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetDetail</span><span class="params">(generics.RetrieveUpdateDestroyAPIView)</span>:</span></div><div class="line">    queryset = Snippet.objects.all()</div><div class="line">    serializer_class = SnippetSerializer</div></pre></td></tr></table></figure>
+<p>天啊！太简洁了！我们根本不用做什么！</p>
+<p>接下来我们移步<a href="">教程4</a>，下一节将介绍如何处理API认证和权限的问题。</p>
+
+	
+	</div>
+  <a type="button" href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2018/02/08/Django-REST-framework-教程2：请求和响应/" >Django REST framework 教程2：请求和响应</a>
 		</h3>
 		</div>
@@ -148,6 +200,11 @@ var _hmt = _hmt || [];
 
 			<div class="entry">
   <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2018/02/08/Django-REST-framework-教程2：请求和响应/"><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fobp94yddvj31480k879i.jpg" alt="Django REST framework 教程2：请求和响应"  class="nofancybox"></a>
+           
+		</div>
 	
 	
 		<p>这一篇我们开始讲解RESTframework框架的核心内容。让我们介绍一些基本的构建模块。<br>
@@ -163,7 +220,7 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" >Django REST framework教程1：序列化</a>
+			<a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" >Django REST framework 教程1：序列化</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
@@ -175,6 +232,11 @@ var _hmt = _hmt || [];
 
 			<div class="entry">
   <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2018/02/07/Django-RESTful-framework教程1：序列化/"><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fobp94yddvj31480k879i.jpg" alt="Django REST framework 教程1：序列化"  class="nofancybox"></a>
+           
+		</div>
 	
 	
 		<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这个教程将创建一套简单的代码高亮的pastebin的Web API。一路上我们会介绍许多构建<code>REST frmaework</code>的组件，并且让你有一个全面的认识，这些组件是如何组建在一起的。<br>
@@ -190,7 +252,7 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2018/02/06/Django-RESTful-framework快速入门/" >Django RESTful framework快速入门</a>
+			<a href="/2018/02/06/Django-RESTful-framework快速入门/" >Django REST framework 快速入门</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
@@ -202,6 +264,11 @@ var _hmt = _hmt || [];
 
 			<div class="entry">
   <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2018/02/06/Django-RESTful-framework快速入门/"><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fobp94yddvj31480k879i.jpg" alt="Django REST framework 快速入门"  class="nofancybox"></a>
+           
+		</div>
 	
 	
 		<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组<br>
@@ -231,7 +298,79 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="一-数据库设计过程"><a href="#一-数据库设计过程" class="headerlink" title="一.数据库设计过程"></a>一.数据库设计过程</h2>
+		<a id="more"></a>
+<h2 id="一-数据库设计过程"><a href="#一-数据库设计过程" class="headerlink" title="一.数据库设计过程"></a>一.数据库设计过程</h2><ol>
+<li>需求分析</li>
+<li>概念设计</li>
+<li>逻辑设计</li>
+<li>模式求精</li>
+<li>物理设计</li>
+<li>应用与安全设计</li>
+</ol>
+<h2 id="二-E-R模型基本概念-实体集-联系集-属性"><a href="#二-E-R模型基本概念-实体集-联系集-属性" class="headerlink" title="二.E-R模型基本概念(实体集,联系集,属性)"></a>二.E-R模型基本概念(实体集,联系集,属性)</h2><h3 id="1-实体与实体集"><a href="#1-实体与实体集" class="headerlink" title="1. 实体与实体集"></a>1. 实体与实体集</h3><h3 id="2-属性及其分类"><a href="#2-属性及其分类" class="headerlink" title="2. 属性及其分类"></a>2. 属性及其分类</h3><ol>
+<li><strong>简单属性,复合属性</strong></li>
+<li><strong>单值属性,多值属性</strong></li>
+<li><strong>派生属性</strong></li>
+</ol>
+<h3 id="3-联系与联系集"><a href="#3-联系与联系集" class="headerlink" title="3. 联系与联系集"></a>3. 联系与联系集</h3><ol>
+<li><strong>多联系</strong>:各实体之间可以有多种不同的联系.</li>
+<li><strong>实体的角色</strong>:当同一个实体集在一个联系集中参与的次数大于一次,且每次以不同的角色参与时,要用显示的角色名定义一个实体参与联系的方式.</li>
+<li><strong>联系集的度</strong>:联系集的实体集的数目.</li>
+</ol>
+<h2 id="三-约束"><a href="#三-约束" class="headerlink" title="三.约束"></a>三.约束</h2><h3 id="1-映射约束"><a href="#1-映射约束" class="headerlink" title="1. 映射约束"></a>1. 映射约束</h3><ol>
+<li>一对一</li>
+<li>一对多</li>
+<li>多对一</li>
+<li>多对多</li>
+</ol>
+<h3 id="2-码约束"><a href="#2-码约束" class="headerlink" title="2. 码约束"></a>2. 码约束</h3><h4 id="①实体集的码"><a href="#①实体集的码" class="headerlink" title="①实体集的码"></a>①实体集的码</h4><ol>
+<li><strong>超码</strong>:唯一标识一个实体的一个或多个属性的集合.</li>
+<li><strong>候选码</strong>:一个超码的任意真子集都不能成为超码,这样最小的超码成为候选码.</li>
+<li><strong>主码</strong>:从多个候选码中选择一个作为实体集的主码.</li>
+</ol>
+<h4 id="②主码选择原则"><a href="#②主码选择原则" class="headerlink" title="②主码选择原则"></a>②主码选择原则</h4><ol>
+<li>选择属性长度最短的候选码</li>
+<li>尽量选择包含单个属性的码,而不是复合候选码</li>
+<li>选择在数据库系统生命周期内属性值最少变化的候选码</li>
+<li>选择在数据库系统生命周期内更可能包含唯一值的候选码</li>
+</ol>
+<h4 id="③联系集的码"><a href="#③联系集的码" class="headerlink" title="③联系集的码"></a>③联系集的码</h4><blockquote>
+<p>每一个联系集必须存在候选码并选择其中的一个候选码作为主码</p>
+</blockquote>
+<p><strong>一对一联系集</strong>:主码可以使用任何一方实体集的主码<br><strong>一对多(多对一)联系集</strong>:主码由”多”的一方实体集的主码组成<br><strong>多对多联系集</strong>:主码由参与联系集中所有实体集的主码组成</p>
+<h4 id="④联系集的属性安置"><a href="#④联系集的属性安置" class="headerlink" title="④联系集的属性安置"></a>④联系集的属性安置</h4><p><strong>一对一联系集的属性</strong>:可安置在任一边的实体集上<br><strong>一对多联系集的属性</strong>:可安置于联系集上,也可安置在多的那一边的实体集上<br><strong>多对多联系集的属性</strong>:只能安置在联系集上,不能放到相关联的实体集上</p>
+<h3 id="3-依赖约束"><a href="#3-依赖约束" class="headerlink" title="3. 依赖约束"></a>3. 依赖约束</h3><p><strong>依赖实体集</strong>:联系中的一种实体的存在依赖于该联系集中联系的存在<br>    如:<strong>销货单</strong>实体集与<strong>商品销售</strong>联系集<br><strong>弱实体集</strong>:联系中的一种实体的存在依赖于其他实体集中实体的存在<br>    如:<strong>开课班</strong>实体集与<strong>课程</strong>实体集</p>
+<h3 id="4-参与约束"><a href="#4-参与约束" class="headerlink" title="4. 参与约束"></a>4. 参与约束</h3><p>实体集与联系集:</p>
+<ol>
+<li>全部参与</li>
+<li>部分参与</li>
+</ol>
+<h3 id="5-多值联系"><a href="#5-多值联系" class="headerlink" title="5. 多值联系"></a>5. 多值联系</h3><p>同一个给定的联系集中,相关联的相同实体之间可能存在多个联系,如<strong>客户</strong>与<strong>银行</strong>之间<strong>多对多</strong>贷款联系集,及同时一个<strong>银行</strong>可以向多个<strong>客户</strong>发放贷款的<strong>一对多</strong>联系集.</p>
+<hr>
+<h2 id="四-弱实体集"><a href="#四-弱实体集" class="headerlink" title="四.弱实体集"></a>四.弱实体集</h2><p>某些实体集的属性不足以形成主码,他们必须依赖于其他实体集的存在而存在.</p>
+<p><strong>部分码</strong>:用来标识弱实体的属性<br>弱实体集中的实体是由标识实体集中的<strong>主码</strong>与其<strong>部分码</strong>共同标识.</p>
+<h2 id="五-扩展E-R特征"><a href="#五-扩展E-R特征" class="headerlink" title="五.扩展E-R特征"></a>五.扩展E-R特征</h2><p><strong>1. 类的层次</strong><br>E-R模型使用实体集的继承和ISA联系来描述这种概念上的继承.<br>ISA关系可以从两个方向进行设计:<br>①自上而下,先设计父类实体集,再将父类具体化为其他子类<br>②自下而上,先具体化子类实体集,再将子类中的共同属性提取出来,泛化为父类</p>
+<p><strong>2. 聚合</strong><br>聚合是一种抽象,它将一个联系集及其相关联的实体集抽象为一个<strong>联系实体集</strong>对待,然后建立该联系实体集与其他实体集之间的联系集.</p>
+<h2 id="六-E-R建模问题"><a href="#六-E-R建模问题" class="headerlink" title="六.E-R建模问题"></a>六.E-R建模问题</h2><h3 id="E-R建模的基本原则"><a href="#E-R建模的基本原则" class="headerlink" title="E-R建模的基本原则"></a>E-R建模的基本原则</h3><p><strong>1.忠实性</strong>: 设计应忠实于应用需求<br><strong>2.简单性</strong>: 除非有绝对需要,否则不要在设计中增加更多成分<br><strong>3.避免冗余</strong>: 一个对象只存放在一个地方<br><strong>4.选择实体集还是属性</strong>:<br>①不可再分<br>②不能和其他实体相联系<br>满足上述两条规则均可作为属性对待<br><strong>5.选择实体集还是联系集</strong>:<br>实体集一般对应现实生活中实际存在的事物<br>联系集一般对应一种动作<br><strong>6.多元联系转化为二元联系</strong>:</p>
+<h3 id="依赖约束的建模"><a href="#依赖约束的建模" class="headerlink" title="依赖约束的建模"></a>依赖约束的建模</h3><h3 id="多值联系的建模"><a href="#多值联系的建模" class="headerlink" title="多值联系的建模"></a>多值联系的建模</h3><ol>
+<li>将多值联系建模为弱实体集</li>
+<li>将多值联系建模为依赖实体集</li>
+</ol>
+<h2 id="E-R模型的表示"><a href="#E-R模型的表示" class="headerlink" title="E-R模型的表示"></a>E-R模型的表示</h2><ol>
+<li>实体集:矩形</li>
+<li>弱实体集:双矩形</li>
+<li>属性:椭圆</li>
+<li>多值属性:双椭圆</li>
+<li>派生属性:虚线椭圆</li>
+<li>联系(集):菱形</li>
+<li>标识联系集:双菱形</li>
+<li>属性与实体之间用连线表示</li>
+<li>加下划线的属性为实体集的主码</li>
+<li>虚下划线表示弱实体的部分码</li>
+<li>“→”指向参与联系集中”一”方实体集,”-“指向参与联系集”多”方实体集</li>
+<li>联系实体集:带菱形的矩形</li>
+</ol>
+
 	
 	</div>
   <a type="button" href="/2018/01/07/数据库建模/#more" class="btn btn-default more">阅读此文</a>
@@ -256,6 +395,11 @@ var _hmt = _hmt || [];
 
 			<div class="entry">
   <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2017/05/21/乐观锁-悲观锁/"><img src="http://okc9ihakz.bkt.clouddn.com/jason-blackeye-198848.jpg?slimimage" alt="乐观锁-悲观锁"  class="nofancybox"></a>
+           
+		</div>
 	
 	
 		<a id="more"></a>
@@ -302,7 +446,8 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="NotNull"><a href="#NotNull" class="headerlink" title="@NotNull"></a>@NotNull</h2><p>不允许为null，但可以是empty</p>
+		<a id="more"></a>
+<h2 id="NotNull"><a href="#NotNull" class="headerlink" title="@NotNull"></a>@NotNull</h2><p>不允许为null，但可以是empty</p>
 <h2 id="NotEmpty"><a href="#NotEmpty" class="headerlink" title="@NotEmpty"></a>@NotEmpty</h2><p>不允许为null且长度要大于0</p>
 <h2 id="NotBlank"><a href="#NotBlank" class="headerlink" title="@NotBlank"></a>@NotBlank</h2><p>只能作用在String上，不能为null，而且调用trim()后，长度必须大于0</p>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">String name = <span class="keyword">null</span>;</div><div class="line">NotNull = <span class="keyword">false</span></div><div class="line">NotEmpty = <span class="keyword">false</span></div><div class="line">NotBlank = <span class="keyword">false</span></div><div class="line"></div><div class="line">String nam = <span class="string">""</span>;</div><div class="line">NotNull = <span class="keyword">true</span></div><div class="line">NotEmpty = <span class="keyword">false</span></div><div class="line">NotBlank = <span class="keyword">false</span></div><div class="line"></div><div class="line">String name = <span class="string">"  "</span>;</div><div class="line">NotNull = <span class="keyword">true</span></div><div class="line">NotEmpty = <span class="keyword">true</span></div><div class="line">NotBlank = <span class="keyword">false</span></div><div class="line"></div><div class="line">String name = <span class="string">"zojian"</span></div><div class="line">NotNull = <span class="keyword">true</span></div><div class="line">NotEmpty = <span class="keyword">true</span></div><div class="line">NotBlank = <span class="keyword">true</span></div></pre></td></tr></table></figure>
@@ -333,7 +478,8 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="PropertySource注解"><a href="#PropertySource注解" class="headerlink" title="@PropertySource注解"></a>@PropertySource注解</h2><p>将properties配置文件中的值存储到Spring的 Environment中，Environment接口提供方法去读取配置文件中的值，参数是properties文件中定义的key值</p>
+		<a id="more"></a>
+<h2 id="PropertySource注解"><a href="#PropertySource注解" class="headerlink" title="@PropertySource注解"></a>@PropertySource注解</h2><p>将properties配置文件中的值存储到Spring的 Environment中，Environment接口提供方法去读取配置文件中的值，参数是properties文件中定义的key值</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@PropertySource</span>(<span class="string">"classpath:message.properties"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</div><div class="line">	<span class="comment">//something</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="多个配置文件-PropertySources注解"><a href="#多个配置文件-PropertySources注解" class="headerlink" title="多个配置文件@PropertySources注解"></a>多个配置文件@PropertySources注解</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@PropertySources</span>(&#123;</div><div class="line">	<span class="meta">@PropertySource</span>(<span class="string">"classpath:config.properties"</span>),</div><div class="line">	<span class="meta">@PropertySource</span>(<span class="string">"classpath:db.properties"</span>)</div><div class="line">&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</div><div class="line">	<span class="comment">//something</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="ignoreResourceNotFound属性"><a href="#ignoreResourceNotFound属性" class="headerlink" title="ignoreResourceNotFound属性"></a>ignoreResourceNotFound属性</h2><p>如果<em>*</em>.properties不存在或找不到,系统则会抛出异常FileNotFoundException。<br>但是ignoreResourceNotFound设为true之后会忽略找不到的文件</p>
@@ -370,7 +516,8 @@ var _hmt = _hmt || [];
 		</div>
 	
 	
-		<h1 id="1-并发编程的挑战"><a href="#1-并发编程的挑战" class="headerlink" title="1.并发编程的挑战"></a>1.并发编程的挑战</h1><h2 id="什么是上下文切换"><a href="#什么是上下文切换" class="headerlink" title="什么是上下文切换"></a>什么是上下文切换</h2><p>CPU通过时间片分配算法循环执行任务[线程]，当任务执行完一个时间片后会切换到下一个任务，在切换前会保存上一个任务的状态，以便下次切换回来时可以再加载这个任务的状态。所以任务从<strong>保存</strong>到<strong>加载</strong>的过程就是一次上下文切换。</p>
+		<a id="more"></a>
+<h1 id="1-并发编程的挑战"><a href="#1-并发编程的挑战" class="headerlink" title="1.并发编程的挑战"></a>1.并发编程的挑战</h1><h2 id="什么是上下文切换"><a href="#什么是上下文切换" class="headerlink" title="什么是上下文切换"></a>什么是上下文切换</h2><p>CPU通过时间片分配算法循环执行任务[线程]，当任务执行完一个时间片后会切换到下一个任务，在切换前会保存上一个任务的状态，以便下次切换回来时可以再加载这个任务的状态。所以任务从<strong>保存</strong>到<strong>加载</strong>的过程就是一次上下文切换。</p>
 <h2 id="如何减少上下文切换"><a href="#如何减少上下文切换" class="headerlink" title="如何减少上下文切换"></a>如何减少上下文切换</h2><ol>
 <li>无锁并发编程：如数据取模分段，不同线程处理不同数据</li>
 <li>CAS算法：Atomic包使用CAS算法来更新数据， 而不需要加锁</li>
@@ -461,7 +608,8 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h2><blockquote>
+		<a id="more"></a>
+<h2 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h2><blockquote>
 <p>缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高了应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。</p>
 </blockquote>
 <h2 id="一级缓存（会话级）"><a href="#一级缓存（会话级）" class="headerlink" title="一级缓存（会话级）"></a>一级缓存（会话级）</h2><ol>
@@ -558,45 +706,6 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/03/30/可能会发生重定向的情况/" >可能会发生重定向的情况</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-03-30  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<a id="more"></a>
-<h2 id="一-永久搬离的资源"><a href="#一-永久搬离的资源" class="headerlink" title="一. 永久搬离的资源"></a>一. 永久搬离的资源</h2><p>访问的资源被<strong>（永久性）移动新的位置</strong>或者被<strong>（永久性）重命名</strong>，从而形成新的URL。Web服务器返回重定向响应告诉客户从新的地址获取资源，并且在访问新地址之前更新书签之类的信息。</p>
-<h2 id="二-临时搬离的资源"><a href="#二-临时搬离的资源" class="headerlink" title="二. 临时搬离的资源"></a>二. 临时搬离的资源</h2><p>访问的资源被<strong>临时移走</strong>或<strong>临时重命名</strong>，服务器希望客户端重定向到新的位置上去，但由于资源的改变是临时的，所以服务器希望客户端将来还是可以回头去使用老的URL。不要对书签进行更新</p>
-<h2 id="三-URL增强"><a href="#三-URL增强" class="headerlink" title="三. URL增强"></a>三. URL增强</h2><p>通过重定向来重写URL，往往用于嵌入上下文。[经过扩展和状态增强的URL称为“胖URL”]<br>客户端会跟随这个重定向信息，重新发起请求，但这次的请求会包含完整的、经过状态增强的URL，这是在事务间维护状态的一种有效的方法。</p>
-<h2 id="四-负载均衡"><a href="#四-负载均衡" class="headerlink" title="四. 负载均衡"></a>四. 负载均衡</h2><p>如果一个超载的服务器收到一条请求，服务器可以将客户端的请求重定向到一个负载不太重的服务器上去。</p>
-<h2 id="五-规范目录名称"><a href="#五-规范目录名称" class="headerlink" title="五. 规范目录名称"></a>五. 规范目录名称</h2><p>客户端请求的URI是一个不带尾部斜线的目录吗时，大多数Web服务器会将客户端重定向到一个加了斜线的URI上，这样相对链接就可以正常工作了。</p>
-<h2 id="补充：状态码302，303，307的区别"><a href="#补充：状态码302，303，307的区别" class="headerlink" title="补充：状态码302，303，307的区别"></a>补充：状态码302，303，307的区别</h2><ul>
-<li>302是HTTP/1.0的标准，303，307则是HTTP/1.1标准中对302的细化</li>
-<li>302：如果客户端发出POST请求后，收到服务端的302状态码，那么不能自动的向新的URI发送重复请求，必须跟用户确认是否该重发，因为第二次POST时，环境可能已经发生变化（POST方法不是幂等的），POST操作会不符合用户预期</li>
-<li>303：对于POST请求，它表示请求已经被处理，客户端可以接着使用GET方法去请求Location里的URI</li>
-<li>307：对于POST请求，表示请求还没有被处理，客户端应该向Location里的URI重新发起POST请求</li>
-</ul>
-
-	
-	</div>
-  <a type="button" href="/2017/03/30/可能会发生重定向的情况/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -646,48 +755,48 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/杂/">杂<span>2</span></a></li>
-		
-			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
-		
-			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
-		
-			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
-		
-			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
-		
-			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
-		
-			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
-		
-			<li><a href="/tags/review/">review<span>2</span></a></li>
-		
-			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>2</span></a></li>
-		
-			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
-		
-			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
-		
-			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
-		
 			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
 		
-			<li><a href="/tags/Django-RESTful-framewo/">Django RESTful framewo<span>1</span></a></li>
-		
-			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
-		
-			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
-		
-			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
-		
-			<li><a href="/tags/并查集/">并查集<span>1</span></a></li>
+			<li><a href="/tags/排序/">排序<span>1</span></a></li>
 		
 			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
 		
+			<li><a href="/tags/Hibernate/">Hibernate<span>2</span></a></li>
+		
+			<li><a href="/tags/Java/">Java<span>4</span></a></li>
+		
+			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
+		
+			<li><a href="/tags/翻译/">翻译<span>4</span></a></li>
+		
+			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
+		
 			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
 		
+			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
 		
-		   <li><a href="/tags">...<span>35</span></a></li>
+			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
+		
+			<li><a href="/tags/杂/">杂<span>2</span></a></li>
+		
+			<li><a href="/tags/ST/">ST<span>1</span></a></li>
+		
+			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>4</span></a></li>
+		
+			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
+		
+			<li><a href="/tags/匈牙利算法/">匈牙利算法<span>1</span></a></li>
+		
+			<li><a href="/tags/Django-RESTful-framewo/">Django RESTful framewo<span>0</span></a></li>
+		
+			<li><a href="/tags/Django-RESTful-framework/">Django RESTful framework<span>0</span></a></li>
+		
+			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
+		
+			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
+		
+		
+		   <li><a href="/tags">...<span>36</span></a></li>
 		 
 		</ul>
 	</div>
@@ -700,23 +809,23 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/" ><i class="fa fa-file-o"></i>Django REST framework  教程3：...</a>
+      </li>
+    
+      <li>
         <a href="/2018/02/08/Django-REST-framework-教程2：请求和响应/" ><i class="fa fa-file-o"></i>Django REST framework 教程2：请...</a>
       </li>
     
       <li>
-        <a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" ><i class="fa fa-file-o"></i>Django REST framework教程1：序列化</a>
+        <a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" ><i class="fa fa-file-o"></i>Django REST framework 教程1：序列化</a>
       </li>
     
       <li>
-        <a href="/2018/02/06/Django-RESTful-framework快速入门/" ><i class="fa fa-file-o"></i>Django RESTful framework快速入门</a>
+        <a href="/2018/02/06/Django-RESTful-framework快速入门/" ><i class="fa fa-file-o"></i>Django REST framework 快速入门</a>
       </li>
     
       <li>
         <a href="/2018/01/07/数据库建模/" ><i class="fa fa-file-o"></i>数据库建模</a>
-      </li>
-    
-      <li>
-        <a href="/2017/05/21/乐观锁-悲观锁/" ><i class="fa fa-file-o"></i>乐观锁-悲观锁</a>
       </li>
     
   </ul>

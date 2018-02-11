@@ -138,7 +138,8 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个数组A，生成一个数组B，<code>B[i] = A[0] x A[1] x..x A[i-1] x A[i+1] x..x A[n]</code><br>时间复杂度O(N)，不能使用除法</p>
+	  <a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个数组A，生成一个数组B，<code>B[i] = A[0] x A[1] x..x A[i-1] x A[i+1] x..x A[n]</code><br>时间复杂度O(N)，不能使用除法</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>仔细看一下，其实每次计算B[i]就是前面i-1个元素相乘，乘上后面i+1个元素相乘。<br>所以只要预处理前缀积和后缀积即可。</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><ol>
 <li><p>版本1  O(N)，S(N)</p>
@@ -205,7 +206,7 @@ var _hmt = _hmt || [];
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li> <li><a href="/tags/Java/">Java<span>4</span></a></li>
+  <li><a href="/tags/Java/">Java<span>4</span></a></li> <li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
     </ul>
 	</div>
 		

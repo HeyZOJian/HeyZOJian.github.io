@@ -9,9 +9,7 @@
   <title>[Codeforces740C]Alyona and mex | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="传送门
-题意给定长度为n的数组，m个区间，要求构造一个数组（元素大于等于0），求出mex的最小值。mex：区间里没有出现的最小元素（大于等于0）并使mex尽量大
-思路一个重要的特点： 一个数组的mex取决于给定区间的长度，数组中最小的mex等于给定区间的最短长度。证明：要尽量使mex尽量大，最短区间">
+  <meta name="description" content="传送门">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -137,7 +135,7 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <p><a href="http://codeforces.com/contest/740/problem/C" target="_blank" rel="external">传送门</a></p>
+	  <p><a href="http://codeforces.com/contest/740/problem/C" target="_blank" rel="external">传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定长度为n的数组，m个区间，要求构造一个数组（元素大于等于0），求出mex的最小值。<br>mex：区间里没有出现的最小元素（大于等于0）<br>并使mex尽量大</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p><strong>一个重要的特点</strong>： 一个数组的mex取决于给定区间的长度，数组中最小的mex等于给定区间的最短长度。<br><strong>证明</strong>：要尽量使mex尽量大，最短区间的数字只能从0开始递增，这时mex的值就为区间的长度</p>
 <p>因此原数组只要照[0,1,…,mex-1]的规则从左至右构造下去即可，这样就使得给定的每组区间的mex相等且mex尽量大</p>

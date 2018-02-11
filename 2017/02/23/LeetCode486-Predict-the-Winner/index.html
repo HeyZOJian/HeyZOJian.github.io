@@ -9,9 +9,7 @@
   <title>LeetCode486. Predict the Winner | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="题目传送门
-题意两个人交替从一个数组两端获取一个数字，每次每个人只能获取一个，最终获取的数字之和最大的获胜，问第一个人能否获胜？
-分析最优子结构：dp[i][j]维护从i到j获取的所有数字之和的最大值，则dp[i+1][j]表示第二个人能够在i-1到j之间获取的所有数字之和的最大值，dp[i][j-">
+  <meta name="description" content="题目传送门">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -137,7 +135,7 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <p><a href="https://leetcode.com/problems/predict-the-winner/?tab=Description" target="_blank" rel="external">题目传送门</a></p>
+	  <p><a href="https://leetcode.com/problems/predict-the-winner/?tab=Description" target="_blank" rel="external">题目传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>两个人交替从一个数组两端获取一个数字，每次每个人只能获取一个，最终获取的数字之和最大的获胜，问第一个人能否获胜？</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p><strong>最优子结构</strong>：<code>dp[i][j]</code>维护从i到j获取的所有数字之和的最大值，则dp[i+1][j]表示第二个人能够在i-1到j之间获取的所有数字之和的最大值，dp[i][j-1]表示第二个人能够在i到j-1之间获取的所有数字之和的最大值。</p>
 <p><code>sum[i][j]</code>维护 i 到 j 所有数字之和，因为两个人都想赢，即每个人都取最优解，所以sum[i+1][j] - dp[i+1][j]表示第一个人取第i个元素以后，能够在 i+1 到 j 之间获取子数组之和的最大值，sum[i][j-1] - dp[i][j-1]标识第一个人取第j个元素以后，能够在 i 到 j-1 之间获取子数组之和的最大值。</p>

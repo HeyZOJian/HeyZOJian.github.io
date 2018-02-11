@@ -136,6 +136,50 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2017/03/30/可能会发生重定向的情况/" >可能会发生重定向的情况</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-03-30  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2017/03/30/可能会发生重定向的情况/"><img src="http://okc9ihakz.bkt.clouddn.com/2b5bcli7wn0-sweet-ice-cream-photography.jpg?slimimage" alt="可能会发生重定向的情况"  class="nofancybox"></a>
+           
+		</div>
+	
+	
+		<a id="more"></a>
+<h2 id="一-永久搬离的资源"><a href="#一-永久搬离的资源" class="headerlink" title="一. 永久搬离的资源"></a>一. 永久搬离的资源</h2><p>访问的资源被<strong>（永久性）移动新的位置</strong>或者被<strong>（永久性）重命名</strong>，从而形成新的URL。Web服务器返回重定向响应告诉客户从新的地址获取资源，并且在访问新地址之前更新书签之类的信息。</p>
+<h2 id="二-临时搬离的资源"><a href="#二-临时搬离的资源" class="headerlink" title="二. 临时搬离的资源"></a>二. 临时搬离的资源</h2><p>访问的资源被<strong>临时移走</strong>或<strong>临时重命名</strong>，服务器希望客户端重定向到新的位置上去，但由于资源的改变是临时的，所以服务器希望客户端将来还是可以回头去使用老的URL。不要对书签进行更新</p>
+<h2 id="三-URL增强"><a href="#三-URL增强" class="headerlink" title="三. URL增强"></a>三. URL增强</h2><p>通过重定向来重写URL，往往用于嵌入上下文。[经过扩展和状态增强的URL称为“胖URL”]<br>客户端会跟随这个重定向信息，重新发起请求，但这次的请求会包含完整的、经过状态增强的URL，这是在事务间维护状态的一种有效的方法。</p>
+<h2 id="四-负载均衡"><a href="#四-负载均衡" class="headerlink" title="四. 负载均衡"></a>四. 负载均衡</h2><p>如果一个超载的服务器收到一条请求，服务器可以将客户端的请求重定向到一个负载不太重的服务器上去。</p>
+<h2 id="五-规范目录名称"><a href="#五-规范目录名称" class="headerlink" title="五. 规范目录名称"></a>五. 规范目录名称</h2><p>客户端请求的URI是一个不带尾部斜线的目录吗时，大多数Web服务器会将客户端重定向到一个加了斜线的URI上，这样相对链接就可以正常工作了。</p>
+<h2 id="补充：状态码302，303，307的区别"><a href="#补充：状态码302，303，307的区别" class="headerlink" title="补充：状态码302，303，307的区别"></a>补充：状态码302，303，307的区别</h2><ul>
+<li>302是HTTP/1.0的标准，303，307则是HTTP/1.1标准中对302的细化</li>
+<li>302：如果客户端发出POST请求后，收到服务端的302状态码，那么不能自动的向新的URI发送重复请求，必须跟用户确认是否该重发，因为第二次POST时，环境可能已经发生变化（POST方法不是幂等的），POST操作会不符合用户预期</li>
+<li>303：对于POST请求，它表示请求已经被处理，客户端可以接着使用GET方法去请求Location里的URI</li>
+<li>307：对于POST请求，表示请求还没有被处理，客户端应该向Location里的URI重新发起POST请求</li>
+</ul>
+
+	
+	</div>
+  <a type="button" href="/2017/03/30/可能会发生重定向的情况/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2017/03/24/读薄系列-并查集/" >[读薄系列]并查集</a>
 		</h3>
 		</div>
@@ -148,6 +192,11 @@ var _hmt = _hmt || [];
 
 			<div class="entry">
   <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2017/03/24/读薄系列-并查集/"><img src="http://okc9ihakz.bkt.clouddn.com/44be171b4017b59271b81ace81613cc4.jpg?slimimage" alt="[读薄系列]并查集"  class="nofancybox"></a>
+           
+		</div>
 	
 	
 		<h2 id="什么是并查集"><a href="#什么是并查集" class="headerlink" title="什么是并查集"></a>什么是并查集</h2>
@@ -177,7 +226,8 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="什么是ST算法"><a href="#什么是ST算法" class="headerlink" title="什么是ST算法"></a>什么是ST算法</h2><p>ST（Sparse Table，稀疏表）是解决RMQ问题的经典在线算法<br>O(NlogN)预处理<br>O(1)查询<br>本质就是动态规划算法</p>
+		<a id="more"></a>
+<h2 id="什么是ST算法"><a href="#什么是ST算法" class="headerlink" title="什么是ST算法"></a>什么是ST算法</h2><p>ST（Sparse Table，稀疏表）是解决RMQ问题的经典在线算法<br>O(NlogN)预处理<br>O(1)查询<br>本质就是动态规划算法</p>
 <h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><p>维护二维数组ST[n][n]，ST[i][j]表示i开始，长度为2<sup>j</sup>的子数组中的最值<br>在求ST[i][j]的最值时，将这段子数组切成两半，每段长度为2<sup>j-1</sup>，于是前面一段的最值为ST[i][j-1]，后面一段的最值为ST[i+2<sup>j-1</sup>][j-1]，即状态转移方程为<br><strong>ST[i][j] = max(ST[i][j-1], ST[i+2<sup>j-1</sup>][j-1])</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">initST</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</div><div class="line">        ST[i][<span class="number">0</span>] = num[i];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; (<span class="number">1</span>&lt;&lt;j) &lt;= n; j++)&#123;<span class="comment">//枚举长度</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i + (<span class="number">1</span>&lt;&lt;j) - <span class="number">1</span> &lt; n;i++)&#123;<span class="comment">//枚举起点</span></div><div class="line">            ST[i][j] = max(ST[i][j<span class="number">-1</span>], ST[i+(<span class="number">1</span>&lt;&lt;(j<span class="number">-1</span>))][j<span class="number">-1</span>]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>由于每次查询的区间长度不一定是偶数，即不能直接用ST[i][j]表示，所以还需进一步处理。<br>对于查询区间[a，b]，我们将其分为两段长度相等（2<sup>k</sup>）的偶数区间,他们可能相交，但不影响最值的求解，即<br>(b-a)/2 ≤ 2<sup>k</sup> ≤ b-a+1<br>所以k的最小值为<strong>log<sub>2</sub>(b-a)</strong><br>即<br><strong>query(a, b) = max(ST[a][k], ST[b - (2<sup>k</sup> + 1)][k])</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> k = (<span class="keyword">int</span>)(<span class="built_in">log</span>(b-a+<span class="number">1.0</span>)/<span class="built_in">log</span>(<span class="number">2.0</span>));</div><div class="line">    <span class="keyword">return</span> max(ST[u][k],ST[b-(<span class="number">1</span>&lt;&lt;k)+<span class="number">1</span>][k]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -215,24 +265,7 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<p><a href="www.codeforces.com/contest/777/problem/A">题目传送门</a></p>
-<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>游戏规则：三个杯子一个球，知道杯子交换的次数和最后球所在的位置，问初始球在哪一个杯子中。<br>杯子交换的规制：</p>
-<ol>
-<li>左边杯子和中间的杯子交换（第奇数次交换）</li>
-<li>右边杯子和中间的杯子交换（第偶数次交换）</li>
-</ol>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>由于杯子数目是固定的，且交换有规则，可以先尝试下前几次交换的情况<br>初始 0 1 2</p>
-<ol>
-<li>第一次交换 1 0 2</li>
-<li>第二次交换 1 2 0</li>
-<li>第三次交换 2 1 0</li>
-<li>第四次交换 2 0 1</li>
-<li>第五次交换 0 2 1</li>
-<li>第六次交换 0 1 2</li>
-</ol>
-<p>发现6次交换后杯子又恢复到初始的位置<br>所以可以将这6种情况的位置情况存到一个二维数组ans[][]，根据交换次数n和最终位置x可得出初始位置是ans[n%6][x]</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> ans[<span class="number">7</span>][<span class="number">3</span>] = &#123;</div><div class="line">	<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,</div><div class="line">	<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,</div><div class="line">	<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,</div><div class="line">	<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,</div><div class="line">	<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,</div><div class="line">	<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,</div><div class="line">	<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	__int64 n;</div><div class="line">	<span class="keyword">int</span> x;</div><div class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; x) &#123;</div><div class="line">		n %= <span class="number">6</span>;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; ans[n][x] &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
+		<p><a href="www.codeforces.com/contest/777/problem/A">题目传送门</a><br>
 	
 	</div>
   <a type="button" href="/2017/03/12/Codeforces777a-Shell-Game/#more" class="btn btn-default more">阅读此文</a>
@@ -257,6 +290,11 @@ var _hmt = _hmt || [];
 
 			<div class="entry">
   <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2017/03/11/脑力游戏/"><img src="http://okc9ihakz.bkt.clouddn.com/jerry-kiesewetter-179264.jpg?slimimage" alt="脑力游戏"  class="nofancybox"></a>
+           
+		</div>
 	
 	
 		<h1 id="脑力游戏"><a href="#脑力游戏" class="headerlink" title="脑力游戏"></a>脑力游戏</h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>给定n个带锁的盒子和n把钥匙，每把钥匙对应着唯一的一个盒子。初始状态下每把钥匙分别放在不同的盒子中，且所有盒子是上锁的。可以通过“暴力”打开某些盒子，取出放在里面的钥匙，然后利用拿到的钥匙去开相应的盒子。问如果只允许“暴力”打开最多k个盒子，那么在多少种状态下，可以最终打开所有盒子。(1≤n≤100, 0≤k≤n)</p>
@@ -345,7 +383,8 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="排序基本思想"><a href="#排序基本思想" class="headerlink" title="排序基本思想"></a>排序基本思想</h2><h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将序列递归折半分割</p>
+		<a id="more"></a>
+<h2 id="排序基本思想"><a href="#排序基本思想" class="headerlink" title="排序基本思想"></a>排序基本思想</h2><h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将序列递归折半分割</p>
 <h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><p>回溯将之前被分割的两个序列<strong>合并后排序</strong></p>
 <h3 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h3><p><strong>原始序列</strong> 9 6 7 2 5 1 8 4 2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">分割</div><div class="line">9 6 7 2     |     5 1 8 4 2</div><div class="line"></div><div class="line">9 6 | 7 2         5 1 | 8 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8 | 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8   4 | 2</div><div class="line"></div><div class="line">合并</div><div class="line">6 9 |  2 7        1 5 | 8 | 2 4</div><div class="line"></div><div class="line">2 6 7 9           1 5 | 2 4 8</div><div class="line"></div><div class="line">2 6 7 9           1 2 4 5 6</div><div class="line"></div><div class="line">1 2 2 4 5 6 7 8 9</div></pre></td></tr></table></figure></p>
 <h3 id="如何合并"><a href="#如何合并" class="headerlink" title="如何合并"></a>如何合并</h3><p><strong>目标</strong><br>将包含n1个元素的数组L以及包含n2个元素的数组R，合并到数组A中</p>
@@ -381,8 +420,14 @@ var _hmt = _hmt || [];
 			<div class="entry">
   <div class="row">
 	
+           
+              <div class="thumbnail"><a href="/2017/03/09/未来火车站建设/"><img src="http://okc9ihakz.bkt.clouddn.com/adrien-ledoux-171222.jpg?slimimage" alt="未来火车站建设"  class="nofancybox"></a>
+           
+		</div>
 	
-		<h1 id="未来的火车网络建设"><a href="#未来的火车网络建设" class="headerlink" title="未来的火车网络建设"></a>未来的火车网络建设</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定无向图，可以分为左、右两部,两图顶点数相等都为N（N&lt;=10），顶点都按1-N编号，开始时两图都为欧拉图（即图中每个点都为偶度点），后添加N条边，每条边都连接两图相同编号的顶点，这导致每个点都变为奇度点,即整个图不是欧拉图。图中所有的边都有权值，问如何复制现有的边使得整个图变为欧拉图（即所有顶点都为偶度点）且复制的边的总权值最小。</p>
+	
+		<a id="more"></a>
+<h1 id="未来的火车网络建设"><a href="#未来的火车网络建设" class="headerlink" title="未来的火车网络建设"></a>未来的火车网络建设</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定无向图，可以分为左、右两部,两图顶点数相等都为N（N&lt;=10），顶点都按1-N编号，开始时两图都为欧拉图（即图中每个点都为偶度点），后添加N条边，每条边都连接两图相同编号的顶点，这导致每个点都变为奇度点,即整个图不是欧拉图。图中所有的边都有权值，问如何复制现有的边使得整个图变为欧拉图（即所有顶点都为偶度点）且复制的边的总权值最小。</p>
 <h2 id="涉及知识点"><a href="#涉及知识点" class="headerlink" title="涉及知识点"></a>涉及知识点</h2><h3 id="欧拉图"><a href="#欧拉图" class="headerlink" title="欧拉图"></a>欧拉图</h3><p>通过图（无向图或有向图）中所有边且每边仅通过一次通路称为欧拉通路，相应的回路称为欧拉回路。具有欧拉回路的图称为欧拉图（Euler Graph），具有欧拉通路而无欧拉回路的图称为半欧拉图。</p>
 <h3 id="状态压缩"><a href="#状态压缩" class="headerlink" title="状态压缩"></a>状态压缩</h3><p>状态压缩指状态用一种压缩的形式存储。一般采用一个二进制数表示状态，有时也用三进制或四进制数等。<br>用二进制数表示状态最大的好处就是在决策转移时可以采用位运算，这样能极大提高算法效率。</p>
 <h3 id="最短路径问题"><a href="#最短路径问题" class="headerlink" title="最短路径问题"></a>最短路径问题</h3><h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><ol>
@@ -425,7 +470,8 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h2><h3 id="1-什么是二分图"><a href="#1-什么是二分图" class="headerlink" title="1.什么是二分图"></a>1.什么是二分图</h3><ul>
+		<a id="more"></a>
+<h2 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h2><h3 id="1-什么是二分图"><a href="#1-什么是二分图" class="headerlink" title="1.什么是二分图"></a>1.什么是二分图</h3><ul>
 <li>将无向图G=<v,e>的顶点集V分为两个子集V<sub>1</sub>和V<sub>2</sub></v,e></li>
 <li>G中的任意一条边的两个端点一个属于V<sub>1</sub>，另一个属于V<sub>2</sub></li>
 </ul>
@@ -592,56 +638,10 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<p><a href="https://leetcode.com/problems/predict-the-winner/?tab=Description" target="_blank" rel="external">题目传送门</a></p>
-<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>两个人交替从一个数组两端获取一个数字，每次每个人只能获取一个，最终获取的数字之和最大的获胜，问第一个人能否获胜？</p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p><strong>最优子结构</strong>：<code>dp[i][j]</code>维护从i到j获取的所有数字之和的最大值，则dp[i+1][j]表示第二个人能够在i-1到j之间获取的所有数字之和的最大值，dp[i][j-1]表示第二个人能够在i到j-1之间获取的所有数字之和的最大值。</p>
-<p><code>sum[i][j]</code>维护 i 到 j 所有数字之和，因为两个人都想赢，即每个人都取最优解，所以sum[i+1][j] - dp[i+1][j]表示第一个人取第i个元素以后，能够在 i+1 到 j 之间获取子数组之和的最大值，sum[i][j-1] - dp[i][j-1]标识第一个人取第j个元素以后，能够在 i 到 j-1 之间获取子数组之和的最大值。</p>
-<p><strong>状态转移方程</strong>：<br><strong>dp[i][j] = max{ nums[i]+sum[i+1][j]-dp[i+1][j], nums[j]+sum[i][j-1]-dp[i][j-1]}</strong><br>当i == j时，只有一种选择，dp[i][j] = nums[i]<br>当i == j-1 时，只有两种选择，dp[i][j] = max(nums[i], nums[j])</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">PredictTheWinner</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> n = nums.length;</div><div class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</div><div class="line">        <span class="keyword">int</span>[] presum = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++) &#123;</div><div class="line">            presum[i+<span class="number">1</span>] = presum[i]+nums[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> len = <span class="number">1</span>;len &lt;= n;len++)<span class="comment">//长度为n的最优解需要用到长度为n-1的最优解</span></div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">0</span>;l + len - <span class="number">1</span> &lt; n;l++)&#123;</div><div class="line">                <span class="keyword">int</span> r = l + len - <span class="number">1</span>;</div><div class="line">                <span class="keyword">if</span>(l==r)&#123;</div><div class="line">                    dp[l][r] = nums[l];</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(l == r-<span class="number">1</span>)&#123;</div><div class="line">                    dp[l][r] = Math.max(nums[l],nums[r]);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    dp[l][r] = Math.max(nums[l]+presum[r+<span class="number">1</span>]-presum[l+<span class="number">1</span>]-dp[l+<span class="number">1</span>][r],</div><div class="line">                                        nums[r]+presum[r]-presum[l]-dp[l][r-<span class="number">1</span>]);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][n-<span class="number">1</span>]*<span class="number">2</span>&gt;=presum[n];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
+		<p><a href="https://leetcode.com/problems/predict-the-winner/?tab=Description">题目传送门</a><br>
 	
 	</div>
   <a type="button" href="/2017/02/23/LeetCode486-Predict-the-Winner/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/02/17/Codeforces731B-Coupons-and-Discounts/" >[Codeforces731B]Coupons and Discounts</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-02-17  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p><a href="http://codeforces.com/contest/731/problem/B" target="_blank" rel="external">题目传送门</a></p>
-<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>n个数字，两种操作</p>
-<ol>
-<li>相邻两个数加1</li>
-<li>一个数加2</li>
-</ol>
-<p>问能不能根据这些操作构成这些数字</p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>贪心一下，能放2就放2，所以偶数转成2，奇数转成1，0还是0<br>遍历一遍</p>
-<ol>
-<li>如果当前是1，则下一个数减1，再判断下一个数是否小于0</li>
-<li>如果当前是2，直接减2</li>
-</ol>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 200005</span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">int</span> num[MAXN];</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> n;</div><div class="line">	<span class="keyword">int</span> flag;</div><div class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n) &#123;</div><div class="line">		flag = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num[i]);</div><div class="line">			<span class="keyword">if</span> (num[i] != <span class="number">0</span>) &#123;</div><div class="line">				<span class="keyword">if</span> (num[i] % <span class="number">2</span>)</div><div class="line">					num[i] = <span class="number">1</span>;</div><div class="line">				<span class="keyword">else</span></div><div class="line">					num[i] = <span class="number">2</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</div><div class="line">			<span class="keyword">if</span> (num[i] == <span class="number">1</span>) &#123;</div><div class="line">				num[i]--;</div><div class="line">				num[i + <span class="number">1</span>]--;</div><div class="line">				<span class="keyword">if</span> (num[i + <span class="number">1</span>] &lt; <span class="number">0</span>) &#123;</div><div class="line">					flag = <span class="number">1</span>;</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (num[i] == <span class="number">2</span>) &#123;</div><div class="line">				num[i] -= <span class="number">2</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (num[n] == <span class="number">1</span>)</div><div class="line">			flag = <span class="number">1</span>;</div><div class="line">		<span class="keyword">if</span> (flag)</div><div class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"NO"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"YES"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-	
-	</div>
-  <a type="button" href="/2017/02/17/Codeforces731B-Coupons-and-Discounts/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -694,48 +694,48 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
-		
-			<li><a href="/tags/DP/">DP<span>7</span></a></li>
-		
-			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
-		
-			<li><a href="/tags/二分图的最大匹配/">二分图的最大匹配<span>1</span></a></li>
-		
-			<li><a href="/tags/Django-RESTful-framewo/">Django RESTful framewo<span>1</span></a></li>
-		
-			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
-		
-			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
-		
-			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
-		
-			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
-		
-			<li><a href="/tags/ST/">ST<span>1</span></a></li>
-		
-			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
-		
-			<li><a href="/tags/排序/">排序<span>1</span></a></li>
-		
-			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
-		
-			<li><a href="/tags/匈牙利算法/">匈牙利算法<span>1</span></a></li>
-		
-			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
-		
-			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
-		
-			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
-		
-			<li><a href="/tags/Java/">Java<span>4</span></a></li>
+			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
 		
 			<li><a href="/tags/Spring/">Spring<span>1</span></a></li>
 		
 			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
 		
+			<li><a href="/tags/ST/">ST<span>1</span></a></li>
 		
-		   <li><a href="/tags">...<span>35</span></a></li>
+			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
+		
+			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
+		
+			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
+		
+			<li><a href="/tags/排序/">排序<span>1</span></a></li>
+		
+			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
+		
+			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
+		
+			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
+		
+			<li><a href="/tags/DP/">DP<span>7</span></a></li>
+		
+			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
+		
+			<li><a href="/tags/Django-RESTful-framewo/">Django RESTful framewo<span>0</span></a></li>
+		
+			<li><a href="/tags/Hibernate/">Hibernate<span>2</span></a></li>
+		
+			<li><a href="/tags/匈牙利算法/">匈牙利算法<span>1</span></a></li>
+		
+			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>4</span></a></li>
+		
+			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
+		
+			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
+		
+			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
+		
+		
+		   <li><a href="/tags">...<span>36</span></a></li>
 		 
 		</ul>
 	</div>
@@ -748,23 +748,23 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/" ><i class="fa fa-file-o"></i>Django REST framework  教程3：...</a>
+      </li>
+    
+      <li>
         <a href="/2018/02/08/Django-REST-framework-教程2：请求和响应/" ><i class="fa fa-file-o"></i>Django REST framework 教程2：请...</a>
       </li>
     
       <li>
-        <a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" ><i class="fa fa-file-o"></i>Django REST framework教程1：序列化</a>
+        <a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" ><i class="fa fa-file-o"></i>Django REST framework 教程1：序列化</a>
       </li>
     
       <li>
-        <a href="/2018/02/06/Django-RESTful-framework快速入门/" ><i class="fa fa-file-o"></i>Django RESTful framework快速入门</a>
+        <a href="/2018/02/06/Django-RESTful-framework快速入门/" ><i class="fa fa-file-o"></i>Django REST framework 快速入门</a>
       </li>
     
       <li>
         <a href="/2018/01/07/数据库建模/" ><i class="fa fa-file-o"></i>数据库建模</a>
-      </li>
-    
-      <li>
-        <a href="/2017/05/21/乐观锁-悲观锁/" ><i class="fa fa-file-o"></i>乐观锁-悲观锁</a>
       </li>
     
   </ul>

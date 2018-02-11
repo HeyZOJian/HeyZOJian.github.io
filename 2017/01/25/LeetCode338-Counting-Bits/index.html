@@ -140,7 +140,8 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>O(n)复杂度计算0到num每个数字二进制表示中1的个数。</p>
+	  <a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>O(n)复杂度计算0到num每个数字二进制表示中1的个数。</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
 <li><strong>找出最优子结构</strong>：当计算二进制为n位的数字时，n-1位的所有情况已经计算过了</li>
 <li><strong>推出状态转移方程</strong>：ans[i] = ans[i&gt;&gt;1]+(i&amp;1)</li>

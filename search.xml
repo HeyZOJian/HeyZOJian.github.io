@@ -3,6 +3,44 @@
   
     
     <entry>
+      <title><![CDATA[Django REST framework  教程3：基于类的视图]]></title>
+      <url>/2018/02/08/Django-REST-framework-%E6%95%99%E7%A8%8B3%EF%BC%9A%E5%9F%BA%E4%BA%8E%E7%B1%BB%E7%9A%84%E8%A7%86%E5%9B%BE/</url>
+      <content type="html"><![CDATA[<p>我们也可以写类视图，而不是方法视图。我们将看到一个强大的模式，该模式允许我们复用公共功能，并且保持代码的DRY（Don’t repeat yourself）。</p>
+<h2 id="使用基于类的视图重新我们的API"><a href="#使用基于类的视图重新我们的API" class="headerlink" title="使用基于类的视图重新我们的API"></a>使用基于类的视图重新我们的API</h2><p>使用类视图重构<code>views.py</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</div><div class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</div><div class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> Http404</div><div class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</div><div class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> status</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetList</span><span class="params">(APIView)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    List all snippets, or create a new snippet.</div><div class="line">    """</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, format=None)</span>:</span></div><div class="line">        snippets = Snippet.objects.all()</div><div class="line">        serializer = SnippetSerializer(snippets, many=<span class="keyword">True</span>)</div><div class="line">        <span class="keyword">return</span> Response(serializer.data)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, format=None)</span>:</span></div><div class="line">        serializer = SnippetSerializer(data=request.data)</div><div class="line">        <span class="keyword">if</span> serializer.is_valid():</div><div class="line">            serializer.save()</div><div class="line">            <span class="keyword">return</span> Response(serializer.data, status=status.HTTP_201_CREATED)</div><div class="line">        <span class="keyword">return</span> Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)</div></pre></td></tr></table></figure>
+<p>目前看来还不错。感觉跟之前的例子很像，但是我们现在把两种不同的HTTP方法分成两个函数了。我们继续重构单个代码片段的视图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetDetail</span><span class="params">(APIView)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Retrieve, update or delete a snippet instance.</div><div class="line">    """</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_object</span><span class="params">(self, pk)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">return</span> Snippet.objects.get(pk=pk)</div><div class="line">        <span class="keyword">except</span> Snippet.DoesNotExist:</div><div class="line">            <span class="keyword">raise</span> Http404</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, pk, format=None)</span>:</span></div><div class="line">        snippet = self.get_object(pk)</div><div class="line">        serializer = SnippetSerializer(snippet)</div><div class="line">        <span class="keyword">return</span> Response(serializer.data)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, pk, format=None)</span>:</span></div><div class="line">        snippet = self.get_object(pk)</div><div class="line">        serializer = SnippetSerializer(snippet, data=request.data)</div><div class="line">        <span class="keyword">if</span> serializer.is_valid():</div><div class="line">            serializer.save()</div><div class="line">            <span class="keyword">return</span> Response(serializer.data)</div><div class="line">        <span class="keyword">return</span> Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, request, pk, format=None)</span>:</span></div><div class="line">        snippet = self.get_object(pk)</div><div class="line">        snippet.delete()</div><div class="line">        <span class="keyword">return</span> Response(status=status.HTTP_204_NO_CONTENT)</div></pre></td></tr></table></figure>
+<p>看起来跟之前差不多。<br>继续，我们还要重构我们的<code>snippets/urls.py</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</div><div class="line"><span class="keyword">from</span> rest_framework.urlpatterns <span class="keyword">import</span> format_suffix_patterns</div><div class="line"><span class="keyword">from</span> snippets <span class="keyword">import</span> views</div><div class="line"></div><div class="line">urlpatterns = [</div><div class="line">    path(<span class="string">'snippets/'</span>, views.SnippetList.as_view()),</div><div class="line">    path(<span class="string">'snippets/&lt;int:pk&gt;/'</span>, views.SnippetDetail.as_view()),</div><div class="line">]</div><div class="line"></div><div class="line">urlpatterns = format_suffix_patterns(urlpatterns)</div></pre></td></tr></table></figure>
+<p>Okay，完成了。现在启动服务器，一切还是跟原来一样</p>
+<h2 id="使用mixins"><a href="#使用mixins" class="headerlink" title="使用mixins"></a>使用mixins</h2><p>使用类视图最大的好处之一就是我们可以轻松地编写可复用的行为。</p>
+<p>REST framework的mixin类实现了常用的创建/检索/更新/删除操作。</p>
+<p>看一下如何使用mixin类编写视图。这儿还是<code>views.py</code>模块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</div><div class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> mixins</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> generics</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetList</span><span class="params">(mixins.ListModelMixin,</span></span></div><div class="line">                  mixins.CreateModelMixin,</div><div class="line">                  generics.GenericAPIView):</div><div class="line">    queryset = Snippet.objects.all()</div><div class="line">    serializer_class = SnippetSerializer</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.list(request, *args, **kwargs)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.create(request, *args, **kwargs)</div></pre></td></tr></table></figure>
+<p>我们的视图继承了<code>GenericAPIView</code>和<code>ListModelMixin</code>，<code>CreateModelMixin</code>。</p>
+<p>这些基类提供了核心的功能，mixin类还提供了<code>.list（）</code>和<code>.create（）</code>行为。我们将<code>get</code>和<code>post</code>方法绑定合适的行文上。多么简单！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetDetail</span><span class="params">(mixins.RetrieveModelMixin,</span></span></div><div class="line">                    mixins.UpdateModelMixin,</div><div class="line">                    mixins.DestroyModelMixin,</div><div class="line">                    generics.GenericAPIView):</div><div class="line">    queryset = Snippet.objects.all()</div><div class="line">    serializer_class = SnippetSerializer</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.retrieve(request, *args, **kwargs)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.update(request, *args, **kwargs)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, request, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.destroy(request, *args, **kwargs)</div></pre></td></tr></table></figure>
+<p>我们再次使用<code>GenericAPIView</code>类来提供一些核心功能，并且添加mixins来提供<code>.retrieve（）</code>，<code>.update（）</code>和<code>。destroy（）</code>行为。</p>
+<h2 id="使用通用的基于类的视图"><a href="#使用通用的基于类的视图" class="headerlink" title="使用通用的基于类的视图"></a>使用通用的基于类的视图</h2><p>使用mixin类可以使我们的视图代码更简洁，但我们可以更进一步，REST framework提供了一系列混合过的通用类，使得我们的<code>views.py</code>模块更加简洁！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</div><div class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> generics</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetList</span><span class="params">(generics.ListCreateAPIView)</span>:</span></div><div class="line">    queryset = Snippet.objects.all()</div><div class="line">    serializer_class = SnippetSerializer</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetDetail</span><span class="params">(generics.RetrieveUpdateDestroyAPIView)</span>:</span></div><div class="line">    queryset = Snippet.objects.all()</div><div class="line">    serializer_class = SnippetSerializer</div></pre></td></tr></table></figure>
+<p>天啊！太简洁了！我们根本不用做什么！</p>
+<p>接下来我们移步<a href="">教程4</a>，下一节将介绍如何处理API认证和权限的问题。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Django REST framework </tag>
+            
+            <tag> 翻译 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Django REST framework 教程2：请求和响应]]></title>
       <url>/2018/02/08/Django-REST-framework-%E6%95%99%E7%A8%8B2%EF%BC%9A%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94/</url>
       <content type="html"><![CDATA[<p>这一篇我们开始讲解RESTframework框架的核心内容。让我们介绍一些基本的构建模块。<br><a id="more"></a></p>
@@ -65,7 +103,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Django REST framework教程1：序列化]]></title>
+      <title><![CDATA[Django REST framework 教程1：序列化]]></title>
       <url>/2018/02/07/Django-RESTful-framework%E6%95%99%E7%A8%8B1%EF%BC%9A%E5%BA%8F%E5%88%97%E5%8C%96/</url>
       <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这个教程将创建一套简单的代码高亮的pastebin的Web API。一路上我们会介绍许多构建<code>REST frmaework</code>的组件，并且让你有一个全面的认识，这些组件是如何组建在一起的。<br><a id="more"></a><br>这个教程相当’深奥’，在开始学习之前你大概需要准备一些饼干和一杯你最爱的啤酒。你如果只是想快速了解，你可以查看之前的<a href="http://zojian.cn/2018/02/06/Django-RESTful-framework%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" target="_blank" rel="external">快速入门</a>文档。</p>
 <blockquote>
@@ -166,7 +204,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Django RESTful framework快速入门]]></title>
+      <title><![CDATA[Django REST framework 快速入门]]></title>
       <url>/2018/02/06/Django-RESTful-framework%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
       <content type="html"><![CDATA[<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>我们会创建一套简单的API来允许管理员查看和编辑系统中的用户和用户组<br><a id="more"></a></p>
 <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>创建一个新的Django项目<code>tutorial</code>，然后创建一个新的app<code>quickstart</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># Create the project directory</div><div class="line">mkdir tutorial</div><div class="line">cd tutorial</div><div class="line"></div><div class="line"># Create a virtualenv to isolate our package dependencies locally</div><div class="line">virtualenv env</div><div class="line">source env/bin/activate  # On Windows use `env\Scripts\activate`</div><div class="line"></div><div class="line"># Install Django and Django REST framework into the virtualenv</div><div class="line">pip install django</div><div class="line">pip install djangorestframework</div><div class="line"></div><div class="line"># Set up a new project with a single application</div><div class="line">django-admin.py startproject tutorial .  # Note the trailing &apos;.&apos; character</div><div class="line">cd tutorial</div><div class="line">django-admin.py startapp quickstart</div><div class="line">cd ..</div></pre></td></tr></table></figure></p>
@@ -203,7 +241,9 @@
             
             <tag> Django </tag>
             
-            <tag> Django RESTful framewo </tag>
+            <tag> Django REST framework </tag>
+            
+            <tag> 翻译 </tag>
             
         </tags>
         
@@ -212,8 +252,8 @@
     <entry>
       <title><![CDATA[数据库建模]]></title>
       <url>/2018/01/07/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BB%BA%E6%A8%A1/</url>
-      <content type="html"><![CDATA[<h2 id="一-数据库设计过程"><a href="#一-数据库设计过程" class="headerlink" title="一.数据库设计过程"></a>一.数据库设计过程</h2><a id="more"></a>
-<ol>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="一-数据库设计过程"><a href="#一-数据库设计过程" class="headerlink" title="一.数据库设计过程"></a>一.数据库设计过程</h2><ol>
 <li>需求分析</li>
 <li>概念设计</li>
 <li>逻辑设计</li>
@@ -289,9 +329,9 @@
         
         <tags>
             
-            <tag> review </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> review </tag>
             
         </tags>
         
@@ -331,7 +371,8 @@
     <entry>
       <title><![CDATA[Hibernate NotNull NotEmpty NotBlank区别]]></title>
       <url>/2017/05/10/Hibernate-NotNull-NotEmpty-NotBlank%E5%8C%BA%E5%88%AB/</url>
-      <content type="html"><![CDATA[<h2 id="NotNull"><a href="#NotNull" class="headerlink" title="@NotNull"></a>@NotNull</h2><p>不允许为null，但可以是empty</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="NotNull"><a href="#NotNull" class="headerlink" title="@NotNull"></a>@NotNull</h2><p>不允许为null，但可以是empty</p>
 <h2 id="NotEmpty"><a href="#NotEmpty" class="headerlink" title="@NotEmpty"></a>@NotEmpty</h2><p>不允许为null且长度要大于0</p>
 <h2 id="NotBlank"><a href="#NotBlank" class="headerlink" title="@NotBlank"></a>@NotBlank</h2><p>只能作用在String上，不能为null，而且调用trim()后，长度必须大于0</p>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">String name = <span class="keyword">null</span>;</div><div class="line">NotNull = <span class="keyword">false</span></div><div class="line">NotEmpty = <span class="keyword">false</span></div><div class="line">NotBlank = <span class="keyword">false</span></div><div class="line"></div><div class="line">String nam = <span class="string">""</span>;</div><div class="line">NotNull = <span class="keyword">true</span></div><div class="line">NotEmpty = <span class="keyword">false</span></div><div class="line">NotBlank = <span class="keyword">false</span></div><div class="line"></div><div class="line">String name = <span class="string">"  "</span>;</div><div class="line">NotNull = <span class="keyword">true</span></div><div class="line">NotEmpty = <span class="keyword">true</span></div><div class="line">NotBlank = <span class="keyword">false</span></div><div class="line"></div><div class="line">String name = <span class="string">"zojian"</span></div><div class="line">NotNull = <span class="keyword">true</span></div><div class="line">NotEmpty = <span class="keyword">true</span></div><div class="line">NotBlank = <span class="keyword">true</span></div></pre></td></tr></table></figure>
@@ -349,7 +390,8 @@
     <entry>
       <title><![CDATA[Spring4基于注解加载properties文件方式]]></title>
       <url>/2017/05/09/Spring4%E6%B3%A8%E5%85%A5properties%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F/</url>
-      <content type="html"><![CDATA[<h2 id="PropertySource注解"><a href="#PropertySource注解" class="headerlink" title="@PropertySource注解"></a>@PropertySource注解</h2><p>将properties配置文件中的值存储到Spring的 Environment中，Environment接口提供方法去读取配置文件中的值，参数是properties文件中定义的key值</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="PropertySource注解"><a href="#PropertySource注解" class="headerlink" title="@PropertySource注解"></a>@PropertySource注解</h2><p>将properties配置文件中的值存储到Spring的 Environment中，Environment接口提供方法去读取配置文件中的值，参数是properties文件中定义的key值</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@PropertySource</span>(<span class="string">"classpath:message.properties"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</div><div class="line">	<span class="comment">//something</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="多个配置文件-PropertySources注解"><a href="#多个配置文件-PropertySources注解" class="headerlink" title="多个配置文件@PropertySources注解"></a>多个配置文件@PropertySources注解</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@PropertySources</span>(&#123;</div><div class="line">	<span class="meta">@PropertySource</span>(<span class="string">"classpath:config.properties"</span>),</div><div class="line">	<span class="meta">@PropertySource</span>(<span class="string">"classpath:db.properties"</span>)</div><div class="line">&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</div><div class="line">	<span class="comment">//something</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="ignoreResourceNotFound属性"><a href="#ignoreResourceNotFound属性" class="headerlink" title="ignoreResourceNotFound属性"></a>ignoreResourceNotFound属性</h2><p>如果<em>*</em>.properties不存在或找不到,系统则会抛出异常FileNotFoundException。<br>但是ignoreResourceNotFound设为true之后会忽略找不到的文件</p>
@@ -368,7 +410,8 @@
     <entry>
       <title><![CDATA[[读薄系列]Java并发编程的艺术笔记]]></title>
       <url>/2017/05/06/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%9A%84%E8%89%BA%E6%9C%AF%E7%AC%94%E8%AE%B0/</url>
-      <content type="html"><![CDATA[<h1 id="1-并发编程的挑战"><a href="#1-并发编程的挑战" class="headerlink" title="1.并发编程的挑战"></a>1.并发编程的挑战</h1><h2 id="什么是上下文切换"><a href="#什么是上下文切换" class="headerlink" title="什么是上下文切换"></a>什么是上下文切换</h2><p>CPU通过时间片分配算法循环执行任务[线程]，当任务执行完一个时间片后会切换到下一个任务，在切换前会保存上一个任务的状态，以便下次切换回来时可以再加载这个任务的状态。所以任务从<strong>保存</strong>到<strong>加载</strong>的过程就是一次上下文切换。</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h1 id="1-并发编程的挑战"><a href="#1-并发编程的挑战" class="headerlink" title="1.并发编程的挑战"></a>1.并发编程的挑战</h1><h2 id="什么是上下文切换"><a href="#什么是上下文切换" class="headerlink" title="什么是上下文切换"></a>什么是上下文切换</h2><p>CPU通过时间片分配算法循环执行任务[线程]，当任务执行完一个时间片后会切换到下一个任务，在切换前会保存上一个任务的状态，以便下次切换回来时可以再加载这个任务的状态。所以任务从<strong>保存</strong>到<strong>加载</strong>的过程就是一次上下文切换。</p>
 <h2 id="如何减少上下文切换"><a href="#如何减少上下文切换" class="headerlink" title="如何减少上下文切换"></a>如何减少上下文切换</h2><ol>
 <li>无锁并发编程：如数据取模分段，不同线程处理不同数据</li>
 <li>CAS算法：Atomic包使用CAS算法来更新数据， 而不需要加锁</li>
@@ -450,7 +493,8 @@
     <entry>
       <title><![CDATA[Hibernate缓存小结]]></title>
       <url>/2017/05/03/Hibernate%E7%BC%93%E5%AD%98%E5%B0%8F%E7%BB%93/</url>
-      <content type="html"><![CDATA[<h2 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h2><blockquote>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h2><blockquote>
 <p>缓存是介于应用程序和物理数据源之间，其作用是为了降低应用程序对物理数据源访问的频次，从而提高了应用的运行性能。缓存内的数据是对物理数据源中的数据的复制，应用程序在运行时从缓存读写数据，在特定的时刻或事件会同步缓存和物理数据源的数据。</p>
 </blockquote>
 <h2 id="一级缓存（会话级）"><a href="#一级缓存（会话级）" class="headerlink" title="一级缓存（会话级）"></a>一级缓存（会话级）</h2><ol>
@@ -601,7 +645,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[读薄系列]RMQ问题之ST算法]]></title>
       <url>/2017/03/23/RMQ%E9%97%AE%E9%A2%98%E4%B9%8BST%E7%AE%97%E6%B3%95/</url>
-      <content type="html"><![CDATA[<h2 id="什么是ST算法"><a href="#什么是ST算法" class="headerlink" title="什么是ST算法"></a>什么是ST算法</h2><p>ST（Sparse Table，稀疏表）是解决RMQ问题的经典在线算法<br>O(NlogN)预处理<br>O(1)查询<br>本质就是动态规划算法</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="什么是ST算法"><a href="#什么是ST算法" class="headerlink" title="什么是ST算法"></a>什么是ST算法</h2><p>ST（Sparse Table，稀疏表）是解决RMQ问题的经典在线算法<br>O(NlogN)预处理<br>O(1)查询<br>本质就是动态规划算法</p>
 <h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><p>维护二维数组ST[n][n]，ST[i][j]表示i开始，长度为2<sup>j</sup>的子数组中的最值<br>在求ST[i][j]的最值时，将这段子数组切成两半，每段长度为2<sup>j-1</sup>，于是前面一段的最值为ST[i][j-1]，后面一段的最值为ST[i+2<sup>j-1</sup>][j-1]，即状态转移方程为<br><strong>ST[i][j] = max(ST[i][j-1], ST[i+2<sup>j-1</sup>][j-1])</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">initST</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</div><div class="line">        ST[i][<span class="number">0</span>] = num[i];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; (<span class="number">1</span>&lt;&lt;j) &lt;= n; j++)&#123;<span class="comment">//枚举长度</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i + (<span class="number">1</span>&lt;&lt;j) - <span class="number">1</span> &lt; n;i++)&#123;<span class="comment">//枚举起点</span></div><div class="line">            ST[i][j] = max(ST[i][j<span class="number">-1</span>], ST[i+(<span class="number">1</span>&lt;&lt;(j<span class="number">-1</span>))][j<span class="number">-1</span>]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>由于每次查询的区间长度不一定是偶数，即不能直接用ST[i][j]表示，所以还需进一步处理。<br>对于查询区间[a，b]，我们将其分为两段长度相等（2<sup>k</sup>）的偶数区间,他们可能相交，但不影响最值的求解，即<br>(b-a)/2 ≤ 2<sup>k</sup> ≤ b-a+1<br>所以k的最小值为<strong>log<sub>2</sub>(b-a)</strong><br>即<br><strong>query(a, b) = max(ST[a][k], ST[b - (2<sup>k</sup> + 1)][k])</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> k = (<span class="keyword">int</span>)(<span class="built_in">log</span>(b-a+<span class="number">1.0</span>)/<span class="built_in">log</span>(<span class="number">2.0</span>));</div><div class="line">    <span class="keyword">return</span> max(ST[u][k],ST[b-(<span class="number">1</span>&lt;&lt;k)+<span class="number">1</span>][k]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -632,7 +677,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[Codeforces777a]Shell Game]]></title>
       <url>/2017/03/12/Codeforces777a-Shell-Game/</url>
-      <content type="html"><![CDATA[<p><a href="www.codeforces.com/contest/777/problem/A">题目传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="www.codeforces.com/contest/777/problem/A">题目传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>游戏规则：三个杯子一个球，知道杯子交换的次数和最后球所在的位置，问初始球在哪一个杯子中。<br>杯子交换的规制：</p>
 <ol>
 <li>左边杯子和中间的杯子交换（第奇数次交换）</li>
@@ -738,7 +783,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[读薄系列]Merge Sort归并排序]]></title>
       <url>/2017/03/10/Merge-Sort%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</url>
-      <content type="html"><![CDATA[<h2 id="排序基本思想"><a href="#排序基本思想" class="headerlink" title="排序基本思想"></a>排序基本思想</h2><h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将序列递归折半分割</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="排序基本思想"><a href="#排序基本思想" class="headerlink" title="排序基本思想"></a>排序基本思想</h2><h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将序列递归折半分割</p>
 <h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><p>回溯将之前被分割的两个序列<strong>合并后排序</strong></p>
 <h3 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h3><p><strong>原始序列</strong> 9 6 7 2 5 1 8 4 2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">分割</div><div class="line">9 6 7 2     |     5 1 8 4 2</div><div class="line"></div><div class="line">9 6 | 7 2         5 1 | 8 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8 | 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8   4 | 2</div><div class="line"></div><div class="line">合并</div><div class="line">6 9 |  2 7        1 5 | 8 | 2 4</div><div class="line"></div><div class="line">2 6 7 9           1 5 | 2 4 8</div><div class="line"></div><div class="line">2 6 7 9           1 2 4 5 6</div><div class="line"></div><div class="line">1 2 2 4 5 6 7 8 9</div></pre></td></tr></table></figure></p>
 <h3 id="如何合并"><a href="#如何合并" class="headerlink" title="如何合并"></a>如何合并</h3><p><strong>目标</strong><br>将包含n1个元素的数组L以及包含n2个元素的数组R，合并到数组A中</p>
@@ -766,7 +812,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[未来火车站建设]]></title>
       <url>/2017/03/09/%E6%9C%AA%E6%9D%A5%E7%81%AB%E8%BD%A6%E7%AB%99%E5%BB%BA%E8%AE%BE/</url>
-      <content type="html"><![CDATA[<h1 id="未来的火车网络建设"><a href="#未来的火车网络建设" class="headerlink" title="未来的火车网络建设"></a>未来的火车网络建设</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定无向图，可以分为左、右两部,两图顶点数相等都为N（N&lt;=10），顶点都按1-N编号，开始时两图都为欧拉图（即图中每个点都为偶度点），后添加N条边，每条边都连接两图相同编号的顶点，这导致每个点都变为奇度点,即整个图不是欧拉图。图中所有的边都有权值，问如何复制现有的边使得整个图变为欧拉图（即所有顶点都为偶度点）且复制的边的总权值最小。</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h1 id="未来的火车网络建设"><a href="#未来的火车网络建设" class="headerlink" title="未来的火车网络建设"></a>未来的火车网络建设</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定无向图，可以分为左、右两部,两图顶点数相等都为N（N&lt;=10），顶点都按1-N编号，开始时两图都为欧拉图（即图中每个点都为偶度点），后添加N条边，每条边都连接两图相同编号的顶点，这导致每个点都变为奇度点,即整个图不是欧拉图。图中所有的边都有权值，问如何复制现有的边使得整个图变为欧拉图（即所有顶点都为偶度点）且复制的边的总权值最小。</p>
 <h2 id="涉及知识点"><a href="#涉及知识点" class="headerlink" title="涉及知识点"></a>涉及知识点</h2><h3 id="欧拉图"><a href="#欧拉图" class="headerlink" title="欧拉图"></a>欧拉图</h3><p>通过图（无向图或有向图）中所有边且每边仅通过一次通路称为欧拉通路，相应的回路称为欧拉回路。具有欧拉回路的图称为欧拉图（Euler Graph），具有欧拉通路而无欧拉回路的图称为半欧拉图。</p>
 <h3 id="状态压缩"><a href="#状态压缩" class="headerlink" title="状态压缩"></a>状态压缩</h3><p>状态压缩指状态用一种压缩的形式存储。一般采用一个二进制数表示状态，有时也用三进制或四进制数等。<br>用二进制数表示状态最大的好处就是在决策转移时可以采用位运算，这样能极大提高算法效率。</p>
 <h3 id="最短路径问题"><a href="#最短路径问题" class="headerlink" title="最短路径问题"></a>最短路径问题</h3><h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><ol>
@@ -800,7 +847,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[读薄系列]匈牙利算法]]></title>
       <url>/2017/03/08/%E6%B5%85%E6%9E%90%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/</url>
-      <content type="html"><![CDATA[<h2 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h2><h3 id="1-什么是二分图"><a href="#1-什么是二分图" class="headerlink" title="1.什么是二分图"></a>1.什么是二分图</h3><ul>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h2><h3 id="1-什么是二分图"><a href="#1-什么是二分图" class="headerlink" title="1.什么是二分图"></a>1.什么是二分图</h3><ul>
 <li>将无向图G=<v,e>的顶点集V分为两个子集V<sub>1</sub>和V<sub>2</sub></v,e></li>
 <li>G中的任意一条边的两个端点一个属于V<sub>1</sub>，另一个属于V<sub>2</sub></li>
 </ul>
@@ -936,9 +984,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
         
         <tags>
             
-            <tag> review </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> review </tag>
             
         </tags>
         
@@ -947,7 +995,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode486. Predict the Winner]]></title>
       <url>/2017/02/23/LeetCode486-Predict-the-Winner/</url>
-      <content type="html"><![CDATA[<p><a href="https://leetcode.com/problems/predict-the-winner/?tab=Description" target="_blank" rel="external">题目传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="https://leetcode.com/problems/predict-the-winner/?tab=Description" target="_blank" rel="external">题目传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>两个人交替从一个数组两端获取一个数字，每次每个人只能获取一个，最终获取的数字之和最大的获胜，问第一个人能否获胜？</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p><strong>最优子结构</strong>：<code>dp[i][j]</code>维护从i到j获取的所有数字之和的最大值，则dp[i+1][j]表示第二个人能够在i-1到j之间获取的所有数字之和的最大值，dp[i][j-1]表示第二个人能够在i到j-1之间获取的所有数字之和的最大值。</p>
 <p><code>sum[i][j]</code>维护 i 到 j 所有数字之和，因为两个人都想赢，即每个人都取最优解，所以sum[i+1][j] - dp[i+1][j]表示第一个人取第i个元素以后，能够在 i+1 到 j 之间获取子数组之和的最大值，sum[i][j-1] - dp[i][j-1]标识第一个人取第j个元素以后，能够在 i 到 j-1 之间获取子数组之和的最大值。</p>
@@ -969,7 +1017,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[Codeforces731B]Coupons and Discounts]]></title>
       <url>/2017/02/17/Codeforces731B-Coupons-and-Discounts/</url>
-      <content type="html"><![CDATA[<p><a href="http://codeforces.com/contest/731/problem/B" target="_blank" rel="external">题目传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="http://codeforces.com/contest/731/problem/B" target="_blank" rel="external">题目传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>n个数字，两种操作</p>
 <ol>
 <li>相邻两个数加1</li>
@@ -996,7 +1044,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[读薄系列]KMP算法(看毛片？)]]></title>
       <url>/2017/02/09/%E6%B5%85%E6%9E%90%E7%9C%8B%E6%AF%9B%E7%89%87%E7%AE%97%E6%B3%95-KMP/</url>
-      <content type="html"><![CDATA[<h2 id="1-什么是“看毛片算法”？"><a href="#1-什么是“看毛片算法”？" class="headerlink" title="1.什么是“看毛片算法”？"></a>1.什么是“看毛片算法”？</h2><p>一种字符串查找算法，在一个<strong>主文本字符串S</strong>内查找一个<strong>词W</strong>的出现位置。<br>其实说“看毛片算法”显得不尊重老前辈<br><a href="https://zh.wikipedia.org/wiki/%E5%85%8B%E5%8A%AA%E6%96%AF-%E8%8E%AB%E9%87%8C%E6%96%AF-%E6%99%AE%E6%8B%89%E7%89%B9%E7%AE%97%E6%B3%95" target="_blank" rel="external">WIKI解释</a></p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="1-什么是“看毛片算法”？"><a href="#1-什么是“看毛片算法”？" class="headerlink" title="1.什么是“看毛片算法”？"></a>1.什么是“看毛片算法”？</h2><p>一种字符串查找算法，在一个<strong>主文本字符串S</strong>内查找一个<strong>词W</strong>的出现位置。<br>其实说“看毛片算法”显得不尊重老前辈<br><a href="https://zh.wikipedia.org/wiki/%E5%85%8B%E5%8A%AA%E6%96%AF-%E8%8E%AB%E9%87%8C%E6%96%AF-%E6%99%AE%E6%8B%89%E7%89%B9%E7%AE%97%E6%B3%95" target="_blank" rel="external">WIKI解释</a></p>
 <h2 id="2-之前是如何暴力查找的？"><a href="#2-之前是如何暴力查找的？" class="headerlink" title="2.之前是如何暴力查找的？"></a>2.之前是如何暴力查找的？</h2><ol>
 <li><p>从两个串的第一个元素开始比较，直到有一个字符不相同<br><img src="http://okc9ihakz.bkt.clouddn.com/kmp1-1.png" alt=""></p>
 </li>
@@ -1045,7 +1094,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode343.Integer Break]]></title>
       <url>/2017/02/04/LeetCode343-Integer-Break/</url>
-      <content type="html"><![CDATA[<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个n(2≤n≤58),求相加等于n且乘积最大的一组整数的积。</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个n(2≤n≤58),求相加等于n且乘积最大的一组整数的积。</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="A-DP解法-O-N"><a href="#A-DP解法-O-N" class="headerlink" title="A. DP解法(O(N))"></a>A. DP解法(O(N))</h3><p>dp[i]维护数字i拆分后最大的积，由于有些数字不拆分比拆分后的积大，例如3<br>所以<strong>状态转移方程</strong>为 <code>dp[i] = max{ max(dp[i-k],i-k) * max(dp[k],k) }(1≤k&lt;i)</code></p>
 <h3 id="B-数学解法-O-logN"><a href="#B-数学解法-O-logN" class="headerlink" title="B. 数学解法(O(logN))"></a>B. 数学解法(O(logN))</h3><ol>
 <li><strong>平方平均数</strong>: <img src="https://imgsa.baidu.com/baike/s%3D253/sign=dbf4ee1fbb389b503cffe757b635e5f1/bd3eb13533fa828b4b3b69e2ff1f4134970a5a93.jpg" alt=""></li>
@@ -1068,9 +1118,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
             
             <tag> Math </tag>
             
-            <tag> LeetCode </tag>
-            
             <tag> Java </tag>
+            
+            <tag> LeetCode </tag>
             
         </tags>
         
@@ -1079,7 +1129,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[Codeforces761B]Dasha and friends]]></title>
       <url>/2017/02/01/Codeforces761B-Dasha-and-friends/</url>
-      <content type="html"><![CDATA[<p><a href="http://codeforces.com/contest/761/problem/B" target="_blank" rel="external">题目传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="http://codeforces.com/contest/761/problem/B" target="_blank" rel="external">题目传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>两个人逆时针绕长度为L的圈跑，并在n个点停留。由于起点不一样，所以到达这n个点的距离不一样，现在给定这两个人先后到达这n个点的距离，判断两人是否绕同一个圈跑。<br><img src="http://codeforces.com/predownloaded/e5/9e/e59eb34dbd789f102f8803e5c23abaf7bcc7973c.png" alt=""><br>Consider an example. Let L = 8, blue points are barriers, and green points are Kefa’s start (A) and Sasha’s start (B). Then Kefa writes down the sequence[2, 4, 6], and Sasha writes down [1, 5, 7].</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>虽然起点不一样，但如果是同一个圈的话，这n个点的相对位置是一样的，既任意两点的最短距离一致。</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> READ(x) scanf(<span class="meta-string">"%d"</span>,&amp;x)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> READLL(x) scanf(<span class="meta-string">"%lld"</span>,&amp;x)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN</span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> dis1[<span class="number">5000</span>];</div><div class="line"><span class="keyword">int</span> dis2[<span class="number">5000</span>];</div><div class="line"><span class="keyword">int</span> cnt1,cnt2;</div><div class="line"><span class="keyword">int</span> n;</div><div class="line"><span class="keyword">int</span> L;</div><div class="line"><span class="keyword">int</span> num[<span class="number">60</span>];</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> flag;</div><div class="line">    <span class="keyword">int</span> q;</div><div class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt;n&gt;&gt;L)&#123;</div><div class="line">        cnt1 = cnt2 = <span class="number">0</span>;</div><div class="line">        flag = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++) READ(num[i]);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i+<span class="number">1</span>;j &lt;= n;j++)&#123;</div><div class="line">                q = min(<span class="built_in">abs</span>(num[i]-num[j]),L-<span class="built_in">abs</span>(num[i]-num[j]));</div><div class="line">                dis1[++cnt1]=q;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++) READ(num[i]);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i+<span class="number">1</span>;j &lt;= n;j++)&#123;</div><div class="line">                q = min(<span class="built_in">abs</span>(num[i]-num[j]),L-<span class="built_in">abs</span>(num[i]-num[j]));</div><div class="line">                dis2[++cnt2]=q;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        sort(dis1,dis1+cnt1+<span class="number">1</span>);</div><div class="line">        sort(dis2,dis2+cnt2+<span class="number">1</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=cnt1;i++)&#123;</div><div class="line">            <span class="keyword">if</span>(dis1[i]!=dis2[i])&#123;</div><div class="line">                flag = <span class="number">1</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(flag)</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"NO"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"YES"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1097,7 +1147,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode419. Battleships in a Board]]></title>
       <url>/2017/02/01/LeetCode419-Battleships-in-a-Board/</url>
-      <content type="html"><![CDATA[<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个二维地图，统计图中战舰的数量，图中“X”表示战舰，“.”表示空地。</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个二维地图，统计图中战舰的数量，图中“X”表示战舰，“.”表示空地。</p>
 <ol>
 <li>给的图一定是一个合法的地图</li>
 <li>战舰的长度不固定，可以是1XN（1行N列）或者NX1（N行1列）</li>
@@ -1121,9 +1172,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
         
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> Java </tag>
+            
+            <tag> LeetCode </tag>
             
         </tags>
         
@@ -1132,7 +1183,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode238. Product of Array Except Self]]></title>
       <url>/2017/01/31/LeetCode238-Product-of-Array-Except-Self/</url>
-      <content type="html"><![CDATA[<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个数组A，生成一个数组B，<code>B[i] = A[0] x A[1] x..x A[i-1] x A[i+1] x..x A[n]</code><br>时间复杂度O(N)，不能使用除法</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个数组A，生成一个数组B，<code>B[i] = A[0] x A[1] x..x A[i-1] x A[i+1] x..x A[n]</code><br>时间复杂度O(N)，不能使用除法</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>仔细看一下，其实每次计算B[i]就是前面i-1个元素相乘，乘上后面i+1个元素相乘。<br>所以只要预处理前缀积和后缀积即可。</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><ol>
 <li><p>版本1  O(N)，S(N)</p>
@@ -1147,9 +1199,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
         
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> Java </tag>
+            
+            <tag> LeetCode </tag>
             
         </tags>
         
@@ -1158,7 +1210,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[Happy New Year 2017]]></title>
       <url>/2017/01/27/Happy-New-Year-2017/</url>
-      <content type="html"><![CDATA[<p>今天除夕夜，写下今年的愿望吧~</p>
+      <content type="html"><![CDATA[<p>今天除夕夜，写下今年的愿望吧~<br><a id="more"></a></p>
 <ul>
 <li>家人身体健康</li>
 <li>蓝桥杯省赛拿个一等去北京旅游</li>
@@ -1184,7 +1236,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[CodeForcesEdu17[A.k-th divisor]]]></title>
       <url>/2017/01/27/CodeForcesEdu17A-k-th-divisor/</url>
-      <content type="html"><![CDATA[<p><a href="http://codeforces.com/contest/762/problem/A" target="_blank" rel="external">传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="http://codeforces.com/contest/762/problem/A" target="_blank" rel="external">传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>求一个数n（1≤n≤10<sup>15</sup>）的第k（1≤n≤10<sup>9</sup>）个因子.</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>一个数的因子都是成对出现的，所以只要遍历$\sqrt{n}$,用两个数组保存因子<br>div1数组是升序<br>div2数组是降序</p>
 <p><strong>注意</strong></p>
@@ -1209,7 +1261,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode413. Arithmetic Slices]]></title>
       <url>/2017/01/26/LeetCode413-Arithmetic-Slices/</url>
-      <content type="html"><![CDATA[<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定一个数组，求满足连续的相邻的元素的差值一样的子序列（至少3个元素）有多少个？<br>[1,2,3,4]-&gt;[1,2,3],[2,3,4],[1,2,3,4] 3个</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定一个数组，求满足连续的相邻的元素的差值一样的子序列（至少3个元素）有多少个？<br>[1,2,3,4]-&gt;[1,2,3],[2,3,4],[1,2,3,4] 3个</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
 <li>预处理数组相邻元素的差值</li>
 <li>遍历找差值一样的片段</li>
@@ -1231,7 +1284,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode338.Counting Bits]]></title>
       <url>/2017/01/25/LeetCode338-Counting-Bits/</url>
-      <content type="html"><![CDATA[<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>O(n)复杂度计算0到num每个数字二进制表示中1的个数。</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>O(n)复杂度计算0到num每个数字二进制表示中1的个数。</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
 <li><strong>找出最优子结构</strong>：当计算二进制为n位的数字时，n-1位的所有情况已经计算过了</li>
 <li><strong>推出状态转移方程</strong>：ans[i] = ans[i&gt;&gt;1]+(i&amp;1)</li>
@@ -1253,7 +1307,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode232 两个栈实现队列]]></title>
       <url>/2017/01/23/LeetCode232-%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/</url>
-      <content type="html"><![CDATA[<h3 id="题意：利用栈实现队列的功能"><a href="#题意：利用栈实现队列的功能" class="headerlink" title="题意：利用栈实现队列的功能"></a>题意：利用栈实现队列的功能</h3><ul>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h3 id="题意：利用栈实现队列的功能"><a href="#题意：利用栈实现队列的功能" class="headerlink" title="题意：利用栈实现队列的功能"></a>题意：利用栈实现队列的功能</h3><ul>
 <li>入队</li>
 <li>出队</li>
 <li>返回队头元素</li>
@@ -1283,7 +1338,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[MVC架构初涉]]></title>
       <url>/2017/01/18/MVC%E6%9E%B6%E6%9E%84%E5%88%9D%E6%B6%89/</url>
-      <content type="html"><![CDATA[<h2 id="三层模型"><a href="#三层模型" class="headerlink" title="三层模型"></a>三层模型</h2><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1485841135&amp;di=03a2b7114b335da8c03843a62692a02b&amp;imgtype=jpg&amp;er=1&amp;src=http%3A%2F%2Fimg4.07net01.com%2Fupload%2Fimages%2F2016%2F12%2F19%2F117255191805342.png" alt=""><br>首先对用户来说，浏览器就是表示层，它主要是与用户交互的页面，根据用户的输入与事件，处理并显示返回的特定数据。我们知道数据是一切应用程序的基础，如果没有数据，那么没有任何意义，所以 Server 端必须要一个强大的数据库来存储所有用户交互产生的数据，而对这些数据的处理，包括增、删、改、查就属于数据访问层。那么连接表示层与数据访问层的就是业务逻辑层，这包括后端程序中模型设计、验证、业务规则、各种计算等。</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="三层模型"><a href="#三层模型" class="headerlink" title="三层模型"></a>三层模型</h2><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1485841135&amp;di=03a2b7114b335da8c03843a62692a02b&amp;imgtype=jpg&amp;er=1&amp;src=http%3A%2F%2Fimg4.07net01.com%2Fupload%2Fimages%2F2016%2F12%2F19%2F117255191805342.png" alt=""><br>首先对用户来说，浏览器就是表示层，它主要是与用户交互的页面，根据用户的输入与事件，处理并显示返回的特定数据。我们知道数据是一切应用程序的基础，如果没有数据，那么没有任何意义，所以 Server 端必须要一个强大的数据库来存储所有用户交互产生的数据，而对这些数据的处理，包括增、删、改、查就属于数据访问层。那么连接表示层与数据访问层的就是业务逻辑层，这包括后端程序中模型设计、验证、业务规则、各种计算等。</p>
 <h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1485246440111&amp;di=94308140a46130a0401abbc4be4ade81&amp;imgtype=0&amp;src=http%3A%2F%2Fstatic.open-open.com%2Flib%2FuploadImg%2F20161214%2F20161214113303_96.png" alt=""></p>
 <h3 id="模型-MODEL（数据保存）"><a href="#模型-MODEL（数据保存）" class="headerlink" title="模型 MODEL（数据保存）"></a>模型 MODEL（数据保存）</h3><p>应用程序的<strong>数据</strong>和用于控制，访问，修改这些数据的<strong>业务规则</strong></p>
 <ul>
@@ -1329,7 +1385,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[Mysql安装(Mac)]]></title>
       <url>/2017/01/16/Mysql%E5%AE%89%E8%A3%85-Mac/</url>
-      <content type="html"><![CDATA[<h2 id="1-官网下载最新的社区版"><a href="#1-官网下载最新的社区版" class="headerlink" title="1.官网下载最新的社区版"></a>1.官网下载最新的社区版</h2><p>地址：<a href="http://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">http://dev.mysql.com/downloads/mysql/</a><br>dmg格式是最方便的</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="1-官网下载最新的社区版"><a href="#1-官网下载最新的社区版" class="headerlink" title="1.官网下载最新的社区版"></a>1.官网下载最新的社区版</h2><p>地址：<a href="http://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">http://dev.mysql.com/downloads/mysql/</a><br>dmg格式是最方便的</p>
 <h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h2><p>双击mysql-5.7.17-osx10.12-x86_64.dmg文件，加载镜像<br>双击mysql-5.7.17-osx10.12-x86_64.pkg，开始安装<br>一路下一步，即可安装成功<br><strong>注意</strong>：安装完成之后会弹出一个对话框，告诉我们生成了一个root账户的临时密码。</p>
 <h2 id="4-配置"><a href="#4-配置" class="headerlink" title="4.配置"></a>4.配置</h2><p>修改<code>.bash</code>文件：为Path路径附加MySQL的bin目录<br>PATH=”$PATH”:/usr/local/mysql/bin</p>
 <h2 id="5-启动"><a href="#5-启动" class="headerlink" title="5.启动"></a>5.启动</h2><p>系统偏好设置-&gt;mysql-&gt;start Mysql Server</p>
@@ -1350,7 +1407,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode(Easy)-17/1/13]]></title>
       <url>/2017/01/13/LeetCode-17-1-13/</url>
-      <content type="html"><![CDATA[<h4 id="409-Longest-Palindrome"><a href="#409-Longest-Palindrome" class="headerlink" title="409. Longest Palindrome"></a>409. Longest Palindrome</h4><ul>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h4 id="409-Longest-Palindrome"><a href="#409-Longest-Palindrome" class="headerlink" title="409. Longest Palindrome"></a>409. Longest Palindrome</h4><ul>
 <li>题意：给定一些字符，问能构成的最长的回文串长度是多少</li>
 <li>思路：每两个相同的字符就可以增加回文串2长度，如果有单个字符，则可以将其放在回文串的中间</li>
 </ul>
@@ -1414,7 +1472,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[Codeforces740C]Alyona and mex]]></title>
       <url>/2017/01/12/Codeforces740C-Alyona-and-mex/</url>
-      <content type="html"><![CDATA[<p><a href="http://codeforces.com/contest/740/problem/C" target="_blank" rel="external">传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="http://codeforces.com/contest/740/problem/C" target="_blank" rel="external">传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定长度为n的数组，m个区间，要求构造一个数组（元素大于等于0），求出mex的最小值。<br>mex：区间里没有出现的最小元素（大于等于0）<br>并使mex尽量大</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p><strong>一个重要的特点</strong>： 一个数组的mex取决于给定区间的长度，数组中最小的mex等于给定区间的最短长度。<br><strong>证明</strong>：要尽量使mex尽量大，最短区间的数字只能从0开始递增，这时mex的值就为区间的长度</p>
 <p>因此原数组只要照[0,1,…,mex-1]的规则从左至右构造下去即可，这样就使得给定的每组区间的mex相等且mex尽量大</p>
@@ -1433,7 +1491,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode(Easy)-17/1/11]]></title>
       <url>/2017/01/12/leetcode-17-1-11/</url>
-      <content type="html"><![CDATA[<h4 id="476-Number-Complement"><a href="#476-Number-Complement" class="headerlink" title="476. Number Complement"></a>476. Number Complement</h4><ul>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h4 id="476-Number-Complement"><a href="#476-Number-Complement" class="headerlink" title="476. Number Complement"></a>476. Number Complement</h4><ul>
 <li>题意：二进制翻转</li>
 <li>思路：</li>
 </ul>
@@ -1511,7 +1570,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[LeetCode(Easy)-17/1/10]]></title>
       <url>/2017/01/10/leetCode-17-1-10/</url>
-      <content type="html"><![CDATA[<h4 id="461-Hamming-Distance"><a href="#461-Hamming-Distance" class="headerlink" title="461. Hamming Distance"></a>461. Hamming Distance</h4><ul>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h4 id="461-Hamming-Distance"><a href="#461-Hamming-Distance" class="headerlink" title="461. Hamming Distance"></a>461. Hamming Distance</h4><ul>
 <li>题意：两个数字的二进制有多少位不同</li>
 <li>思路：判断x^y的二进制结果有多少个1</li>
 </ul>
@@ -1592,6 +1652,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
       <content type="html"><![CDATA[<blockquote>
 <p>8月14号各自在家中打网络赛，拿到一个长春赛区的名额。确认名额到参赛时间仅剩一个月时间。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="day0"><a href="#day0" class="headerlink" title="day0"></a>day0</h2><p>七点半出发，在校门口和老板（教练）会和。由于特殊原因，从我们这一届开始，老板已经没有继续指导我们训练，所以一路上跟老板还是有些…尴尬吧。</p>
 <p>先是轻轨，然后地铁，接着上了飞机（有个空姐真的巨漂亮），18点到达长春（长春当是还是蛮冷的=A=）,之后坐上了之前就预约好的接机，师傅一路上给我们介绍了长春的特产和景点，不过听他描述好像真没什么好吃好玩的..（司机开车有点生猛，一路狂飙，哇差点吐出来</p>
 <p>之前还想着怎么开口跟老板说让他一个人住，我们三个人挤一间房，结果到了酒店老板自己说了- -|||，还约了八点下去吃火锅。吃火锅的时候老板给我们讲了一道概率题，说是已经在以往的比赛中碰到四五次了，其实当是听的一头雾水。（结果热身赛的时候真的碰到一摸一样的了:-)holyshit）然后谈到现在的协会，说我们神神秘秘自己搞，要是认真上完老板的acm1，2，省赛拿铜是轻易的事..（其实我也是前几天才知道为什么老板不再指导我们了，再想想省赛，去年13级1银3铜高校排名第八，今年的14级3铁滚粗…老板的重要性唉</p>
@@ -1631,7 +1692,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[CodeVs1017]乘积最大]]></title>
       <url>/2016/09/20/CodeVs1017-%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7/</url>
-      <content type="html"><![CDATA[<p><a href="http://codevs.cn/problem/1017/" target="_blank" rel="external">题目传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="http://codevs.cn/problem/1017/" target="_blank" rel="external">题目传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>有一个长度为N的数字串，要求选手使用K个乘号将它分成K+1个部分，找出一种分法，使得这K+1个部分的乘积能够为最大。</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>水= =<br>很容易推出转移方程<br>dp[i][j] = max(dp[k][j - 1] * a[k][i - 1], dp[i][j]),1&lt;=k&lt;i;<br>预处理一下k位到i-1位的数字</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</div><div class="line"></div><div class="line"><span class="keyword">char</span> arr[<span class="number">50</span>];</div><div class="line">ll dp[<span class="number">50</span>][<span class="number">50</span>], a[<span class="number">50</span>][<span class="number">50</span>];</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">int</span> N, K;</div><div class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;N, &amp;K);</div><div class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, arr);</div><div class="line">	getchar();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;N; i++)&#123;</div><div class="line">		a[i][i] = arr[i] - <span class="string">'0'</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;N; i++)&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j&lt;N; j++)&#123;</div><div class="line">			a[i][j] = a[i][j - <span class="number">1</span>] * <span class="number">10</span> + arr[j] - <span class="string">'0'</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++)&#123;</div><div class="line">		dp[i][<span class="number">0</span>] = a[<span class="number">0</span>][i - <span class="number">1</span>];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++)&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i&amp;&amp;j &lt;= K; j++)&#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k&lt;i; k++)&#123;</div><div class="line">				<span class="keyword">if</span> (k&gt;j - <span class="number">1</span>)</div><div class="line">					dp[i][j] = max(dp[k][j - <span class="number">1</span>] * a[k][i - <span class="number">1</span>], dp[i][j]);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, dp[N][K]);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1651,7 +1712,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[CodeVs1058]合唱队形]]></title>
       <url>/2016/09/20/CodeVs1058-%E5%90%88%E5%94%B1%E9%98%9F%E5%BD%A2/</url>
-      <content type="html"><![CDATA[<p><a href="http://codevs.cn/problem/1058/" target="_blank" rel="external">题目传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="http://codevs.cn/problem/1058/" target="_blank" rel="external">题目传送门</a><br><a id="more"></a></p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>合唱队形即为左边是最大上升子序列，右边是最大下降子序列，则我们可以枚举中间节点i，</p>
 <p>up[i]表示以i结尾的最长上升子序列，down[i]表示以i开始的最长下降子序列，以免麻烦，我们从后往前求down[i]，则合唱队形人数为 max(up[i]+down[i]-1)</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 105</span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> up[MAXN];</div><div class="line"><span class="keyword">int</span> down[MAXN];</div><div class="line"><span class="keyword">int</span> num[MAXN];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> n;</div><div class="line">	<span class="keyword">int</span> ans;</div><div class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n) &#123;</div><div class="line">		ans = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)<span class="built_in">cin</span> &gt;&gt; num[i],up[i]=<span class="number">1</span>,down[i]=<span class="number">1</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = i<span class="number">-1</span>; j &gt;=<span class="number">1</span>; j--) &#123;</div><div class="line">				<span class="keyword">if</span> (num[i] &gt; num[j]) &#123;</div><div class="line">					up[i] = max(up[j] + <span class="number">1</span>, up[i]);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &gt;= <span class="number">1</span>; i--) &#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt;=n; j++) &#123;</div><div class="line">				<span class="keyword">if</span> (num[i] &gt; num[j]) &#123;</div><div class="line">					down[i] = max(down[j] + <span class="number">1</span>, down[i]);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</div><div class="line">				ans = max(up[i] + down[i]<span class="number">-1</span>, ans);</div><div class="line">			<span class="built_in">cout</span> &lt;&lt; n - ans &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1671,7 +1732,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[CodeVs3278]最小m 段和问题]]></title>
       <url>/2016/09/20/CodeVs3278-%E6%9C%80%E5%B0%8Fm-%E6%AE%B5%E5%92%8C%E9%97%AE%E9%A2%98/</url>
-      <content type="html"><![CDATA[<p><a href="http://codevs.cn/problem/3278/" target="_blank" rel="external">题目传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="http://codevs.cn/problem/3278/" target="_blank" rel="external">题目传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定 n 个整数(不一定是正整数)组成的序列，现在要求将序列分割为 m 段，每段子序列中的数在原序列 中连续排列。如何分割才能使这 m 段子序列的和的最大值达到最小？</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>dp[i][j]维护i结尾，分成j段的最大值</p>
 <p>dp[i][j] = min(dp[i][j], max(dp[k][j - 1],dp[i][1]-dp[k][1]));</p>
@@ -1692,7 +1753,7 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[Codeforces701b]Cells Not Under Attack]]></title>
       <url>/2016/07/28/Codeforces701b-Cells-Not-Under-Attack/</url>
-      <content type="html"><![CDATA[<p><a href="http://codeforces.com/problemset/problem/701/B" target="_blank" rel="external">题目传送门</a></p>
+      <content type="html"><![CDATA[<p><a href="http://codeforces.com/problemset/problem/701/B" target="_blank" rel="external">题目传送门</a><br><a id="more"></a></p>
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定一个n＊n的棋盘，如果一个点放了棋子那么该行该列都不能再放棋子了，现在给定一些棋子的位置，问还有多少格子可以放置棋子</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>两个数组分别记录每一行每一列还剩下多少空位置，暴力枚举每颗棋子对行和列的影响</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 100005</span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> x[MAXN];</div><div class="line"><span class="keyword">int</span> y[MAXN];</div><div class="line"><span class="keyword">long</span> <span class="keyword">long</span> numx, numy;</div><div class="line"><span class="keyword">int</span> n, m;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">int</span> a, b;</div><div class="line">	<span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt;n&gt;&gt;m)&#123;</div><div class="line">		<span class="built_in">memset</span>(x,<span class="number">0</span>,<span class="keyword">sizeof</span>(x));</div><div class="line">		<span class="built_in">memset</span>(y,<span class="number">0</span>,<span class="keyword">sizeof</span>(y));</div><div class="line">		numx = numy = n;</div><div class="line">		<span class="keyword">while</span>(m--)&#123;</div><div class="line">			<span class="built_in">cin</span>&gt;&gt;a&gt;&gt;b;</div><div class="line">			<span class="keyword">if</span>(x[a]==<span class="number">0</span>)&#123;</div><div class="line">				x[a]++;</div><div class="line">				numx--;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span>(y[b]==<span class="number">0</span>)&#123;</div><div class="line">				y[b]++;</div><div class="line">				numy--;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span>(m!=<span class="number">0</span>)</div><div class="line">				<span class="built_in">cout</span>&lt;&lt;numx*numy&lt;&lt;<span class="string">" "</span>;</div><div class="line">			<span class="keyword">else</span></div><div class="line">			  <span class="built_in">cout</span>&lt;&lt;numx*numy&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1710,7 +1771,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[Codeforces701C]They Are Everywhere]]></title>
       <url>/2016/07/28/Codeforces701C-They-Are-Everywhere/</url>
-      <content type="html"><![CDATA[<p>Sergei B., the young coach of Pokemons, has found the big house which consists of n flats ordered in a row from left to right. It is possible to enter each flat from the street. It is possible to go out from each flat. Also, each flat is connected with the flat to the left and the flat to the right. Flat number 1 is only connected with the flat number 2 and the flat number n is only connected with the flat number n - 1.</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<p>Sergei B., the young coach of Pokemons, has found the big house which consists of n flats ordered in a row from left to right. It is possible to enter each flat from the street. It is possible to go out from each flat. Also, each flat is connected with the flat to the left and the flat to the right. Flat number 1 is only connected with the flat number 2 and the flat number n is only connected with the flat number n - 1.</p>
 <p>There is exactly one Pokemon of some type in each of these flats. Sergei B. asked residents of the house to let him enter their flats in order to catch Pokemons. After consulting the residents of the house decided to let Sergei B. enter one flat from the street, visit several flats and then go out from some flat. But they won’t let him visit the same flat more than once.</p>
 <p>Sergei B. was very pleased, and now he wants to visit as few flats as possible in order to collect Pokemons of all types that appear in this house. Your task is to help him and determine this minimum number of flats he has to visit.</p>
 <h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><p>The first line contains the integer n (1 ≤ n ≤ 100 000) — the number of flats in the house.</p>
@@ -1739,7 +1801,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[HDU5752]Sqrt Bo]]></title>
       <url>/2016/07/26/HDU5752-Sqrt-Bo/</url>
-      <content type="html"><![CDATA[<h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>Let’s define the function f(n)=⌊n√⌋.</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>Let’s define the function f(n)=⌊n√⌋.</p>
 <p>Bo wanted to know the minimum number y which satisfies fy(n)=1.</p>
 <p>note:f1(n)=f(n),fy(n)=f(fy−1(n))</p>
 <p>It is a pity that Bo can only use 1 unit of time to calculate this function each time.</p>
@@ -1767,7 +1830,8 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     <entry>
       <title><![CDATA[[HDU5762]Teacher Bo]]></title>
       <url>/2016/07/26/HDU5762-Teacher-Bo/</url>
-      <content type="html"><![CDATA[<h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>Teacher BoBo is a geography teacher in the school.One day in his class,he marked N points in the map,the i-th point is at (Xi,Yi).He wonders,whether there is a tetrad (A,B,C,D)(A&lt;B,C&lt;D,A≠CorB≠D) such that the manhattan distance between A and B is equal to the manhattan distance between C and D.</p>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>Teacher BoBo is a geography teacher in the school.One day in his class,he marked N points in the map,the i-th point is at (Xi,Yi).He wonders,whether there is a tetrad (A,B,C,D)(A&lt;B,C&lt;D,A≠CorB≠D) such that the manhattan distance between A and B is equal to the manhattan distance between C and D.</p>
 <p>If there exists such tetrad,print “YES”,else print “NO”.</p>
 <h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><p>First line, an integer T. There are T test cases.(T≤50)</p>
 <p>In each test case,the first line contains two intergers, N, M, means the number of points and the range of the coordinates.(N,M≤105).</p>

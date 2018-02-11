@@ -136,7 +136,8 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个n(2≤n≤58),求相加等于n且乘积最大的一组整数的积。</p>
+	  <a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个n(2≤n≤58),求相加等于n且乘积最大的一组整数的积。</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="A-DP解法-O-N"><a href="#A-DP解法-O-N" class="headerlink" title="A. DP解法(O(N))"></a>A. DP解法(O(N))</h3><p>dp[i]维护数字i拆分后最大的积，由于有些数字不拆分比拆分后的积大，例如3<br>所以<strong>状态转移方程</strong>为 <code>dp[i] = max{ max(dp[i-k],i-k) * max(dp[k],k) }(1≤k&lt;i)</code></p>
 <h3 id="B-数学解法-O-logN"><a href="#B-数学解法-O-logN" class="headerlink" title="B. 数学解法(O(logN))"></a>B. 数学解法(O(logN))</h3><ol>
 <li><strong>平方平均数</strong>: <img src="https://imgsa.baidu.com/baike/s%3D253/sign=dbf4ee1fbb389b503cffe757b635e5f1/bd3eb13533fa828b4b3b69e2ff1f4134970a5a93.jpg" alt=""></li>
@@ -209,7 +210,7 @@ var _hmt = _hmt || [];
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Math/">Math<span>2</span></a></li> <li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li> <li><a href="/tags/Java/">Java<span>4</span></a></li>
+  <li><a href="/tags/Math/">Math<span>2</span></a></li> <li><a href="/tags/Java/">Java<span>4</span></a></li> <li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
     </ul>
 	</div>
 		
