@@ -1,0 +1,293 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Django REST framework 教程4：认证与权限 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="目前我们的API没有限制谁可以编辑和删除代码片段。我们想要一些更高级的行为来确保：">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Django REST framework 教程4：认证与权限"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-70812759-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?9fe8cb2deab9dc59dccf858801029c7e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Hexo</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> Django REST framework 教程4：认证与权限</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>目前我们的API没有限制谁可以编辑和删除代码片段。我们想要一些更高级的行为来确保：<br><a id="more"></a></p>
+<ul>
+<li>代码片段与创建者关联</li>
+<li>只有注册了的用户才可以创建代码片段</li>
+<li>只有创建者才能更新或者删除代码片段</li>
+<li>未经身份认证的请求只能浏览代码片段</li>
+</ul>
+<h2 id="在我们的模型中添加一些信息"><a href="#在我们的模型中添加一些信息" class="headerlink" title="在我们的模型中添加一些信息"></a>在我们的模型中添加一些信息</h2><p>我们将对<code>Snippet</code>模型进行一些修改。首先，添加一些字段。第一个字段被用来表示该片段是由哪个用户创建的。另一个被用来存储高亮显示的片段的HTML代码。</p>
+<p>在<code>models.py</code>中的<code>Snippet</code>模型中添加以下两个字段。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">owner = models.ForeignKey(<span class="string">'auth.User'</span>, related_name=<span class="string">'snippets'</span>, on_delete=models.CASCADE)</div><div class="line">highlighted = models.TextField()</div></pre></td></tr></table></figure>
+<p>我们得确保当模型存储时，用<code>pygments</code>代码高亮库去填充高亮字段。</p>
+<p>所有还有导入一些东西：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pygments.lexers <span class="keyword">import</span> get_lexer_by_name</div><div class="line"><span class="keyword">from</span> pygments.formatters.html <span class="keyword">import</span> HtmlFormatter</div><div class="line"><span class="keyword">from</span> pygments <span class="keyword">import</span> highlight</div></pre></td></tr></table></figure>
+<p>然后在模型类中添加<code>.save（）</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self, *args, **kwargs)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Use the `pygments` library to create a highlighted HTML</div><div class="line">    representation of the code snippet.</div><div class="line">    """</div><div class="line">    lexer = get_lexer_by_name(self.language)</div><div class="line">    linenos = self.linenos <span class="keyword">and</span> <span class="string">'table'</span> <span class="keyword">or</span> <span class="keyword">False</span></div><div class="line">    options = self.title <span class="keyword">and</span> &#123;<span class="string">'title'</span>: self.title&#125; <span class="keyword">or</span> &#123;&#125;</div><div class="line">    formatter = HtmlFormatter(style=self.style, linenos=linenos,</div><div class="line">                              full=<span class="keyword">True</span>, **options)</div><div class="line">    self.highlighted = highlight(self.code, lexer, formatter)</div><div class="line">    super(Snippet, self).save(*args, **kwargs)</div></pre></td></tr></table></figure>
+<p>更新一些数据库。通常我们都是利用数据库迁移来完成这一操作，但是出于本教程的目的，我们直接删除数据库再创建吧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">rm -f db.sqlite3</div><div class="line">rm -r snippets/migrations</div><div class="line">python manage.py makemigrations snippets</div><div class="line">python manage.py migrate</div></pre></td></tr></table></figure>
+<p>你可以需要创建一些不同的用户来测试我们的API。创建用户最快的方法就是使用<code>createsuperuser</code>命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py createsuperuser</div></pre></td></tr></table></figure>
+<h2 id="给用户模型添加端点"><a href="#给用户模型添加端点" class="headerlink" title="给用户模型添加端点"></a>给用户模型添加端点</h2><p>现在我们有了一些可以用的用户，我们最好给API添加用户的模型表示。创建一个序列器很简单。在<code>serializers.py</code>添加：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></div><div class="line">    snippets = serializers.PrimaryKeyRelatedField(many=<span class="keyword">True</span>, queryset=Snippet.objects.all())</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        model = User</div><div class="line">        fields = (<span class="string">'id'</span>, <span class="string">'username'</span>, <span class="string">'snippets'</span>)</div></pre></td></tr></table></figure>
+<p>因为<code>snippets</code>与用户模型是一个多对一的关系，使用<code>ModelSerializer</code>类时多的一方默认不生成该关系，所以我们需要为此添加一个字段。</p>
+<p>修改<code>views.py</code>。我们想要用户模型表示的视图只能被浏览，所以我们使用通用类视图的<code>ListAPIView</code>和<code>RetrieveAPIView</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserList</span><span class="params">(generics.ListAPIView)</span>:</span></div><div class="line">    queryset = User.objects.all()</div><div class="line">    serializer_class = UserSerializer</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserDetail</span><span class="params">(generics.RetrieveAPIView)</span>:</span></div><div class="line">    queryset = User.objects.all()</div><div class="line">    serializer_class = UserSerializer</div></pre></td></tr></table></figure>
+<p>导入<code>UserSerializer</code>类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> UserSerializer</div></pre></td></tr></table></figure>
+<h2 id="关联片段和用户"><a href="#关联片段和用户" class="headerlink" title="关联片段和用户"></a>关联片段和用户</h2><p>现在，如果我们创建一个代码片段，还不能将创建者和片段关联起来。用户信息不是作为序列化的模型表示的一部分发送，而是作为传入请求的属性。</p>
+<p>我们的处理方法是通过重写snippet视图的<code>.perform_create()</code>方法，该方法允许我们修改实例保存时的操作，和处理任何隐含在传入的请求或URL中的信息。</p>
+<p>在<code>SnippetList</code>视图类中添加下面的方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">perform_create</span><span class="params">(self, serializer)</span>:</span></div><div class="line">    serializer.save(owner=self.request.user)</div></pre></td></tr></table></figure>
+<p>现在通过请求的合法数据，向序列化器中的<code>.create()</code>方法传递额外的<code>owner</code>字段。</p>
+<h2 id="给视图添加权限"><a href="#给视图添加权限" class="headerlink" title="给视图添加权限"></a>给视图添加权限</h2><h2 id="给Browsable-API-添加登陆功能"><a href="#给Browsable-API-添加登陆功能" class="headerlink" title="给Browsable API 添加登陆功能"></a>给Browsable API 添加登陆功能</h2><h2 id="对象级的权限"><a href="#对象级的权限" class="headerlink" title="对象级的权限"></a>对象级的权限</h2><h2 id="用API验证"><a href="#用API验证" class="headerlink" title="用API验证"></a>用API验证</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+
+    
+    
+    <a href="/2018/02/12/Django-REST-framework-教程5：关系和超链接API/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+    <h2 class="title">留言</h2>
+
+    
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-02-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Django/">Django<span>5</span></a></li> <li><a href="/tags/Django-REST-framework/">Django REST framework<span>5</span></a></li> <li><a href="/tags/翻译/">翻译<span>5</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 John Doe
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
+     <br> Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

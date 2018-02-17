@@ -136,6 +136,250 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2017/03/09/未来火车站建设/" >未来火车站建设</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-03-09  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2017/03/09/未来火车站建设/"><img src="http://okc9ihakz.bkt.clouddn.com/adrien-ledoux-171222.jpg?slimimage" alt="未来火车站建设"  class="nofancybox"></a>
+           
+		</div>
+	
+	
+		<a id="more"></a>
+<h1 id="未来的火车网络建设"><a href="#未来的火车网络建设" class="headerlink" title="未来的火车网络建设"></a>未来的火车网络建设</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定无向图，可以分为左、右两部,两图顶点数相等都为N（N&lt;=10），顶点都按1-N编号，开始时两图都为欧拉图（即图中每个点都为偶度点），后添加N条边，每条边都连接两图相同编号的顶点，这导致每个点都变为奇度点,即整个图不是欧拉图。图中所有的边都有权值，问如何复制现有的边使得整个图变为欧拉图（即所有顶点都为偶度点）且复制的边的总权值最小。</p>
+<h2 id="涉及知识点"><a href="#涉及知识点" class="headerlink" title="涉及知识点"></a>涉及知识点</h2><h3 id="欧拉图"><a href="#欧拉图" class="headerlink" title="欧拉图"></a>欧拉图</h3><p>通过图（无向图或有向图）中所有边且每边仅通过一次通路称为欧拉通路，相应的回路称为欧拉回路。具有欧拉回路的图称为欧拉图（Euler Graph），具有欧拉通路而无欧拉回路的图称为半欧拉图。</p>
+<h3 id="状态压缩"><a href="#状态压缩" class="headerlink" title="状态压缩"></a>状态压缩</h3><p>状态压缩指状态用一种压缩的形式存储。一般采用一个二进制数表示状态，有时也用三进制或四进制数等。<br>用二进制数表示状态最大的好处就是在决策转移时可以采用位运算，这样能极大提高算法效率。</p>
+<h3 id="最短路径问题"><a href="#最短路径问题" class="headerlink" title="最短路径问题"></a>最短路径问题</h3><h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><ol>
+<li><p>每条边最多只复制一次，对于奇偶性问题，同一条边复制两次对顶点的度数奇偶性的贡献相当于0。</p>
+</li>
+<li><p>连接左右两图的边很特殊，我们可以枚举选择当中的哪几条边，使得剩下的问题可以在左右两图内部各自解决而互不影响。 </p>
+</li>
+<li><p>连接这些特殊边后，左右两图的顶点的奇偶性会发生变化，这时候问题就变为他们各自内部怎么使用最少的花费来到达顶点的这种奇偶状态。</p>
+</li>
+<li><p>由于顶点数不超过10个，所有可以用一个10位的二进制数表示每种奇偶状态，1为奇数，0为偶数。初始状态下，所有点都为奇数度，所有二进制位都为1。</p>
+</li>
+<li><p>如果选择连接(i， j)这条边， 那么可以让状态x和y之间相互转换，其中在x和y的二进制表示中只有第i位和第j位不一样，然后将状态抽象为点，上述转换的代价作为边权构建新图，再对新图求以初始状态对应顶点为源的单源最短路径。</p>
+</li>
+</ol>
+<h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">()</span></span>&#123;	<span class="comment">//求图g中各状态顶点间的最小变换花费</span></div><div class="line">	<span class="built_in">memset</span>(G, <span class="number">-1</span>, <span class="keyword">sizeof</span>(G));	<span class="comment">//初始化新矩阵G </span></div><div class="line">	<span class="comment">//枚举变换前状态i</span></div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n: i++)	<span class="comment">//n=(1&lt;&lt;N)</span></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; N; j++)&#123;<span class="comment">//枚举复制边的端点j和k</span></div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; N; k++)&#123;</div><div class="line">			<span class="comment">//改状态i第j和k位的奇偶性</span></div><div class="line">			<span class="comment">//并记录变换花费为边jk的权</span></div><div class="line">				G[i][i^(<span class="number">1</span>&lt;&lt;j)^(<span class="number">1</span>&lt;&lt;k)] = g[j][k];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125; </div><div class="line">	dijkstra();	<span class="comment">//求出初始状态到其他任意状态的最小花费</span></div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;<span class="comment">//枚举每个状态</span></div><div class="line">		<span class="keyword">if</span>(d[i] &lt; INF)&#123;</div><div class="line">			f[i] += d[i];	<span class="comment">//记录初始状态到状态i的最小变换花费</span></div><div class="line">			flag[i]++;		<span class="comment">//记录有几个图能够到达状态i</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;	<span class="comment">//求解</span></div><div class="line">		…</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;<span class="comment">//枚举所有状态</span></div><div class="line">			<span class="keyword">if</span>(flag[i] == <span class="number">2</span>)&#123;		<span class="comment">//是否两个图都能到达状态i</span></div><div class="line">				<span class="keyword">int</span> t = f[i];		<span class="comment">//记录两个图到达i的变换花费</span></div><div class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; j++)&#123;<span class="comment">//枚举所有顶点</span></div><div class="line">					<span class="comment">//判断i的第j个顶点是否是奇度点</span></div><div class="line">					<span class="keyword">if</span>((i &amp; (<span class="number">1</span>&lt;&lt;j)) &gt; <span class="number">0</span>)&#123;</div><div class="line">						t += cross[j];<span class="comment">//若是则复制两图j点间的这条边</span></div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				ans = min(ans, t);<span class="comment">//每次用两图间的边补全状态i,更新答案</span></div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		…</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2017/03/09/未来火车站建设/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2017/03/08/浅析匈牙利算法/" >[读薄系列]匈牙利算法</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-03-08  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<a id="more"></a>
+<h2 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h2><h3 id="1-什么是二分图"><a href="#1-什么是二分图" class="headerlink" title="1.什么是二分图"></a>1.什么是二分图</h3><ul>
+<li>将无向图G=<v,e>的顶点集V分为两个子集V<sub>1</sub>和V<sub>2</sub></v,e></li>
+<li>G中的任意一条边的两个端点一个属于V<sub>1</sub>，另一个属于V<sub>2</sub></li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/mw690/7afe6825gw1f261swoly7j208l08caad.jpg" alt=""></p>
+<h3 id="2-如何判断一个图是二分图"><a href="#2-如何判断一个图是二分图" class="headerlink" title="2.如何判断一个图是二分图"></a>2.如何判断一个图是二分图</h3><p>染色法：开始对任意一未染色的顶点染色，之后判断其相邻的顶点中，若未染色则将其染上和相邻顶点不同的颜色， 若已经染色且颜色和相邻顶点的颜色相同则说明不是二分图，若颜色不同则继续判断。</p>
+<h2 id="匈牙利算法-二分图的最大匹配"><a href="#匈牙利算法-二分图的最大匹配" class="headerlink" title="匈牙利算法-二分图的最大匹配"></a>匈牙利算法-二分图的最大匹配</h2><h3 id="1-匹配是什么"><a href="#1-匹配是什么" class="headerlink" title="1.匹配是什么"></a>1.匹配是什么</h3><p>在图论中，一个<strong>匹配</strong>（matching）是一个边的集合，其中任意两条边都没有公共顶点。所以最大匹配也就是拥有边数最多的那个集合。</p>
+<h3 id="2-交替路"><a href="#2-交替路" class="headerlink" title="2.交替路"></a>2.交替路</h3><p>从一个未匹配的点出发，依次经过非匹配边，匹配边，非匹配边…形成的路径</p>
+<h3 id="3-增广路"><a href="#3-增广路" class="headerlink" title="3.增广路"></a>3.增广路</h3><p>1.定义：从一个未匹配点出发，走交替路，如果途径另一个未匹配点，则这条交替路称为增广路<br>2.特点：</p>
+<ul>
+<li>非匹配边比匹配边多一条（因为起始和终止都是非匹配边）</li>
+<li>起点和终点都是当前未匹配的点，其他的点都是已匹配的点</li>
+<li>整条路径都没有重复的点</li>
+<li>把增广路径上的所有第奇数条边加入到原匹配中去，并把增广路径中的所有第偶数条边从原匹配中删除（这个操作称为增广路径的取反），则新的匹配数就比原匹配数增加了1个</li>
+</ul>
+<p>####4.匈牙利算法的步骤<br><strong>情景假设</strong>：今晚有个舞会，四个男生，四个女生。男生可以邀请女生一起跳舞，并且男生开始前已经有心仪的对象（图中连线代表对该女生有意思）</p>
+<p><img src="http://ww1.sinaimg.cn/mw690/7afe6825gw1f277w0vcg9j20cs09uwet.jpg" alt=""><br>将实线改成虚线，表示现在还没有人邀请成功。<br><img src="http://ww1.sinaimg.cn/mw690/7afe6825gw1f277w2qmtpj20bw093t90.jpg" alt=""><br>第一个男生有两个心仪的女生（芙蓉，赵四），按照顺序，他先邀请了第一个心仪女生（芙蓉），而该女生此时还没有接受其他人的邀请，此时邀请成功，并将该女生的搭档记录为该男生<br><img src="http://ww2.sinaimg.cn/mw690/7afe6825gw1f277w370k8j20c40950t1.jpg" alt=""><br>接下来轮到第二个男生，按照刚才的步骤成功邀请到翠花<br><img src="http://ww3.sinaimg.cn/mw690/7afe6825gw1f277w3i0j0j20c1095aad.jpg" alt=""><br>轮到第三个男生的时候出现了点小状况，他心仪的第一个对象已经被其他人邀请走了（翠花已经个俊杰搭档），此时第三个男生尝试去说服翠花接受他的邀请，翠花只能去问她当前的搭档俊杰，让他去找其他女生，但是俊杰心仪的对象只有一个，就是翠花，俊杰不同意，最后翠花只能拒绝了进进的邀请。</p>
+<p>第三个男生尝试去邀请他的第二个心仪对象，发现该女生也被其他人邀请走了（芙蓉和朝钧搭档），按照老套路，芙蓉去跟朝钧协商，朝钧去邀请他第二个心仪的女生，发现该女生还没有搭档，因此朝钧答应了不再和芙蓉搭档而是和赵四搭档，此时芙蓉就可以和进进搭档了。<br><img src="http://ww4.sinaimg.cn/mw690/7afe6825gw1f277w5ay7vj20bt090jrp.jpg" alt=""><br>更新搭档关系<br><img src="http://ww3.sinaimg.cn/mw690/7afe6825gw1f277w5p5w4j20c1098wer.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/mw690/7afe6825gw1f277w71q0bj20bz09aq38.jpg" alt=""></p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//二维数组实现</span></div><div class="line"></div><div class="line">===============================================</div><div class="line"></div><div class="line"><span class="keyword">int</span> ans;</div><div class="line"></div><div class="line"><span class="keyword">int</span> k,n,m;</div><div class="line"></div><div class="line"><span class="keyword">int</span> vis[MAXN];</div><div class="line"></div><div class="line"><span class="keyword">int</span> link[MAXN];</div><div class="line"></div><div class="line"><span class="keyword">int</span> Graph[MAXN][MAXN];</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">FindPath</span><span class="params">(<span class="keyword">int</span> u)</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> v=<span class="number">1</span>;v&lt;=n;v++)&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(Graph[u][v]==<span class="number">1</span>&amp;&amp;vis[v]==<span class="number">0</span>)&#123;</div><div class="line"></div><div class="line">            vis[v]=<span class="number">1</span>;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(link[v]==<span class="number">-1</span>||FindPath(link[v]))&#123;</div><div class="line"></div><div class="line">                link[v]=u;</div><div class="line"></div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">hungary</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="built_in">memset</span>(link,<span class="number">-1</span>,<span class="keyword">sizeof</span>(link));</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</div><div class="line"></div><div class="line">        <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(FindPath(i))</div><div class="line"></div><div class="line">          ans++;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> ans;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">==================================================</div><div class="line"></div><div class="line"><span class="comment">//邻接表优化</span></div><div class="line"></div><div class="line"><span class="keyword">int</span> ans;</div><div class="line"></div><div class="line"><span class="keyword">int</span> k,n,m;</div><div class="line"></div><div class="line"><span class="keyword">int</span> vis[MAXN];</div><div class="line"></div><div class="line"><span class="keyword">int</span> link[MAXN];</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; Graph[MAXN];</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;MAXN;i++)</div><div class="line"></div><div class="line">      Graph[i].clear();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">FindPath</span><span class="params">(<span class="keyword">int</span> u)</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;Graph[u].size();i++)&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> v = Graph[u][i];</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(vis[v]==<span class="number">0</span>)&#123;</div><div class="line"></div><div class="line">            vis[v]=<span class="number">1</span>;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(link[v]==<span class="number">-1</span>||FindPath(link[v]))&#123;</div><div class="line"></div><div class="line">                link[v]=u;</div><div class="line"></div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">hungary</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="built_in">memset</span>(link,<span class="number">-1</span>,<span class="keyword">sizeof</span>(link));</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</div><div class="line"></div><div class="line">        <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(FindPath(i))</div><div class="line"></div><div class="line">          ans++;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> ans;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2017/03/08/浅析匈牙利算法/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2017/02/24/关系数据库-范式/" >关系数据理论</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-02-24  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<a id="more"></a>
+<h2 id="一-问题的提出"><a href="#一-问题的提出" class="headerlink" title="一.问题的提出"></a>一.问题的提出</h2><h3 id="1-数据冗余导致的问题"><a href="#1-数据冗余导致的问题" class="headerlink" title="1.数据冗余导致的问题"></a>1.数据冗余导致的问题</h3><ol>
+<li>冗余存储: 信息被重复存储</li>
+<li>更新异常: 当重复信息的一个副本被修改时,要对所有副本进行同样的修改</li>
+<li>插入异常: 只有当一些信息事先已经存放在数据库中时,另外一些信息才能存入数据库中</li>
+<li>删除异常: 删除某些信息时可能丢失其他信息</li>
+</ol>
+<h3 id="2-模式分解导致的问题"><a href="#2-模式分解导致的问题" class="headerlink" title="2.模式分解导致的问题"></a>2.模式分解导致的问题</h3><ol>
+<li>有损分解: 通过连接分解后的较小关系不能完全还原被分解关系的所有实例</li>
+<li>依赖丢失: 部分属性之间的依赖丢失</li>
+</ol>
+<h2 id="二-函数依赖的定义"><a href="#二-函数依赖的定义" class="headerlink" title="二.函数依赖的定义"></a>二.函数依赖的定义</h2><h3 id="1-函数依赖"><a href="#1-函数依赖" class="headerlink" title="1.函数依赖"></a>1.函数依赖</h3><blockquote>
+<p>关系模式中属性之间存在的一种约束关系</p>
+</blockquote>
+<p>设r(R)为关系模式,α⊆R,γ⊆R,对任意合法关系r及其中任意两个元祖t<sub>i</sub>和t<sub>j</sub>,i≠j,若t<sub>i</sub>[α]=t<sub>j</sub>[α],则t<sub>i</sub>[γ]=t<sub>j</sub>[γ],则称α函数确定γ,或γ函数依赖于α,记作α→γ<br>简单来说就像函数y=f(x),x唯一确定y<br><img src="http://okc9ihakz.bkt.clouddn.com/%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96.png" alt="函数依赖"></p>
+<h3 id="2-平凡与非平凡函数依赖"><a href="#2-平凡与非平凡函数依赖" class="headerlink" title="2.平凡与非平凡函数依赖"></a>2.平凡与非平凡函数依赖</h3><p><strong>非平凡函数依赖</strong>:若α→γ,但γ不是α的真子集,则称α→γ是非平凡函数依赖<br><img src="http://okc9ihakz.bkt.clouddn.com/%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96.png" alt="函数依赖"><br><strong>平凡函数依赖</strong>:如γ是α的真子集,则称α→γ是平凡函数依赖<br><img src="http://okc9ihakz.bkt.clouddn.com/%E5%B9%B3%E5%87%A1%E4%BE%9D%E8%B5%96.png" alt="平凡函数依赖"></p>
+<h3 id="3-完全函数依赖和部分函数依赖"><a href="#3-完全函数依赖和部分函数依赖" class="headerlink" title="3.完全函数依赖和部分函数依赖"></a>3.完全函数依赖和部分函数依赖</h3><blockquote>
+<p>对于任意γ⊂α,γ→β都不成立,则称α→β是完全函数依赖,否则称部分函数依赖</p>
+</blockquote>
+<p>部分函数依赖<br><img src="http://okc9ihakz.bkt.clouddn.com/%E9%83%A8%E5%88%86%E4%BE%9D%E8%B5%96.png" alt="部分函数依赖"></p>
+<h3 id="4-传递函数依赖"><a href="#4-传递函数依赖" class="headerlink" title="4.传递函数依赖"></a>4.传递函数依赖</h3><blockquote>
+<p>若α→β,β→γ,则必存在函数依赖α→γ</p>
+</blockquote>
+<p><img src="http://okc9ihakz.bkt.clouddn.com/%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96.png" alt="传递函数依赖"></p>
+<h2 id="三-范式"><a href="#三-范式" class="headerlink" title="三.范式"></a>三.范式</h2><blockquote>
+<p>基于函数依赖理论,关系模式可分成第一范式(1NF),第二范式(2NF),第三范式(3NF)和Boyce-Codd范式</p>
+</blockquote>
+<h3 id="1-目标"><a href="#1-目标" class="headerlink" title="1.目标"></a>1.目标</h3><ol>
+<li>减少数据冗余</li>
+<li>消除异常（插入异常，更新异常，删除异常）</li>
+</ol>
+<h3 id="2-第一范式-码"><a href="#2-第一范式-码" class="headerlink" title="2.第一范式-码"></a>2.第一范式-码</h3><p><strong>每个属性都不可再分</strong></p>
+<table>
+<thead>
+<tr>
+<th>学号</th>
+<th>姓名</th>
+<th>系名</th>
+<th>系主任</th>
+<th>课名</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h4><p> <strong>1.插入异常</strong>：当出现新的系时，无法单独地添加系名与系主任的数据到数据表中<br> <strong>2.更新异常</strong>：当某个学生转系时，需要将与该学生有关的记录一起修改<br> <strong>3.删除异常</strong>：当某个系的所有学生删除时，该系也不复存在（一个系所有学生都没有了，并不表示这个系就没有了）<br> <strong>4.数据冗余</strong>：每一名学生的学号、姓名、系名、系主任这些数据重复多次</p>
+<h3 id="3-第二范式-全部是码"><a href="#3-第二范式-全部是码" class="headerlink" title="3.第二范式-全部是码"></a>3.第二范式-全部是码</h3><p><strong>消除非主属性对码的部分函数依赖</strong><br><strong>简单的说，是表中的属性必须完全依赖于全部主键，而不是部分主键</strong></p>
+<p><strong>判断是否符合2NF的方法</strong><br>上表为例</p>
+<ol>
+<li>确定码（学号，课名）</li>
+<li>确定非主属性（系名，系主任，课名，分数）</li>
+<li>查看是否存在非主属性对码的部分函数依赖{<br>对于<strong>（学号，课名） → 姓名</strong>，有 <strong>学号 → 姓名</strong>，存在非主属性 姓名 对码（学号，课名）的部分函数依赖。<br>对于<strong>（学号，课名） → 系名</strong>，有 <strong>学号 → 系名</strong>，存在非主属性 系名 对码（学号，课名）的部分函数依赖。<br>对于<strong>（学号，课名） → 系主任</strong>，有<strong>学号 → 系主任</strong>，存在非主属性 对码（学号，课名）的部分函数依赖。<br>}</li>
+</ol>
+<p>所以该表只符合1NF,不符合2NF</p>
+<h4 id="模式分解"><a href="#模式分解" class="headerlink" title="模式分解"></a>模式分解</h4><p>将上述表拆分成两个表</p>
+<table>
+<thead>
+<tr>
+<th>学号</th>
+<th>姓名</th>
+<th>系名 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>码：（学号，姓名）</p>
+<table>
+<thead>
+<tr>
+<th>学号</th>
+<th>姓名</th>
+<th>系名</th>
+<th>系主任</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>码：（学号）因为码只有一个属性，所以不可能存在非主属性对于码 的部分函数依赖，所以此表符合2NF的要求</p>
+<h4 id="出现的问题-1"><a href="#出现的问题-1" class="headerlink" title="出现的问题"></a>出现的问题</h4><p><strong>1.删除异常</strong>：删除某个系中所有的学生记录，该系的信息仍然全部丢失<br><strong>2.插入异常</strong>：无法插入一个尚无学生的新系的信息。因为学生表的码是学号，不能为空，所以此操作不被允许</p>
+<h3 id="4-第三范式-仅仅是码"><a href="#4-第三范式-仅仅是码" class="headerlink" title="4.第三范式-仅仅是码"></a>4.第三范式-仅仅是码</h3><p><strong>消除了非主属性对于码的传递函数依赖</strong></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>作者：刘慰<br>链接：<a href="https://www.zhihu.com/question/24696366/answer/29189700" target="_blank" rel="external">https://www.zhihu.com/question/24696366/answer/29189700</a><br>来源：知乎</p>
+
+	
+	</div>
+  <a type="button" href="/2017/02/24/关系数据库-范式/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2017/02/23/LeetCode486-Predict-the-Winner/" >LeetCode486. Predict the Winner</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-02-23  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p><a href="https://leetcode.com/problems/predict-the-winner/?tab=Description">题目传送门</a><br>
+	
+	</div>
+  <a type="button" href="/2017/02/23/LeetCode486-Predict-the-Winner/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2017/02/17/Codeforces731B-Coupons-and-Discounts/" >[Codeforces731B]Coupons and Discounts</a>
 		</h3>
 		</div>
@@ -382,130 +626,6 @@ var _hmt = _hmt || [];
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/01/27/Happy-New-Year-2017/" >Happy New Year 2017</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-01-27  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p>今天除夕夜，写下今年的愿望吧~<br>
-	
-	</div>
-  <a type="button" href="/2017/01/27/Happy-New-Year-2017/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/01/27/CodeForcesEdu17A-k-th-divisor/" >CodeForcesEdu17[A.k-th divisor]</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-01-27  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p><a href="http://codeforces.com/contest/762/problem/A">传送门</a><br>
-	
-	</div>
-  <a type="button" href="/2017/01/27/CodeForcesEdu17A-k-th-divisor/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/01/26/LeetCode413-Arithmetic-Slices/" >LeetCode413. Arithmetic Slices</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-01-26  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<a id="more"></a>
-<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定一个数组，求满足连续的相邻的元素的差值一样的子序列（至少3个元素）有多少个？<br>[1,2,3,4]-&gt;[1,2,3],[2,3,4],[1,2,3,4] 3个</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>预处理数组相邻元素的差值</li>
-<li>遍历找差值一样的片段</li>
-</ol>
-<p>例如数组A为<code>[1,2,3,4,6,7,8]</code><br>预处理后得到数组<code>[1,1,1,2,1,1]</code><br>找到两个值相同的片段<code>[1,1,1]</code>,<code>[1,1]</code>，长度分别为3和2<br>长度为<code>n</code>的片段代表有<code>n+1</code>个连续的元素差值相同，则长度大于等于3的子序列有<code>∑(n-1)</code>种</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>第一次写的版本<br>缺陷：修改了原数组<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberOfArithmeticSlices</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> cnt = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; A.length-<span class="number">1</span>;i++)&#123;</div><div class="line">            A[i]=A[i+<span class="number">1</span>]-A[i];</div><div class="line">            <span class="keyword">if</span>(i!=<span class="number">0</span> &amp;&amp; A[i]==A[i-<span class="number">1</span>]) cnt++;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">if</span>(cnt&gt;=<span class="number">2</span>) ans+=(cnt*(cnt-<span class="number">1</span>))/<span class="number">2</span>;</div><div class="line">                cnt = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(cnt&gt;=<span class="number">2</span>) ans+=(cnt*(cnt-<span class="number">1</span>))/<span class="number">2</span>;</div><div class="line">        <span class="keyword">return</span> ans;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>优化版本<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberOfArithmeticSlices</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> curr = <span class="number">0</span>, sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;A.length; i++)</div><div class="line">        <span class="keyword">if</span> (A[i]-A[i-<span class="number">1</span>] == A[i-<span class="number">1</span>]-A[i-<span class="number">2</span>]) &#123;</div><div class="line">            curr += <span class="number">1</span>;</div><div class="line">            sum += curr;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            curr = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-	
-	</div>
-  <a type="button" href="/2017/01/26/LeetCode413-Arithmetic-Slices/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/01/25/LeetCode338-Counting-Bits/" >LeetCode338.Counting Bits</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-01-25  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<a id="more"></a>
-<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>O(n)复杂度计算0到num每个数字二进制表示中1的个数。</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li><strong>找出最优子结构</strong>：当计算二进制为n位的数字时，n-1位的所有情况已经计算过了</li>
-<li><strong>推出状态转移方程</strong>：ans[i] = ans[i&gt;&gt;1]+(i&amp;1)</li>
-</ol>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</div><div class="line">       <span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[num+<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= num;i++)</div><div class="line">            ans[i] = ans[i&gt;&gt;<span class="number">1</span>]+(i&amp;<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> ans;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-	
-	</div>
-  <a type="button" href="/2017/01/25/LeetCode338-Counting-Bits/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -555,48 +675,48 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
+			<li><a href="/tags/翻译/">翻译<span>5</span></a></li>
 		
-			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
-		
-			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
-		
-			<li><a href="/tags/并查集/">并查集<span>1</span></a></li>
-		
-			<li><a href="/tags/Hibernate/">Hibernate<span>2</span></a></li>
-		
-			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
-		
-			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
-		
-			<li><a href="/tags/翻译/">翻译<span>4</span></a></li>
-		
-			<li><a href="/tags/ST/">ST<span>1</span></a></li>
-		
-			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>4</span></a></li>
-		
-			<li><a href="/tags/排序/">排序<span>1</span></a></li>
-		
-			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
-		
-			<li><a href="/tags/Django-RESTful-framework/">Django RESTful framework<span>0</span></a></li>
-		
-			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
+			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
 		
 			<li><a href="/tags/Algorithm/">Algorithm<span>1</span></a></li>
 		
-			<li><a href="/tags/Django/">Django<span>4</span></a></li>
+			<li><a href="/tags/二分图的最大匹配/">二分图的最大匹配<span>1</span></a></li>
+		
+			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
+		
+			<li><a href="/tags/Spring/">Spring<span>1</span></a></li>
+		
+			<li><a href="/tags/Django/">Django<span>5</span></a></li>
+		
+			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
+		
+			<li><a href="/tags/review/">review<span>2</span></a></li>
+		
+			<li><a href="/tags/Java/">Java<span>4</span></a></li>
+		
+			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
+		
+			<li><a href="/tags/置换轮换/">置换轮换<span>1</span></a></li>
 		
 			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
 		
-			<li><a href="/tags/Math/">Math<span>2</span></a></li>
+			<li><a href="/tags/ST/">ST<span>1</span></a></li>
 		
-			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
+			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
 		
-			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
+			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
+		
+			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
+		
+			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
+		
+			<li><a href="/tags/Hibernate/">Hibernate<span>2</span></a></li>
+		
+			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
 		
 		
-		   <li><a href="/tags">...<span>36</span></a></li>
+		   <li><a href="/tags">...<span>34</span></a></li>
 		 
 		</ul>
 	</div>
@@ -609,23 +729,23 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2018/02/15/HAPPY-NEW-YEAR-2018/" ><i class="fa fa-file-o"></i>HAPPY NEW YEAR 2018</a>
+      </li>
+    
+      <li>
+        <a href="/2018/02/12/Django-REST-framework-教程6：Viewsets和Routers/" ><i class="fa fa-file-o"></i>Django REST framework 教程6：V...</a>
+      </li>
+    
+      <li>
+        <a href="/2018/02/12/Django-REST-framework-教程5：关系和超链接API/" ><i class="fa fa-file-o"></i>Django REST framework 教程5：关...</a>
+      </li>
+    
+      <li>
+        <a href="/2018/02/12/Django-REST-framework-教程4：认证与权限/" ><i class="fa fa-file-o"></i>Django REST framework 教程4：认...</a>
+      </li>
+    
+      <li>
         <a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/" ><i class="fa fa-file-o"></i>Django REST framework  教程3：...</a>
-      </li>
-    
-      <li>
-        <a href="/2018/02/08/Django-REST-framework-教程2：请求和响应/" ><i class="fa fa-file-o"></i>Django REST framework 教程2：请...</a>
-      </li>
-    
-      <li>
-        <a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" ><i class="fa fa-file-o"></i>Django REST framework 教程1：序列化</a>
-      </li>
-    
-      <li>
-        <a href="/2018/02/06/Django-RESTful-framework快速入门/" ><i class="fa fa-file-o"></i>Django REST framework 快速入门</a>
-      </li>
-    
-      <li>
-        <a href="/2018/01/07/数据库建模/" ><i class="fa fa-file-o"></i>数据库建模</a>
       </li>
     
   </ul>

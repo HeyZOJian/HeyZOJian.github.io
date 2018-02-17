@@ -136,6 +136,130 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2017/01/27/Happy-New-Year-2017/" >Happy New Year 2017</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-01-27  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>今天除夕夜，写下今年的愿望吧~<br>
+	
+	</div>
+  <a type="button" href="/2017/01/27/Happy-New-Year-2017/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2017/01/27/CodeForcesEdu17A-k-th-divisor/" >CodeForcesEdu17[A.k-th divisor]</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-01-27  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p><a href="http://codeforces.com/contest/762/problem/A">传送门</a><br>
+	
+	</div>
+  <a type="button" href="/2017/01/27/CodeForcesEdu17A-k-th-divisor/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2017/01/26/LeetCode413-Arithmetic-Slices/" >LeetCode413. Arithmetic Slices</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-01-26  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定一个数组，求满足连续的相邻的元素的差值一样的子序列（至少3个元素）有多少个？<br>[1,2,3,4]-&gt;[1,2,3],[2,3,4],[1,2,3,4] 3个</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>预处理数组相邻元素的差值</li>
+<li>遍历找差值一样的片段</li>
+</ol>
+<p>例如数组A为<code>[1,2,3,4,6,7,8]</code><br>预处理后得到数组<code>[1,1,1,2,1,1]</code><br>找到两个值相同的片段<code>[1,1,1]</code>,<code>[1,1]</code>，长度分别为3和2<br>长度为<code>n</code>的片段代表有<code>n+1</code>个连续的元素差值相同，则长度大于等于3的子序列有<code>∑(n-1)</code>种</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>第一次写的版本<br>缺陷：修改了原数组<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberOfArithmeticSlices</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> cnt = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; A.length-<span class="number">1</span>;i++)&#123;</div><div class="line">            A[i]=A[i+<span class="number">1</span>]-A[i];</div><div class="line">            <span class="keyword">if</span>(i!=<span class="number">0</span> &amp;&amp; A[i]==A[i-<span class="number">1</span>]) cnt++;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">if</span>(cnt&gt;=<span class="number">2</span>) ans+=(cnt*(cnt-<span class="number">1</span>))/<span class="number">2</span>;</div><div class="line">                cnt = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(cnt&gt;=<span class="number">2</span>) ans+=(cnt*(cnt-<span class="number">1</span>))/<span class="number">2</span>;</div><div class="line">        <span class="keyword">return</span> ans;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>优化版本<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberOfArithmeticSlices</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> curr = <span class="number">0</span>, sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;A.length; i++)</div><div class="line">        <span class="keyword">if</span> (A[i]-A[i-<span class="number">1</span>] == A[i-<span class="number">1</span>]-A[i-<span class="number">2</span>]) &#123;</div><div class="line">            curr += <span class="number">1</span>;</div><div class="line">            sum += curr;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            curr = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+	
+	</div>
+  <a type="button" href="/2017/01/26/LeetCode413-Arithmetic-Slices/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2017/01/25/LeetCode338-Counting-Bits/" >LeetCode338.Counting Bits</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-01-25  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>O(n)复杂度计算0到num每个数字二进制表示中1的个数。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li><strong>找出最优子结构</strong>：当计算二进制为n位的数字时，n-1位的所有情况已经计算过了</li>
+<li><strong>推出状态转移方程</strong>：ans[i] = ans[i&gt;&gt;1]+(i&amp;1)</li>
+</ol>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</div><div class="line">       <span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[num+<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= num;i++)</div><div class="line">            ans[i] = ans[i&gt;&gt;<span class="number">1</span>]+(i&amp;<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> ans;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2017/01/25/LeetCode338-Counting-Bits/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2017/01/23/LeetCode232-两个栈实现队列/" >LeetCode232 两个栈实现队列</a>
 		</h3>
 		</div>
@@ -464,186 +588,6 @@ var _hmt = _hmt || [];
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/01/10/leetCode-17-1-10/" >LeetCode(Easy)-17/1/10</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-01-10  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<a id="more"></a>
-<h4 id="461-Hamming-Distance"><a href="#461-Hamming-Distance" class="headerlink" title="461. Hamming Distance"></a>461. Hamming Distance</h4><ul>
-<li>题意：两个数字的二进制有多少位不同</li>
-<li>思路：判断x^y的二进制结果有多少个1</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingDistance</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> xor = x ^ y;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;=<span class="number">31</span>;i++)</div><div class="line">            sum +=(xor &gt;&gt; i) &amp; <span class="number">1</span>;</div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h4 id="412-Fizz-Buzz"><a href="#412-Fizz-Buzz" class="headerlink" title="412. Fizz Buzz"></a>412. Fizz Buzz</h4><ul>
-<li>题意：3的倍数输出Fizz，5的倍数输出Buzz，既是3的倍数也是5的倍数输出FizzBuzz</li>
-<li>思路：先判断既是3和5的倍数的情况</li>
-</ul>
-<p>代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">fizzBuzz</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	List&lt;String&gt; ans = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		<span class="keyword">for</span>(Integer i = <span class="number">1</span>;i &lt;= n;i++)&#123;</div><div class="line">			<span class="keyword">if</span>(i%<span class="number">3</span>==<span class="number">0</span> &amp;&amp; i%<span class="number">5</span>==<span class="number">0</span>)</div><div class="line">				ans.add(<span class="string">"FizzBuzz"</span>);</div><div class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(i%<span class="number">3</span>==<span class="number">0</span>)</div><div class="line">				ans.add(<span class="string">"Fizz"</span>);</div><div class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(i%<span class="number">5</span>==<span class="number">0</span>)</div><div class="line">				ans.add(<span class="string">"Buzz"</span>);</div><div class="line">			<span class="keyword">else</span></div><div class="line">				ans.add(i.toString());</div><div class="line">			&#125;</div><div class="line">		<span class="keyword">return</span> ans;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="344-Reverse-String"><a href="#344-Reverse-String" class="headerlink" title="344. Reverse String"></a>344. Reverse String</h4><ul>
-<li>题意：反转一个字符串</li>
-<li>思路：递归翻转，每次将字符串分半</li>
-</ul>
-<p>代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">reverseString</span><span class="params">(String s)</span></span>&#123;</div><div class="line">		<span class="keyword">if</span>(s.length()&lt;=<span class="number">1</span>)</div><div class="line">			<span class="keyword">return</span> s;</div><div class="line">		<span class="keyword">return</span> reverseString(s.substring(s.length()/<span class="number">2</span>,s.length())) + reverseString(s.substring(<span class="number">0</span>,s.length()/<span class="number">2</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="463-Island-Perimeter"><a href="#463-Island-Perimeter" class="headerlink" title="463. Island Perimeter"></a>463. Island Perimeter</h4><ul>
-<li>题意：给一个01矩阵，1代表陆地，0代表海，问需要多少围栏将陆地围成一块</li>
-<li>思路：遍历矩阵，假设一个1需要4个围栏，判断每个1四周是否为1，为1则减去一个围栏</li>
-</ul>
-<p>代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">islandPerimeter</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> x;</div><div class="line">        <span class="keyword">int</span> y;</div><div class="line">        <span class="keyword">int</span>[][] dir= <span class="keyword">new</span> <span class="keyword">int</span>[][]&#123;&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;-<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;&#125;;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;grid.length;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j =<span class="number">0</span>;j&lt;grid[<span class="number">0</span>].length;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(grid[i][j]==<span class="number">1</span>) &#123;</div><div class="line">                    <span class="keyword">int</span> cnt = <span class="number">4</span>;</div><div class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">4</span>; k++) &#123;</div><div class="line">                        x = i + dir[k][<span class="number">0</span>];</div><div class="line">                        y = j + dir[k][<span class="number">1</span>];</div><div class="line">                        <span class="keyword">if</span> (x &gt;= <span class="number">0</span> &amp;&amp; x &lt; grid.length &amp;&amp; y &gt;= <span class="number">0</span> &amp;&amp; y &lt; grid[<span class="number">0</span>].length) &#123;</div><div class="line">                            <span class="keyword">if</span> (grid[x][y] == <span class="number">1</span>)</div><div class="line">                                cnt--;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    ans+=cnt;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ans;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="448-Find-All-Numbers-Disappeared-in-an-Array"><a href="#448-Find-All-Numbers-Disappeared-in-an-Array" class="headerlink" title="448. Find All Numbers Disappeared in an Array"></a>448. Find All Numbers Disappeared in an Array</h4><ul>
-<li>题意：找出数组（1≤a[i]≤n，n = size of array）中没出现的数字</li>
-<li>思路：<ol>
-<li>开一个数组记录哪些数字出现过</li>
-<li>对每个元素nums[nums[i] -1] = -nums[nums[i]-1]，最后哪个位置的值大于则该下标对应的数字就是没出现过的</li>
-</ol>
-</li>
-</ul>
-<p>代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">findDisappearedNumbers</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">       List&lt;Integer&gt; ret = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</div><div class="line">           <span class="keyword">int</span> val = Math.abs(nums[i]) - <span class="number">1</span>;</div><div class="line">           <span class="keyword">if</span>(nums[val] &gt; <span class="number">0</span>)</div><div class="line">               nums[val] = -nums[val];</div><div class="line">       &#125;  </div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</div><div class="line">           <span class="keyword">if</span>(nums[i] &gt; <span class="number">0</span>)</div><div class="line">               ret.add(i+<span class="number">1</span>);</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">return</span> ret;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<h4 id="136-Single-Number"><a href="#136-Single-Number" class="headerlink" title="136. Single Number"></a>136. Single Number</h4><ul>
-<li>题意：给定一个整数数组，每个数字都出现两次但有个数字只出现一次，找出这个数字</li>
-<li>思路：将数组所有的元素异或一遍，因为两个相同的数字异或的结果为0，0与一个数字异或结果不变</li>
-</ul>
-<p>代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> ans = nums[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; nums.length;i++)</div><div class="line">            ans^=nums[i];</div><div class="line">        <span class="keyword">return</span> ans;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="371-Sum-of-Two-Integers"><a href="#371-Sum-of-Two-Integers" class="headerlink" title="371. Sum of Two Integers"></a>371. Sum of Two Integers</h4><ul>
-<li>题意：不使用四则运算符实现两个数相加</li>
-<li>思路：相同位相加时会进位</li>
-<li>例子：7+2<br>  =0111+0010<br>  =0101+0100<br>  =1000+0001<br>  =1001（9）</li>
-</ul>
-<p>代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(a==<span class="number">0</span>)<span class="keyword">return</span> b;</div><div class="line">        <span class="keyword">if</span>(b==<span class="number">0</span>)<span class="keyword">return</span> a;</div><div class="line">        <span class="keyword">while</span>(b!=<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">int</span> carry = a &amp; b;<span class="comment">//找相同位</span></div><div class="line">            a = a ^ b;<span class="comment">//找不同位</span></div><div class="line">            b = carry&lt;&lt;<span class="number">1</span>;<span class="comment">//进位</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> a;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<h4 id="104-Maximum-Depth-of-Binary-Tree"><a href="#104-Maximum-Depth-of-Binary-Tree" class="headerlink" title="104. Maximum Depth of Binary Tree"></a>104. Maximum Depth of Binary Tree</h4><ul>
-<li>题意：求一棵二叉树的最大深度</li>
-<li>思路：递归左右子树的深度，返回最大值</li>
-</ul>
-<p>代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> depthLeft = maxDepth(root.left);</div><div class="line">        <span class="keyword">int</span> depthRight = maxDepth(root.right);</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>+(depthLeft &gt; depthRight ? depthLeft : depthRight);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="389-Find-the-Difference"><a href="#389-Find-the-Difference" class="headerlink" title="389. Find the Difference"></a>389. Find the Difference</h4><ul>
-<li>题意：给两个只包含小写的字符串，第二个字符串是在第一字符串随机洗乱后再随机插入一个字符，找出这个字符</li>
-<li>思路：</li>
-</ul>
-<ol>
-<li>两个数组记录每个字符串中小写字母出现的次数</li>
-<li>通过异或运算</li>
-</ol>
-<p>代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">findTheDifference</span><span class="params">(String s, String t)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> n = t.length();</div><div class="line">	<span class="keyword">char</span> c = t.charAt(n - <span class="number">1</span>);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; ++i) &#123;</div><div class="line">		c ^= s.charAt(i);</div><div class="line">		c ^= t.charAt(i);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> c;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="258-Add-Digits"><a href="#258-Add-Digits" class="headerlink" title="258. Add Digits"></a>258. Add Digits</h4><ul>
-<li>题意：给一个数反复的将每位数相加，直到结果为一位数（38-&gt;3+8=11-&gt;1+1=2）</li>
-<li>思路：</li>
-</ul>
-<ol>
-<li>递归求解</li>
-<li>（100a+10b+c）%9 = (a+99a+b+9b+c)%9=(a+b+c)%9</li>
-</ol>
-<p>代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">addDigits</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> num==<span class="number">0</span>?<span class="number">0</span>:(num%<span class="number">9</span>==<span class="number">0</span>?<span class="number">9</span>:(num%<span class="number">9</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-	
-	</div>
-  <a type="button" href="/2017/01/10/leetCode-17-1-10/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2016/10/03/CCPC2016长春赛后流水账/" >CCPC2016长春赛后流水账</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2016-10-03  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-           
-              <div class="thumbnail"><a href="/2016/10/03/CCPC2016长春赛后流水账/"><img src="http://okc9ihakz.bkt.clouddn.com/IMG_20160928_200526.jpg?imageslim" alt="CCPC2016长春赛后流水账"  class="nofancybox"></a>
-           
-		</div>
-	
-	
-		<blockquote>
-<p>8月14号各自在家中打网络赛，拿到一个长春赛区的名额。确认名额到参赛时间仅剩一个月时间。</p>
-</blockquote>
-	
-	</div>
-  <a type="button" href="/2016/10/03/CCPC2016长春赛后流水账/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2016/09/20/CodeVs1017-乘积最大/" >[CodeVs1017]乘积最大</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2016-09-20  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p><a href="http://codevs.cn/problem/1017/">题目传送门</a><br>
-	
-	</div>
-  <a type="button" href="/2016/09/20/CodeVs1017-乘积最大/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2016/09/20/CodeVs1058-合唱队形/" >[CodeVs1058]合唱队形</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2016-09-20  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p><a href="http://codevs.cn/problem/1058/">题目传送门</a><br>
-	
-	</div>
-  <a type="button" href="/2016/09/20/CodeVs1058-合唱队形/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -693,48 +637,48 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/匈牙利算法/">匈牙利算法<span>1</span></a></li>
+			<li><a href="/tags/置换轮换/">置换轮换<span>1</span></a></li>
 		
-			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
+			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
 		
-			<li><a href="/tags/Django-RESTful-framework/">Django RESTful framework<span>0</span></a></li>
-		
-			<li><a href="/tags/Hibernate/">Hibernate<span>2</span></a></li>
-		
-			<li><a href="/tags/翻译/">翻译<span>4</span></a></li>
+			<li><a href="/tags/review/">review<span>2</span></a></li>
 		
 			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
 		
-			<li><a href="/tags/Math/">Math<span>2</span></a></li>
-		
-			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
-		
-			<li><a href="/tags/DP/">DP<span>7</span></a></li>
+			<li><a href="/tags/二分图的最大匹配/">二分图的最大匹配<span>1</span></a></li>
 		
 			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
 		
 			<li><a href="/tags/ST/">ST<span>1</span></a></li>
 		
-			<li><a href="/tags/review/">review<span>2</span></a></li>
+			<li><a href="/tags/翻译/">翻译<span>5</span></a></li>
 		
-			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
+			<li><a href="/tags/Django/">Django<span>5</span></a></li>
 		
-			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
+			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
 		
-			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
+			<li><a href="/tags/DP/">DP<span>7</span></a></li>
 		
-			<li><a href="/tags/二分图的最大匹配/">二分图的最大匹配<span>1</span></a></li>
+			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
 		
-			<li><a href="/tags/Spring/">Spring<span>1</span></a></li>
+			<li><a href="/tags/Math/">Math<span>2</span></a></li>
+		
+			<li><a href="/tags/匈牙利算法/">匈牙利算法<span>1</span></a></li>
+		
+			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
+		
+			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
+		
+			<li><a href="/tags/杂/">杂<span>3</span></a></li>
 		
 			<li><a href="/tags/Algorithm/">Algorithm<span>1</span></a></li>
 		
-			<li><a href="/tags/排序/">排序<span>1</span></a></li>
+			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
 		
-			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
+			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
 		
 		
-		   <li><a href="/tags">...<span>36</span></a></li>
+		   <li><a href="/tags">...<span>34</span></a></li>
 		 
 		</ul>
 	</div>
@@ -747,23 +691,23 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2018/02/15/HAPPY-NEW-YEAR-2018/" ><i class="fa fa-file-o"></i>HAPPY NEW YEAR 2018</a>
+      </li>
+    
+      <li>
+        <a href="/2018/02/12/Django-REST-framework-教程6：Viewsets和Routers/" ><i class="fa fa-file-o"></i>Django REST framework 教程6：V...</a>
+      </li>
+    
+      <li>
+        <a href="/2018/02/12/Django-REST-framework-教程5：关系和超链接API/" ><i class="fa fa-file-o"></i>Django REST framework 教程5：关...</a>
+      </li>
+    
+      <li>
+        <a href="/2018/02/12/Django-REST-framework-教程4：认证与权限/" ><i class="fa fa-file-o"></i>Django REST framework 教程4：认...</a>
+      </li>
+    
+      <li>
         <a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/" ><i class="fa fa-file-o"></i>Django REST framework  教程3：...</a>
-      </li>
-    
-      <li>
-        <a href="/2018/02/08/Django-REST-framework-教程2：请求和响应/" ><i class="fa fa-file-o"></i>Django REST framework 教程2：请...</a>
-      </li>
-    
-      <li>
-        <a href="/2018/02/07/Django-RESTful-framework教程1：序列化/" ><i class="fa fa-file-o"></i>Django REST framework 教程1：序列化</a>
-      </li>
-    
-      <li>
-        <a href="/2018/02/06/Django-RESTful-framework快速入门/" ><i class="fa fa-file-o"></i>Django REST framework 快速入门</a>
-      </li>
-    
-      <li>
-        <a href="/2018/01/07/数据库建模/" ><i class="fa fa-file-o"></i>数据库建模</a>
       </li>
     
   </ul>

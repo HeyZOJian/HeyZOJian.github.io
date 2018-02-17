@@ -9,9 +9,7 @@
   <title>Django REST framework  教程3：基于类的视图 | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="我们也可以写类视图，而不是方法视图。我们将看到一个强大的模式，该模式允许我们复用公共功能，并且保持代码的DRY（Don’t repeat yourself）。
-使用基于类的视图重新我们的API使用类视图重构views.py。
-1234567891011121314151617181920212223">
+  <meta name="description" content="我们也可以写类视图，而不是方法视图。我们将看到一个强大的模式，该模式允许我们复用公共功能，并且保持代码的DRY（Don’t repeat yourself）。">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -137,7 +135,7 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <p>我们也可以写类视图，而不是方法视图。我们将看到一个强大的模式，该模式允许我们复用公共功能，并且保持代码的DRY（Don’t repeat yourself）。</p>
+	  <p>我们也可以写类视图，而不是方法视图。我们将看到一个强大的模式，该模式允许我们复用公共功能，并且保持代码的DRY（Don’t repeat yourself）。<br><a id="more"></a></p>
 <h2 id="使用基于类的视图重新我们的API"><a href="#使用基于类的视图重新我们的API" class="headerlink" title="使用基于类的视图重新我们的API"></a>使用基于类的视图重新我们的API</h2><p>使用类视图重构<code>views.py</code>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</div><div class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</div><div class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> Http404</div><div class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</div><div class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> status</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetList</span><span class="params">(APIView)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    List all snippets, or create a new snippet.</div><div class="line">    """</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, format=None)</span>:</span></div><div class="line">        snippets = Snippet.objects.all()</div><div class="line">        serializer = SnippetSerializer(snippets, many=<span class="keyword">True</span>)</div><div class="line">        <span class="keyword">return</span> Response(serializer.data)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, format=None)</span>:</span></div><div class="line">        serializer = SnippetSerializer(data=request.data)</div><div class="line">        <span class="keyword">if</span> serializer.is_valid():</div><div class="line">            serializer.save()</div><div class="line">            <span class="keyword">return</span> Response(serializer.data, status=status.HTTP_201_CREATED)</div><div class="line">        <span class="keyword">return</span> Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)</div></pre></td></tr></table></figure>
 <p>目前看来还不错。感觉跟之前的例子很像，但是我们现在把两种不同的HTTP方法分成两个函数了。我们继续重构单个代码片段的视图。</p>
@@ -166,7 +164,8 @@ var _hmt = _hmt || [];
 
     
     
-    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>上一页</a>
+    <a href="/2018/02/12/Django-REST-framework-教程4：认证与权限/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
     
 
     <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
@@ -213,7 +212,7 @@ var _hmt = _hmt || [];
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Django/">Django<span>4</span></a></li> <li><a href="/tags/Django-REST-framework/">Django REST framework<span>4</span></a></li> <li><a href="/tags/翻译/">翻译<span>4</span></a></li>
+  <li><a href="/tags/Django/">Django<span>5</span></a></li> <li><a href="/tags/Django-REST-framework/">Django REST framework<span>5</span></a></li> <li><a href="/tags/翻译/">翻译<span>5</span></a></li>
     </ul>
 	</div>
 		
