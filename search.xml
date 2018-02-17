@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[HAPPY NEW YEAR 2018]]></title>
       <url>/2018/02/15/HAPPY-NEW-YEAR-2018/</url>
-      <content type="html"><![CDATA[<p>2017年过去了，拿到各种证，考（不）过研，无悔<br><del>家人身体健康</del><br><del>蓝桥杯省赛拿个一等去北京旅游</del><br><del>ACM省赛拿个铜牌结束自己的生涯</del><br>找个女朋友？<br>暑假找个满意的实习<br>去个没去过的地旅游<br><del>体重控制在140-150</del><br>早睡早起</p>
+      <content type="html"><![CDATA[<p>2017年过去了，拿到各种证，考（不）过研，无悔<br><a id="more"></a><br><del>家人身体健康</del><br><del>蓝桥杯省赛拿个一等去北京旅游</del><br><del>ACM省赛拿个铜牌结束自己的生涯</del><br>找个女朋友？<br>暑假找个满意的实习<br>去个没去过的地旅游<br><del>体重控制在140-150</del><br>早睡早起</p>
 <p>//2018</p>
 <ul>
 <li>家人身体健康</li>
@@ -31,6 +31,16 @@
       <content type="html"></content>
       
         
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Django REST framework </tag>
+            
+            <tag> 翻译 </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -38,6 +48,16 @@
       <url>/2018/02/12/Django-REST-framework-%E6%95%99%E7%A8%8B5%EF%BC%9A%E5%85%B3%E7%B3%BB%E5%92%8C%E8%B6%85%E9%93%BE%E6%8E%A5API/</url>
       <content type="html"></content>
       
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Django REST framework </tag>
+            
+            <tag> 翻译 </tag>
+            
+        </tags>
         
     </entry>
     
