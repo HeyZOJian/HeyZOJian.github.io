@@ -6,13 +6,17 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
   
-  <title>HDU | Hexo</title>
+  <title>vue axios post出现&quot;CSRF token missing or incorrect&quot; | Hexo</title>
   <meta name="author" content="John Doe">
+  
+  <meta name="description" content="登陆后保存服务器返回的csrftoken到localstore
+创建axios时添加X-CSRFTOKEN头部
+123var instance = axios.create(&amp;#123;            headers:&amp;#123;&#39;X-CSRFTOKEN&#39;:localStorage.getI">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="vue axios post出现&quot;CSRF token missing or incorrect&quot;"/>
   <meta property="og:site_name" content="Hexo"/>
 
   
@@ -113,163 +117,108 @@ var _hmt = _hmt || [];
   	<div class="content">
     	 
 
-<!-- title -->
-<div class="page-header">
-  <h1 class="archive-title-tag"><i class="fa fa-archive"></i> HDU</h1>
-</div>
 
-<div class="row page">
-  <!-- cols -->
-  
-  <div class="col-md-9">
 	
-
-	  <div id="top_search"></div>
-
-	  <div class="archive">
-		
-		
-		
-			
-			
-			<h4 class="archive-ul" data-toggle="collapse" data-target="#2016">2016<b class="caret"></b></h4>
-			<ul id="2016" class="collapse in">
-			
-		
-		<li class="listing-item">
-		<span class="date_class"> 2016-07-26 </span> &raquo;
-		
-		   <span class="title"><a href="/2016/07/26/HDU5752-Sqrt-Bo/" >[HDU5752]Sqrt Bo</a></span>
-		
-		</li>			
-		
-		
-		
-		<li class="listing-item">
-		<span class="date_class"> 2016-07-26 </span> &raquo;
-		
-		   <span class="title"><a href="/2016/07/26/HDU5762-Teacher-Bo/" >[HDU5762]Teacher Bo</a></span>
-		
-		</li>			
-		
-		</ul>
+		<div class="page-header">
+			<h1> vue axios post出现&quot;CSRF token missing or incorrect&quot;</h1>
 		</div>
-
-</div> <!-- col-md-9/col-md-12 -->
-
-
-<div class="col-md-3">
-	<div id="sidebar">
 	
-			
-  <div id="site_search">
-   <div class="form-group">
-    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
-   </div>  
-  <div id="local-search-result"></div>
-  </div>
 
 
-		
-			
-		
-			
-	<div class="widget">
-		<h4>标签云</h4>
-		<ul class="tag_box inline list-unstyled">		
-		
-			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>7</span></a></li>
-		
-			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
-		
-			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
-		
-			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
-		
-			<li><a href="/tags/Java/">Java<span>4</span></a></li>
-		
-			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
-		
-			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
-		
-			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
-		
-			<li><a href="/tags/ST/">ST<span>1</span></a></li>
-		
-			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
-		
-			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
-		
-			<li><a href="/tags/DP/">DP<span>7</span></a></li>
-		
-			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
-		
-			<li><a href="/tags/并查集/">并查集<span>1</span></a></li>
-		
-			<li><a href="/tags/Vue/">Vue<span>1</span></a></li>
-		
-			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
-		
-			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
-		
-			<li><a href="/tags/Math/">Math<span>2</span></a></li>
-		
-			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
-		
-			<li><a href="/tags/Django/">Django<span>8</span></a></li>
-		
-		
-		   <li><a href="/tags">...<span>35</span></a></li>
-		 
-		</ul>
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <ol>
+<li>登陆后保存服务器返回的<code>csrftoken</code>到localstore</li>
+<li><p>创建axios时添加<code>X-CSRFTOKEN</code>头部</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> instance = axios.create(&#123;</div><div class="line">            <span class="attr">headers</span>:&#123;<span class="string">'X-CSRFTOKEN'</span>:localStorage.getItem(<span class="string">'csrftoken'</span>) &#125;</div><div class="line">        &#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>解决</p>
+</li>
+</ol>
+	  
 	</div>
 
+	<div>
+  	<center>
+	<div class="pagination">
 
-		
-			
-<div class="widget">
-  <h4>最新文章</h4>
-  <ul class="entry list-unstyled">
     
-      <li>
-        <a href="/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/" ><i class="fa fa-file-o"></i>vue axios post出现&quot;CSRF token...</a>
-      </li>
     
-      <li>
-        <a href="/2018/02/15/HAPPY-NEW-YEAR-2018/" ><i class="fa fa-file-o"></i>HAPPY NEW YEAR 2018</a>
-      </li>
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>上一页</a>
     
-      <li>
-        <a href="/2018/02/12/Django-REST-framework-教程6：Viewsets和Routers/" ><i class="fa fa-file-o"></i>Django REST framework 教程6：V...</a>
-      </li>
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
     
-      <li>
-        <a href="/2018/02/12/Django-REST-framework-教程5：关系和超链接API/" ><i class="fa fa-file-o"></i>Django REST framework 教程5：关...</a>
-      </li>
+    <a href="/2018/02/15/HAPPY-NEW-YEAR-2018/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
     
-      <li>
-        <a href="/2018/02/12/Django-REST-framework-教程4：认证与权限/" ><i class="fa fa-file-o"></i>Django REST framework 教程4：认...</a>
-      </li>
+
     
-  </ul>
 </div>
 
-		
-			
-<div class="widget">
-	<h4>链接</h4>
-	<ul class="blogroll list-unstyled">
+    </center>
+	</div>
 	
-		<li><i class="fa fa-github"></i><a href="https://github.com/HeyZOJian" title="My Github account." target="_blank"]);">My Github</a></li>
+	<!-- comment -->
 	
-	</ul>
-</div>
+<section id="comment">
+    <h2 class="title">留言</h2>
+
+    
+</section>
 
 
+	</div> <!-- col-md-9/col-md-12 -->
 		
-	</div> <!-- sidebar -->
-</div> <!-- col-md-3 -->
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
 
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-04-08 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Django/">Django<span>8</span></a></li> <li><a href="/tags/Vue/">Vue<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
 
 
 

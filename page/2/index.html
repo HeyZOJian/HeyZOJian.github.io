@@ -136,6 +136,55 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2017/05/21/乐观锁-悲观锁/" >乐观锁-悲观锁</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-05-21  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+           
+              <div class="thumbnail"><a href="/2017/05/21/乐观锁-悲观锁/"><img src="http://okc9ihakz.bkt.clouddn.com/jason-blackeye-198848.jpg?slimimage" alt="乐观锁-悲观锁"  class="nofancybox"></a>
+           
+		</div>
+	
+	
+		<a id="more"></a>
+<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h2><p>对数据被外界修改持保守态度，在整个数据处理过程中，将数据处于<strong>锁定状态</strong>。其实现依靠数据库的锁机制，以保证操作最大程度的独占性。但随之而来的就是数据库性能的大量开销。<br>以<strong>MySQL InnoDB</strong>为例,当使用<code>SELECT FOR UPDATE</code>就会使用悲观锁，前提是把事务自动提交取消<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> autocommit = <span class="number">0</span>;</div></pre></td></tr></table></figure></p>
+<p>使用悲观锁的原理就是，当我们在查询出信息后就把当前的数据锁定，直到我们修改完毕后再解锁。<br>根据查询条件的不同，锁定的范围也不同</p>
+<ol>
+<li>当查询条件中<strong>指定明确主键</strong>，并且有此数据——–行级锁（row lock）</li>
+<li>当查询条件中<strong>指定明确主键</strong>，但无次数据———-无锁</li>
+<li>当查询条件中<strong>无主键</strong>————————-表级锁（table lock）</li>
+<li>当查询条件中<strong>主键不明确</strong>———————-表级锁（table lock）</li>
+</ol>
+<h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h2><p>乐观锁大多基于<strong>数据版本记录机制</strong>实现，即为数据增加一个版本标识，在基于数据库表的版本解决方案，一般是通过为数据库表增加一个 “version” 字段来实现。也可以采用另一种方式，同样是在需要乐观锁控制的table中增加一个字段，名称无所谓，字段类型使用时间戳timestamp中，<br><strong>操作步骤</strong></p>
+<ol>
+<li>读取出数据时，将此版本号（时间戳）一同读出</li>
+<li>更新时，比较数据库中该数据当前的版本号和手上的版本号，不一致说明版本冲突，一致则OK，将版本号+1或者获取当前时间戳后将数据更新回数据库</li>
+</ol>
+<p><strong>缺点</strong><br>乐观锁机制往往基于系统中的数据存储逻辑，那么来自外部系统的更新操作不受我们系统的控制，因此可能会造成脏数据被更新到数据库中。<br><strong>解决</strong><br>如将乐观锁策略在数据库存储过程中实现，对外只开放基于此存储过程的数据更新途径，而不是将数据库表直接对外公开</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.36nu.com/post/162.html" target="_blank" rel="external">muyuren | mysql悲观锁详解</a></p>
+<p><a href="https://www.36nu.com/post/163.html" target="_blank" rel="external">muyuren | mysql乐观锁详解</a></p>
+
+	
+	</div>
+  <a type="button" href="/2017/05/21/乐观锁-悲观锁/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2017/05/10/Hibernate-NotNull-NotEmpty-NotBlank区别/" >Hibernate NotNull NotEmpty NotBlank区别</a>
 		</h3>
 		</div>
@@ -643,44 +692,6 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/03/10/Merge-Sort归并排序/" >[读薄系列]Merge Sort归并排序</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-03-10  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<a id="more"></a>
-<h2 id="排序基本思想"><a href="#排序基本思想" class="headerlink" title="排序基本思想"></a>排序基本思想</h2><h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将序列递归折半分割</p>
-<h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><p>回溯将之前被分割的两个序列<strong>合并后排序</strong></p>
-<h3 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h3><p><strong>原始序列</strong> 9 6 7 2 5 1 8 4 2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">分割</div><div class="line">9 6 7 2     |     5 1 8 4 2</div><div class="line"></div><div class="line">9 6 | 7 2         5 1 | 8 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8 | 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8   4 | 2</div><div class="line"></div><div class="line">合并</div><div class="line">6 9 |  2 7        1 5 | 8 | 2 4</div><div class="line"></div><div class="line">2 6 7 9           1 5 | 2 4 8</div><div class="line"></div><div class="line">2 6 7 9           1 2 4 5 6</div><div class="line"></div><div class="line">1 2 2 4 5 6 7 8 9</div></pre></td></tr></table></figure></p>
-<h3 id="如何合并"><a href="#如何合并" class="headerlink" title="如何合并"></a>如何合并</h3><p><strong>目标</strong><br>将包含n1个元素的数组L以及包含n2个元素的数组R，合并到数组A中</p>
-<p><strong>利用的条件</strong><br>两个数组均已排好序</p>
-<p><strong>合并过程</strong><br>每次从两个数组中取出一个元素进行比较，将小的那个元素放入数组A中，最后将各段中余下的部分直接复制到数组A中。<br>为了简化合并代码的实现，可以在两个数组末尾分别插入一个大于所有元素的标记。在比较L，R元素的过程中，肯定会遇到元素与标记相比较，知道标记设置得足够大，且将比较次数限制在n1+n2之内，就可以既防止两个标记比较，又防止循环变量i，j分别超过n1，n2.</p>
-<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p><strong>时间复杂度</strong><br>一般来说，n个数据大致会分为log<sub>2</sub>n层，由于每次合并的总复杂度是O(n)，因此归并排序整体的时间复杂度是O(nlog<sub>2</sub>n)</p>
-<p><strong>空间复杂度</strong><br>由于合并需要复制到另一个数组，故空间复杂度为O(n)</p>
-<p><strong>稳定性</strong><br>在合并两个已经排序的序列时，如果遇到相同的元素，只有保证前半部分数组优于后半部分数组，相同元素的顺序就不会颠倒了，因此归并排序属于<strong>稳定</strong>的排序算法</p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>C++<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 500000</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SENTINEL 0x3f3f3f3f <span class="comment">//标记</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> L[MAX/<span class="number">2</span>],R[MAX/<span class="number">2</span>+<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n, <span class="keyword">int</span> left,i nt mid, <span class="keyword">int</span> right)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> n1 = mid-left;</div><div class="line">    <span class="keyword">int</span> n2 = right-mid;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n1; i++) L[i] = A[left+i];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n2; i++) R[i] = A[mid+i];</div><div class="line">    L[n1] = R[n2] = SENTINEL;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = left; k &lt; right; k++)&#123;</div><div class="line">        <span class="keyword">if</span>(L[i] &lt;= R[i])&#123;<span class="comment">//保证稳定性</span></div><div class="line">            A[k] = L[i++];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            A[k] = R[j++];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(left+<span class="number">1</span> &lt; right)&#123;</div><div class="line">        <span class="keyword">int</span> mid = (left + right)/<span class="number">2</span>;</div><div class="line">        <span class="comment">//分割</span></div><div class="line">        mergeSort(A, n, left, mid);</div><div class="line">        mergeSort(A, n, mid, right);</div><div class="line">        <span class="comment">//合并</span></div><div class="line">        merge(A, n, left, mid, right);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-	
-	</div>
-  <a type="button" href="/2017/03/10/Merge-Sort归并排序/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -730,48 +741,48 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
-		
-			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
-		
-			<li><a href="/tags/匈牙利算法/">匈牙利算法<span>1</span></a></li>
-		
-			<li><a href="/tags/并查集/">并查集<span>1</span></a></li>
-		
-			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
-		
-			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
-		
-			<li><a href="/tags/DP/">DP<span>7</span></a></li>
-		
-			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
-		
-			<li><a href="/tags/置换轮换/">置换轮换<span>1</span></a></li>
+			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
 		
 			<li><a href="/tags/ST/">ST<span>1</span></a></li>
 		
 			<li><a href="/tags/杂/">杂<span>3</span></a></li>
 		
+			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
+		
+			<li><a href="/tags/置换轮换/">置换轮换<span>1</span></a></li>
+		
+			<li><a href="/tags/匈牙利算法/">匈牙利算法<span>1</span></a></li>
+		
+			<li><a href="/tags/Vue/">Vue<span>1</span></a></li>
+		
+			<li><a href="/tags/review/">review<span>2</span></a></li>
+		
+			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
+		
 			<li><a href="/tags/Hibernate/">Hibernate<span>2</span></a></li>
 		
-			<li><a href="/tags/排序/">排序<span>1</span></a></li>
+			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
 		
-			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
+			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
+		
+			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
 		
 			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
 		
-			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
-		
 			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
 		
-			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
+			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
 		
-			<li><a href="/tags/Math/">Math<span>2</span></a></li>
+			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
 		
-			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
+			<li><a href="/tags/Django/">Django<span>8</span></a></li>
+		
+			<li><a href="/tags/二分图的最大匹配/">二分图的最大匹配<span>1</span></a></li>
+		
+			<li><a href="/tags/DP/">DP<span>7</span></a></li>
 		
 		
-		   <li><a href="/tags">...<span>34</span></a></li>
+		   <li><a href="/tags">...<span>35</span></a></li>
 		 
 		</ul>
 	</div>
@@ -782,6 +793,10 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/" ><i class="fa fa-file-o"></i>vue axios post出现&quot;CSRF token...</a>
+      </li>
     
       <li>
         <a href="/2018/02/15/HAPPY-NEW-YEAR-2018/" ><i class="fa fa-file-o"></i>HAPPY NEW YEAR 2018</a>
@@ -797,10 +812,6 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
     
       <li>
         <a href="/2018/02/12/Django-REST-framework-教程4：认证与权限/" ><i class="fa fa-file-o"></i>Django REST framework 教程4：认...</a>
-      </li>
-    
-      <li>
-        <a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/" ><i class="fa fa-file-o"></i>Django REST framework  教程3：...</a>
       </li>
     
   </ul>

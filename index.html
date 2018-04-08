@@ -136,6 +136,41 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/" >vue axios post出现&quot;CSRF token missing or incorrect&quot;</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2018-04-08  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<ol>
+<li>登陆后保存服务器返回的<code>csrftoken</code>到localstore</li>
+<li><p>创建axios时添加<code>X-CSRFTOKEN</code>头部</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> instance = axios.create(&#123;</div><div class="line">            <span class="attr">headers</span>:&#123;<span class="string">'X-CSRFTOKEN'</span>:localStorage.getItem(<span class="string">'csrftoken'</span>) &#125;</div><div class="line">        &#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>解决</p>
+</li>
+</ol>
+
+	
+	</div>
+  <a type="button" href="/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2018/02/15/HAPPY-NEW-YEAR-2018/" >HAPPY NEW YEAR 2018</a>
 		</h3>
 		</div>
@@ -485,55 +520,6 @@ var _hmt = _hmt || [];
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/05/21/乐观锁-悲观锁/" >乐观锁-悲观锁</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-05-21  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-           
-              <div class="thumbnail"><a href="/2017/05/21/乐观锁-悲观锁/"><img src="http://okc9ihakz.bkt.clouddn.com/jason-blackeye-198848.jpg?slimimage" alt="乐观锁-悲观锁"  class="nofancybox"></a>
-           
-		</div>
-	
-	
-		<a id="more"></a>
-<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h2><p>对数据被外界修改持保守态度，在整个数据处理过程中，将数据处于<strong>锁定状态</strong>。其实现依靠数据库的锁机制，以保证操作最大程度的独占性。但随之而来的就是数据库性能的大量开销。<br>以<strong>MySQL InnoDB</strong>为例,当使用<code>SELECT FOR UPDATE</code>就会使用悲观锁，前提是把事务自动提交取消<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> autocommit = <span class="number">0</span>;</div></pre></td></tr></table></figure></p>
-<p>使用悲观锁的原理就是，当我们在查询出信息后就把当前的数据锁定，直到我们修改完毕后再解锁。<br>根据查询条件的不同，锁定的范围也不同</p>
-<ol>
-<li>当查询条件中<strong>指定明确主键</strong>，并且有此数据——–行级锁（row lock）</li>
-<li>当查询条件中<strong>指定明确主键</strong>，但无次数据———-无锁</li>
-<li>当查询条件中<strong>无主键</strong>————————-表级锁（table lock）</li>
-<li>当查询条件中<strong>主键不明确</strong>———————-表级锁（table lock）</li>
-</ol>
-<h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h2><p>乐观锁大多基于<strong>数据版本记录机制</strong>实现，即为数据增加一个版本标识，在基于数据库表的版本解决方案，一般是通过为数据库表增加一个 “version” 字段来实现。也可以采用另一种方式，同样是在需要乐观锁控制的table中增加一个字段，名称无所谓，字段类型使用时间戳timestamp中，<br><strong>操作步骤</strong></p>
-<ol>
-<li>读取出数据时，将此版本号（时间戳）一同读出</li>
-<li>更新时，比较数据库中该数据当前的版本号和手上的版本号，不一致说明版本冲突，一致则OK，将版本号+1或者获取当前时间戳后将数据更新回数据库</li>
-</ol>
-<p><strong>缺点</strong><br>乐观锁机制往往基于系统中的数据存储逻辑，那么来自外部系统的更新操作不受我们系统的控制，因此可能会造成脏数据被更新到数据库中。<br><strong>解决</strong><br>如将乐观锁策略在数据库存储过程中实现，对外只开放基于此存储过程的数据更新途径，而不是将数据库表直接对外公开</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.36nu.com/post/162.html" target="_blank" rel="external">muyuren | mysql悲观锁详解</a></p>
-<p><a href="https://www.36nu.com/post/163.html" target="_blank" rel="external">muyuren | mysql乐观锁详解</a></p>
-
-	
-	</div>
-  <a type="button" href="/2017/05/21/乐观锁-悲观锁/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -583,48 +569,48 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
+			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
 		
-			<li><a href="/tags/ST/">ST<span>1</span></a></li>
+			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
 		
-			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
-		
-			<li><a href="/tags/DP/">DP<span>7</span></a></li>
-		
-			<li><a href="/tags/Django/">Django<span>7</span></a></li>
-		
-			<li><a href="/tags/Java/">Java<span>4</span></a></li>
-		
-			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
-		
-			<li><a href="/tags/置换轮换/">置换轮换<span>1</span></a></li>
-		
-			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
-		
-			<li><a href="/tags/翻译/">翻译<span>7</span></a></li>
-		
-			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
+			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
 		
 			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
 		
-			<li><a href="/tags/review/">review<span>2</span></a></li>
+			<li><a href="/tags/Java/">Java<span>4</span></a></li>
 		
-			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
+			<li><a href="/tags/并查集/">并查集<span>1</span></a></li>
+		
+			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
+		
+			<li><a href="/tags/翻译/">翻译<span>7</span></a></li>
 		
 			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>7</span></a></li>
 		
-			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
+			<li><a href="/tags/杂/">杂<span>3</span></a></li>
 		
-			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
+			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
+		
+			<li><a href="/tags/Vue/">Vue<span>1</span></a></li>
+		
+			<li><a href="/tags/排序/">排序<span>1</span></a></li>
+		
+			<li><a href="/tags/ST/">ST<span>1</span></a></li>
+		
+			<li><a href="/tags/DP/">DP<span>7</span></a></li>
+		
+			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
+		
+			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
+		
+			<li><a href="/tags/Django/">Django<span>8</span></a></li>
 		
 			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
 		
-			<li><a href="/tags/杂/">杂<span>3</span></a></li>
-		
-			<li><a href="/tags/Hibernate/">Hibernate<span>2</span></a></li>
+			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
 		
 		
-		   <li><a href="/tags">...<span>34</span></a></li>
+		   <li><a href="/tags">...<span>35</span></a></li>
 		 
 		</ul>
 	</div>
@@ -635,6 +621,10 @@ var _hmt = _hmt || [];
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/" ><i class="fa fa-file-o"></i>vue axios post出现&quot;CSRF token...</a>
+      </li>
     
       <li>
         <a href="/2018/02/15/HAPPY-NEW-YEAR-2018/" ><i class="fa fa-file-o"></i>HAPPY NEW YEAR 2018</a>
@@ -650,10 +640,6 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2018/02/12/Django-REST-framework-教程4：认证与权限/" ><i class="fa fa-file-o"></i>Django REST framework 教程4：认...</a>
-      </li>
-    
-      <li>
-        <a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/" ><i class="fa fa-file-o"></i>Django REST framework  教程3：...</a>
       </li>
     
   </ul>

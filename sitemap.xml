@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/04/08/vue-axios-post%E5%87%BA%E7%8E%B0CSRF-token-missing-or-incorrect/</loc>
+    
+    <lastmod>2018-04-08T13:47:16.393Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/02/12/Django-REST-framework-%E6%95%99%E7%A8%8B5%EF%BC%9A%E5%85%B3%E7%B3%BB%E5%92%8C%E8%B6%85%E9%93%BE%E6%8E%A5API/</loc>
     
     <lastmod>2018-02-17T09:42:34.976Z</lastmod>

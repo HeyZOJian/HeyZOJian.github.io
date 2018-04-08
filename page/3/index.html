@@ -136,6 +136,44 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2017/03/10/Merge-Sort归并排序/" >[读薄系列]Merge Sort归并排序</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-03-10  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<a id="more"></a>
+<h2 id="排序基本思想"><a href="#排序基本思想" class="headerlink" title="排序基本思想"></a>排序基本思想</h2><h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将序列递归折半分割</p>
+<h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><p>回溯将之前被分割的两个序列<strong>合并后排序</strong></p>
+<h3 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h3><p><strong>原始序列</strong> 9 6 7 2 5 1 8 4 2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">分割</div><div class="line">9 6 7 2     |     5 1 8 4 2</div><div class="line"></div><div class="line">9 6 | 7 2         5 1 | 8 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8 | 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8   4 | 2</div><div class="line"></div><div class="line">合并</div><div class="line">6 9 |  2 7        1 5 | 8 | 2 4</div><div class="line"></div><div class="line">2 6 7 9           1 5 | 2 4 8</div><div class="line"></div><div class="line">2 6 7 9           1 2 4 5 6</div><div class="line"></div><div class="line">1 2 2 4 5 6 7 8 9</div></pre></td></tr></table></figure></p>
+<h3 id="如何合并"><a href="#如何合并" class="headerlink" title="如何合并"></a>如何合并</h3><p><strong>目标</strong><br>将包含n1个元素的数组L以及包含n2个元素的数组R，合并到数组A中</p>
+<p><strong>利用的条件</strong><br>两个数组均已排好序</p>
+<p><strong>合并过程</strong><br>每次从两个数组中取出一个元素进行比较，将小的那个元素放入数组A中，最后将各段中余下的部分直接复制到数组A中。<br>为了简化合并代码的实现，可以在两个数组末尾分别插入一个大于所有元素的标记。在比较L，R元素的过程中，肯定会遇到元素与标记相比较，知道标记设置得足够大，且将比较次数限制在n1+n2之内，就可以既防止两个标记比较，又防止循环变量i，j分别超过n1，n2.</p>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p><strong>时间复杂度</strong><br>一般来说，n个数据大致会分为log<sub>2</sub>n层，由于每次合并的总复杂度是O(n)，因此归并排序整体的时间复杂度是O(nlog<sub>2</sub>n)</p>
+<p><strong>空间复杂度</strong><br>由于合并需要复制到另一个数组，故空间复杂度为O(n)</p>
+<p><strong>稳定性</strong><br>在合并两个已经排序的序列时，如果遇到相同的元素，只有保证前半部分数组优于后半部分数组，相同元素的顺序就不会颠倒了，因此归并排序属于<strong>稳定</strong>的排序算法</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>C++<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 500000</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SENTINEL 0x3f3f3f3f <span class="comment">//标记</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> L[MAX/<span class="number">2</span>],R[MAX/<span class="number">2</span>+<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n, <span class="keyword">int</span> left,i nt mid, <span class="keyword">int</span> right)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> n1 = mid-left;</div><div class="line">    <span class="keyword">int</span> n2 = right-mid;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n1; i++) L[i] = A[left+i];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n2; i++) R[i] = A[mid+i];</div><div class="line">    L[n1] = R[n2] = SENTINEL;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = left; k &lt; right; k++)&#123;</div><div class="line">        <span class="keyword">if</span>(L[i] &lt;= R[i])&#123;<span class="comment">//保证稳定性</span></div><div class="line">            A[k] = L[i++];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            A[k] = R[j++];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(left+<span class="number">1</span> &lt; right)&#123;</div><div class="line">        <span class="keyword">int</span> mid = (left + right)/<span class="number">2</span>;</div><div class="line">        <span class="comment">//分割</span></div><div class="line">        mergeSort(A, n, left, mid);</div><div class="line">        mergeSort(A, n, mid, right);</div><div class="line">        <span class="comment">//合并</span></div><div class="line">        merge(A, n, left, mid, right);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+	
+	</div>
+  <a type="button" href="/2017/03/10/Merge-Sort归并排序/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2017/03/09/未来火车站建设/" >未来火车站建设</a>
 		</h3>
 		</div>
@@ -588,44 +626,6 @@ var _hmt = _hmt || [];
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2017/01/31/LeetCode238-Product-of-Array-Except-Self/" >LeetCode238. Product of Array Except Self</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-01-31  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<a id="more"></a>
-<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个数组A，生成一个数组B，<code>B[i] = A[0] x A[1] x..x A[i-1] x A[i+1] x..x A[n]</code><br>时间复杂度O(N)，不能使用除法</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>仔细看一下，其实每次计算B[i]就是前面i-1个元素相乘，乘上后面i+1个元素相乘。<br>所以只要预处理前缀积和后缀积即可。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><ol>
-<li><p>版本1  O(N)，S(N)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    	<span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">        	<span class="keyword">int</span>[] pre = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];<span class="comment">//前缀积</span></div><div class="line">        	<span class="keyword">int</span>[] sub = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];<span class="comment">//后缀积</span></div><div class="line">        	<span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line">        	pre[<span class="number">0</span>] = nums[<span class="number">0</span>];</div><div class="line">        	sub[nums.length-<span class="number">1</span>]=nums[nums.length-<span class="number">1</span>];</div><div class="line">        	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;nums.length;i++)</div><div class="line">            	pre[i] = pre[i-<span class="number">1</span>]*nums[i];</div><div class="line">        	<span class="keyword">for</span>(<span class="keyword">int</span> i = nums.length-<span class="number">2</span>;i&gt;=<span class="number">0</span>;i--)</div><div class="line">            	sub[i] = sub[i+<span class="number">1</span>]*nums[i];</div><div class="line">        	ans[<span class="number">0</span>] = sub[<span class="number">1</span>];</div><div class="line">        	ans[nums.length-<span class="number">1</span>]=pre[nums.length-<span class="number">2</span>];</div><div class="line">        	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;nums.length-<span class="number">1</span>;i++)</div><div class="line">            	ans[i] = pre[i-<span class="number">1</span>]*sub[i+<span class="number">1</span>];<span class="comment">//前i-1个的积*后i+1个的积</span></div><div class="line">        	<span class="keyword">return</span> ans;</div><div class="line">    	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>版本2 O(N),S(1)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">		<span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">    		<span class="keyword">int</span> n = nums.length;</div><div class="line">    		<span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">    		res[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">    		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)</div><div class="line">        		res[i] = res[i - <span class="number">1</span>] * nums[i - <span class="number">1</span>];<span class="comment">//res[i]保存的是前i-1个数的积</span></div><div class="line">    		<span class="keyword">int</span> right = <span class="number">1</span>;</div><div class="line">    		<span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">        		res[i] *= right;<span class="comment">//当前的right值为后i+1个数的积</span></div><div class="line">        		right *= nums[i];<span class="comment">//更新为后i个数的积</span></div><div class="line">    		&#125;</div><div class="line">    		<span class="keyword">return</span> res;</div><div class="line">		&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-
-	
-	</div>
-  <a type="button" href="/2017/01/31/LeetCode238-Product-of-Array-Except-Self/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -675,48 +675,48 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/翻译/">翻译<span>7</span></a></li>
-		
-			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
-		
 			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
 		
-			<li><a href="/tags/杂/">杂<span>3</span></a></li>
-		
-			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
-		
-			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
-		
-			<li><a href="/tags/二分图的最大匹配/">二分图的最大匹配<span>1</span></a></li>
-		
-			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
-		
-			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
-		
-			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
-		
-			<li><a href="/tags/Math/">Math<span>2</span></a></li>
-		
-			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>7</span></a></li>
-		
-			<li><a href="/tags/排序/">排序<span>1</span></a></li>
-		
-			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
-		
-			<li><a href="/tags/Algorithm/">Algorithm<span>1</span></a></li>
-		
-			<li><a href="/tags/Spring/">Spring<span>1</span></a></li>
+			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
 		
 			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
 		
-			<li><a href="/tags/Django/">Django<span>7</span></a></li>
-		
-			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
-		
 			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
 		
+			<li><a href="/tags/Hibernate/">Hibernate<span>2</span></a></li>
 		
-		   <li><a href="/tags">...<span>34</span></a></li>
+			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
+		
+			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
+		
+			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
+		
+			<li><a href="/tags/二分图的最大匹配/">二分图的最大匹配<span>1</span></a></li>
+		
+			<li><a href="/tags/Java/">Java<span>4</span></a></li>
+		
+			<li><a href="/tags/Vue/">Vue<span>1</span></a></li>
+		
+			<li><a href="/tags/DP/">DP<span>7</span></a></li>
+		
+			<li><a href="/tags/并查集/">并查集<span>1</span></a></li>
+		
+			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
+		
+			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
+		
+			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
+		
+			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
+		
+			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
+		
+			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
+		
+			<li><a href="/tags/Math/">Math<span>2</span></a></li>
+		
+		
+		   <li><a href="/tags">...<span>35</span></a></li>
 		 
 		</ul>
 	</div>
@@ -727,6 +727,10 @@ var _hmt = _hmt || [];
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/" ><i class="fa fa-file-o"></i>vue axios post出现&quot;CSRF token...</a>
+      </li>
     
       <li>
         <a href="/2018/02/15/HAPPY-NEW-YEAR-2018/" ><i class="fa fa-file-o"></i>HAPPY NEW YEAR 2018</a>
@@ -742,10 +746,6 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2018/02/12/Django-REST-framework-教程4：认证与权限/" ><i class="fa fa-file-o"></i>Django REST framework 教程4：认...</a>
-      </li>
-    
-      <li>
-        <a href="/2018/02/08/Django-REST-framework-教程3：基于类的视图/" ><i class="fa fa-file-o"></i>Django REST framework  教程3：...</a>
       </li>
     
   </ul>

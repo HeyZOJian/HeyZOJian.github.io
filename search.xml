@@ -3,6 +3,30 @@
   
     
     <entry>
+      <title><![CDATA[vue axios post出现"CSRF token missing or incorrect"]]></title>
+      <url>/2018/04/08/vue-axios-post%E5%87%BA%E7%8E%B0CSRF-token-missing-or-incorrect/</url>
+      <content type="html"><![CDATA[<ol>
+<li>登陆后保存服务器返回的<code>csrftoken</code>到localstore</li>
+<li><p>创建axios时添加<code>X-CSRFTOKEN</code>头部</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> instance = axios.create(&#123;</div><div class="line">            <span class="attr">headers</span>:&#123;<span class="string">'X-CSRFTOKEN'</span>:localStorage.getItem(<span class="string">'csrftoken'</span>) &#125;</div><div class="line">        &#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>解决</p>
+</li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Vue </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[HAPPY NEW YEAR 2018]]></title>
       <url>/2018/02/15/HAPPY-NEW-YEAR-2018/</url>
       <content type="html"><![CDATA[<p>2017年过去了，拿到各种证，考（不）过研，无悔<br><a id="more"></a><br><del>家人身体健康</del><br><del>蓝桥杯省赛拿个一等去北京旅游</del><br><del>ACM省赛拿个铜牌结束自己的生涯</del><br>找个女朋友？<br>暑假找个满意的实习<br>去个没去过的地旅游<br><del>体重控制在140-150</del><br>早睡早起</p>
@@ -1226,9 +1250,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
             
             <tag> Math </tag>
             
-            <tag> Java </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> Java </tag>
             
         </tags>
         
@@ -1280,9 +1304,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
         
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> Java </tag>
             
         </tags>
         
@@ -1307,9 +1331,9 @@ on CUSTOMERS.ID=ORDERS.CUSTOMER_ID</code></li>
         
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> Java </tag>
             
         </tags>
         

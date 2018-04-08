@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-17T09:41:44.487Z</updated>
+  <updated>2018-04-08T13:47:16.393Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vue axios post出现&quot;CSRF token missing or incorrect&quot;</title>
+    <link href="http://yoursite.com/2018/04/08/vue-axios-post%E5%87%BA%E7%8E%B0CSRF-token-missing-or-incorrect/"/>
+    <id>http://yoursite.com/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/</id>
+    <published>2018-04-08T13:44:45.000Z</published>
+    <updated>2018-04-08T13:47:16.393Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>登陆后保存服务器返回的<code>csrftoken</code>到localstore</li><li><p>创建axios时添加<code>X-CSRFTOKEN</code>头部</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> instance = axios.create(&#123;</div><div class="line">            <span class="attr">headers</span>:&#123;<span class="string">'X-CSRFTOKEN'</span>:localStorage.getItem(<span class="string">'csrftoken'</span>) &#125;</div><div class="line">        &#125;)</div></pre></td></tr></table></figure></li><li><p>解决</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;登陆后保存服务器返回的&lt;code&gt;csrftoken&lt;/code&gt;到localstore&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;创建axios时添加&lt;code&gt;X-CSRFTOKEN&lt;/code&gt;头部&lt;/p&gt;
+&lt;figure class=&quot;highlight javascri
+      
+    
+    </summary>
+    
+    
+      <category term="Django" scheme="http://yoursite.com/tags/Django/"/>
+    
+      <category term="Vue" scheme="http://yoursite.com/tags/Vue/"/>
+    
+  </entry>
   
   <entry>
     <title>HAPPY NEW YEAR 2018</title>
@@ -468,34 +496,6 @@
       <category term="DP" scheme="http://yoursite.com/tags/DP/"/>
     
       <category term="置换轮换" scheme="http://yoursite.com/tags/%E7%BD%AE%E6%8D%A2%E8%BD%AE%E6%8D%A2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[读薄系列]Merge Sort归并排序</title>
-    <link href="http://yoursite.com/2017/03/10/Merge-Sort%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
-    <id>http://yoursite.com/2017/03/10/Merge-Sort归并排序/</id>
-    <published>2017-03-10T02:36:07.000Z</published>
-    <updated>2018-02-08T09:30:23.987Z</updated>
-    
-    <content type="html"><![CDATA[<a id="more"></a><h2 id="排序基本思想"><a href="#排序基本思想" class="headerlink" title="排序基本思想"></a>排序基本思想</h2><h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将序列递归折半分割</p><h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><p>回溯将之前被分割的两个序列<strong>合并后排序</strong></p><h3 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h3><p><strong>原始序列</strong> 9 6 7 2 5 1 8 4 2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">分割</div><div class="line">9 6 7 2     |     5 1 8 4 2</div><div class="line"></div><div class="line">9 6 | 7 2         5 1 | 8 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8 | 4 2</div><div class="line"></div><div class="line">9 | 6   7 | 2     5 | 1   8   4 | 2</div><div class="line"></div><div class="line">合并</div><div class="line">6 9 |  2 7        1 5 | 8 | 2 4</div><div class="line"></div><div class="line">2 6 7 9           1 5 | 2 4 8</div><div class="line"></div><div class="line">2 6 7 9           1 2 4 5 6</div><div class="line"></div><div class="line">1 2 2 4 5 6 7 8 9</div></pre></td></tr></table></figure></p><h3 id="如何合并"><a href="#如何合并" class="headerlink" title="如何合并"></a>如何合并</h3><p><strong>目标</strong><br>将包含n1个元素的数组L以及包含n2个元素的数组R，合并到数组A中</p><p><strong>利用的条件</strong><br>两个数组均已排好序</p><p><strong>合并过程</strong><br>每次从两个数组中取出一个元素进行比较，将小的那个元素放入数组A中，最后将各段中余下的部分直接复制到数组A中。<br>为了简化合并代码的实现，可以在两个数组末尾分别插入一个大于所有元素的标记。在比较L，R元素的过程中，肯定会遇到元素与标记相比较，知道标记设置得足够大，且将比较次数限制在n1+n2之内，就可以既防止两个标记比较，又防止循环变量i，j分别超过n1，n2.</p><h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p><strong>时间复杂度</strong><br>一般来说，n个数据大致会分为log<sub>2</sub>n层，由于每次合并的总复杂度是O(n)，因此归并排序整体的时间复杂度是O(nlog<sub>2</sub>n)</p><p><strong>空间复杂度</strong><br>由于合并需要复制到另一个数组，故空间复杂度为O(n)</p><p><strong>稳定性</strong><br>在合并两个已经排序的序列时，如果遇到相同的元素，只有保证前半部分数组优于后半部分数组，相同元素的顺序就不会颠倒了，因此归并排序属于<strong>稳定</strong>的排序算法</p><h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>C++<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 500000</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SENTINEL 0x3f3f3f3f <span class="comment">//标记</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> L[MAX/<span class="number">2</span>],R[MAX/<span class="number">2</span>+<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n, <span class="keyword">int</span> left,i nt mid, <span class="keyword">int</span> right)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> n1 = mid-left;</div><div class="line">    <span class="keyword">int</span> n2 = right-mid;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n1; i++) L[i] = A[left+i];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n2; i++) R[i] = A[mid+i];</div><div class="line">    L[n1] = R[n2] = SENTINEL;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = left; k &lt; right; k++)&#123;</div><div class="line">        <span class="keyword">if</span>(L[i] &lt;= R[i])&#123;<span class="comment">//保证稳定性</span></div><div class="line">            A[k] = L[i++];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            A[k] = R[j++];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(left+<span class="number">1</span> &lt; right)&#123;</div><div class="line">        <span class="keyword">int</span> mid = (left + right)/<span class="number">2</span>;</div><div class="line">        <span class="comment">//分割</span></div><div class="line">        mergeSort(A, n, left, mid);</div><div class="line">        mergeSort(A, n, mid, right);</div><div class="line">        <span class="comment">//合并</span></div><div class="line">        merge(A, n, left, mid, right);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;排序基本思想&quot;&gt;&lt;a href=&quot;#排序基本思想&quot; class=&quot;headerlink&quot; title=&quot;排序基本思想&quot;&gt;&lt;/a&gt;排序基本思想&lt;/h2&gt;&lt;h3 id=&quot;分割&quot;&gt;&lt;a href=&quot;#分割&quot; class=&quot;header
-      
-    
-    </summary>
-    
-    
-      <category term="读薄系列" scheme="http://yoursite.com/tags/%E8%AF%BB%E8%96%84%E7%B3%BB%E5%88%97/"/>
-    
-      <category term="排序" scheme="http://yoursite.com/tags/%E6%8E%92%E5%BA%8F/"/>
-    
-      <category term="笔记" scheme="http://yoursite.com/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
