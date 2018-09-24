@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-08T13:47:16.393Z</updated>
+  <updated>2018-09-24T15:23:53.730Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Week 0]GRE</title>
+    <link href="http://yoursite.com/2018/09/24/Week-0-GRE/"/>
+    <id>http://yoursite.com/2018/09/24/Week-0-GRE/</id>
+    <published>2018-09-24T15:12:12.000Z</published>
+    <updated>2018-09-24T15:23:53.730Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天预报名开始了，睡到十一点，打开研招网，填信息，确认，确认，一切都这么熟悉。</p><p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvl1dq17ruj30wi0ahq4g.jpg" alt=""></p><p>嗯，换了学校。</p><p>之前ITA培训，所以一直没有准备考研的事，408确实太花时间了，所以换了一家不用考408的学校。</p><hr><p>不知道到时候如果考上了，跟公司辞职会不会遇到麻烦，毕竟签了培训协议..</p><p>emmm 还是被录取了再烦恼吧哈哈哈</p><p>工作了，私人的时间也变少了，每天只有晚上回到家才有时间复习。</p><p>也不知道，这个选择是否正确，未来会怎样，但是还是心存不甘，还是觉得趁年轻，趁还有热血，去拼一把！</p><p>对英语不再那么恐惧，专业课压力也不是特别重。主要还是数学，希望这次能抓住奇数年的机会，考有生之年来的数学的最高分。</p><p>一切真的太熟悉了，加油吧！接下来的88天。</p><p>希望能保存ITA写report的习惯，每周写weekly report来回顾自己的复习进展。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天预报名开始了，睡到十一点，打开研招网，填信息，确认，确认，一切都这么熟悉。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ws2.sinaimg.cn/large/006tNbRwgy1fvl1dq17ruj30wi0ahq4g.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="GRE" scheme="http://yoursite.com/tags/GRE/"/>
+    
+  </entry>
   
   <entry>
     <title>vue axios post出现&quot;CSRF token missing or incorrect&quot;</title>
@@ -471,31 +496,6 @@
     
     
       <category term="CodeForces" scheme="http://yoursite.com/tags/CodeForces/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>脑力游戏</title>
-    <link href="http://yoursite.com/2017/03/11/%E8%84%91%E5%8A%9B%E6%B8%B8%E6%88%8F/"/>
-    <id>http://yoursite.com/2017/03/11/脑力游戏/</id>
-    <published>2017-03-11T02:04:52.000Z</published>
-    <updated>2018-02-10T13:56:21.592Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="脑力游戏"><a href="#脑力游戏" class="headerlink" title="脑力游戏"></a>脑力游戏</h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>给定n个带锁的盒子和n把钥匙，每把钥匙对应着唯一的一个盒子。初始状态下每把钥匙分别放在不同的盒子中，且所有盒子是上锁的。可以通过“暴力”打开某些盒子，取出放在里面的钥匙，然后利用拿到的钥匙去开相应的盒子。问如果只允许“暴力”打开最多k个盒子，那么在多少种状态下，可以最终打开所有盒子。(1≤n≤100, 0≤k≤n)</p><h2 id="涉及知识点"><a href="#涉及知识点" class="headerlink" title="涉及知识点"></a>涉及知识点</h2><h3 id="置换"><a href="#置换" class="headerlink" title="置换"></a>置换</h3><h4 id="1-什么是置换"><a href="#1-什么是置换" class="headerlink" title="1.什么是置换"></a>1.什么是置换</h4><p>假设S={1,2,3,.., n}，σ是S上的双射函数，则S上的n元置换记为σ<br> $$<br> \left(<br> \begin{matrix}<br> 1 &amp; 2 &amp; … &amp; n \<br> σ(1) &amp; σ(2) &amp; … &amp; σ(n)<br> \end{matrix}<br> \right)<br>$$</p><h4 id="2-什么是轮换"><a href="#2-什么是轮换" class="headerlink" title="2.什么是轮换"></a>2.什么是轮换</h4><p>设σ是S上的n元置换，若σ(i<sub>1</sub>)=i<sub>2</sub>,σ(i<sub>2</sub>)=i<sub>3</sub> ,…, σ(i<sub>k-1</sub>)=i<sub>k</sub>,σ(i<sub>k</sub>)=i<sub>1</sub><br>且保持S中的其他元素不变，则称σ为S上的<strong>k阶轮换</strong>，记作(i<sub>1</sub> i<sub>2</sub> … i<sub>k</sub>),若k=2，称σ为S上的<strong>对换</strong>。</p><h4 id="3-置换和轮换的关系"><a href="#3-置换和轮换的关系" class="headerlink" title="3.置换和轮换的关系"></a>3.置换和轮换的关系</h4><p>任何n元置换可以分解为不相交的轮换之积。<br>$$<br> \left(<br> \begin{matrix}<br> 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 &amp; 7 &amp; 8 \<br> 5 &amp; 3 &amp; 6 &amp; 4 &amp; 2 &amp; 1 &amp; 8 &amp; 7<br> \end{matrix}<br> \right)<br>$$<br>拆成(1 5 2 3 6)(4)(7 8)</p><h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><h4 id="1-判断一个问题是否可以用动态规划解决"><a href="#1-判断一个问题是否可以用动态规划解决" class="headerlink" title="1.判断一个问题是否可以用动态规划解决"></a>1.判断一个问题是否可以用动态规划解决</h4><ol><li>具有最优子结构</li><li>具有重叠子问题</li><li>无后效性</li></ol><h4 id="2-什么是最优子结构"><a href="#2-什么是最优子结构" class="headerlink" title="2.什么是最优子结构"></a>2.什么是最优子结构</h4><ol><li>一个问题的最优解包含其子问题的最优解</li><li>局部最优解能解决全局最优解</li></ol><h4 id="3-什么重叠子问题"><a href="#3-什么重叠子问题" class="headerlink" title="3.什么重叠子问题"></a>3.什么重叠子问题</h4><ol><li>每次产生的子问题并不总是新问题，有些子问题会被重复计算多少</li><li>而分治产生的子问题都是相互独立的</li></ol><h4 id="4-什么是无后效性"><a href="#4-什么是无后效性" class="headerlink" title="4.什么是无后效性"></a>4.什么是无后效性</h4><ol><li>某个状态以后的过程不会影响到以前的过程</li></ol><h4 id="5-处理动态规划问题的步骤"><a href="#5-处理动态规划问题的步骤" class="headerlink" title="5.处理动态规划问题的步骤"></a>5.处理动态规划问题的步骤</h4><ol><li>定义最优子结构</li><li>把问题看作多阶段决策的过程来求解问题</li><li>递归定义最优解</li><li>按自定向上的方式解最优解</li></ol><h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><ol><li><p>n把钥匙的不同放置方法实际上对应1~n的不同的排列。</p></li><li><p>第一次暴力打开一个盒子会出现两种情况：</p><ol><li>拿到的钥匙是该暴力打开的盒子的钥匙。</li><li>拿着该钥匙打开另一个盒子，直到拿到第一次暴力打开的那个盒子的钥匙，而这实际上构成了一个循环。</li></ol></li></ol><ol><li><p>根据离散数学的角度，这里的每种排列情况对应着一个置换，每一个循环对应一个轮换。</p></li><li><p>所以问题转化成 n！个n元置换中，有多少个置换可以分解为不超过k个不相交的轮换。由于100！非常大，所以问题不能单纯的暴力算出答案，而且需要高精度整数运算。</p></li><li><p>f[i][j]表示i元置换中可以分解为j个不相交轮换的个数。</p></li><li><p>f[n][1] + f[n][2] + … + f[n][k]即为问题所求。所以预处理求出所有状态，再将符合题目要求的结果求和。</p></li><li><p>状态转移的时候有两种情况：</p><ol><li>前面i-1个元素组成j-1个轮换，第i个元素单独作为一个一元轮换。</li><li>前面i-1个元素组成j个轮换，第i个元素加入到前面的元素组成的某个轮换中，能加入的位置有i-1个。</li></ol></li></ol><ol><li><p>假设现在有3个元素，这会将隔出4个位置 1□2□3□4 但是位置1和位置4所构成的循环是相同的。</p></li><li><p>状态转移方程 f[i][j] = f[i-1][j-1] + f[i-1][j]*(i-1)，特殊边界情况f[0][0]=1,f[0][j]=0。</p></li></ol><h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">preprocess</span><span class="params">()</span></span>&#123;</div><div class="line">f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= MAXN; i++)&#123;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j &lt;= MAXN; j++)&#123;</div><div class="line">f[i][j] = f[i<span class="number">-1</span>][j<span class="number">-1</span>] + f[i<span class="number">-1</span>][j]*(i<span class="number">-1</span>);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;脑力游戏&quot;&gt;&lt;a href=&quot;#脑力游戏&quot; class=&quot;headerlink&quot; title=&quot;脑力游戏&quot;&gt;&lt;/a&gt;脑力游戏&lt;/h1&gt;&lt;h2 id=&quot;题目大意&quot;&gt;&lt;a href=&quot;#题目大意&quot; class=&quot;headerlink&quot; title=&quot;题目大意&quot;&gt;&lt;/a
-      
-    
-    </summary>
-    
-    
-      <category term="DP" scheme="http://yoursite.com/tags/DP/"/>
-    
-      <category term="置换轮换" scheme="http://yoursite.com/tags/%E7%BD%AE%E6%8D%A2%E8%BD%AE%E6%8D%A2/"/>
     
   </entry>
   
