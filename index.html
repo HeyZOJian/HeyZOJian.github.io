@@ -136,51 +136,6 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2018/09/24/Week-0-GRE/" >[Week 0]GRE</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2018-09-24  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-           
-              <div class="thumbnail"><a href="/2018/09/24/Week-0-GRE/"><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fvl1m52b2oj317j0t1wi4.jpg" alt="[Week 0]GRE"  class="nofancybox"></a>
-           
-		</div>
-	
-	
-		<a id="more"></a>
-<p>今天预报名开始了，睡到十一点，打开研招网，填信息，确认，确认，一切都这么熟悉。</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvl1dq17ruj30wi0ahq4g.jpg" alt=""></p>
-<p>嗯，换了学校。</p>
-<p>之前ITA培训，所以一直没有准备考研的事，408确实太花时间了，所以换了一家不用考408的学校。</p>
-<hr>
-<p>不知道到时候如果考上了，跟公司辞职会不会遇到麻烦，毕竟签了培训协议..</p>
-<p>emmm 还是被录取了再烦恼吧哈哈哈</p>
-<p>工作了，私人的时间也变少了，每天只有晚上回到家才有时间复习。</p>
-<p>也不知道，这个选择是否正确，未来会怎样，但是还是心存不甘，还是觉得趁年轻，趁还有热血，去拼一把！</p>
-<p>对英语不再那么恐惧，专业课压力也不是特别重。主要还是数学，希望这次能抓住奇数年的机会，考有生之年来的数学的最高分。</p>
-<p>一切真的太熟悉了，加油吧！接下来的88天。</p>
-<p>希望能保存ITA写report的习惯，每周写weekly report来回顾自己的复习进展。</p>
-
-	
-	</div>
-  <a type="button" href="/2018/09/24/Week-0-GRE/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
 			<a href="/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/" >vue axios post出现&quot;CSRF token missing or incorrect&quot;</a>
 		</h3>
 		</div>
@@ -466,6 +421,105 @@ var _hmt = _hmt || [];
 </div>
 
 		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2018/01/07/数据库建模/" >数据库建模</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2018-01-07  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<a id="more"></a>
+<h2 id="一-数据库设计过程"><a href="#一-数据库设计过程" class="headerlink" title="一.数据库设计过程"></a>一.数据库设计过程</h2><ol>
+<li>需求分析</li>
+<li>概念设计</li>
+<li>逻辑设计</li>
+<li>模式求精</li>
+<li>物理设计</li>
+<li>应用与安全设计</li>
+</ol>
+<h2 id="二-E-R模型基本概念-实体集-联系集-属性"><a href="#二-E-R模型基本概念-实体集-联系集-属性" class="headerlink" title="二.E-R模型基本概念(实体集,联系集,属性)"></a>二.E-R模型基本概念(实体集,联系集,属性)</h2><h3 id="1-实体与实体集"><a href="#1-实体与实体集" class="headerlink" title="1. 实体与实体集"></a>1. 实体与实体集</h3><h3 id="2-属性及其分类"><a href="#2-属性及其分类" class="headerlink" title="2. 属性及其分类"></a>2. 属性及其分类</h3><ol>
+<li><strong>简单属性,复合属性</strong></li>
+<li><strong>单值属性,多值属性</strong></li>
+<li><strong>派生属性</strong></li>
+</ol>
+<h3 id="3-联系与联系集"><a href="#3-联系与联系集" class="headerlink" title="3. 联系与联系集"></a>3. 联系与联系集</h3><ol>
+<li><strong>多联系</strong>:各实体之间可以有多种不同的联系.</li>
+<li><strong>实体的角色</strong>:当同一个实体集在一个联系集中参与的次数大于一次,且每次以不同的角色参与时,要用显示的角色名定义一个实体参与联系的方式.</li>
+<li><strong>联系集的度</strong>:联系集的实体集的数目.</li>
+</ol>
+<h2 id="三-约束"><a href="#三-约束" class="headerlink" title="三.约束"></a>三.约束</h2><h3 id="1-映射约束"><a href="#1-映射约束" class="headerlink" title="1. 映射约束"></a>1. 映射约束</h3><ol>
+<li>一对一</li>
+<li>一对多</li>
+<li>多对一</li>
+<li>多对多</li>
+</ol>
+<h3 id="2-码约束"><a href="#2-码约束" class="headerlink" title="2. 码约束"></a>2. 码约束</h3><h4 id="①实体集的码"><a href="#①实体集的码" class="headerlink" title="①实体集的码"></a>①实体集的码</h4><ol>
+<li><strong>超码</strong>:唯一标识一个实体的一个或多个属性的集合.</li>
+<li><strong>候选码</strong>:一个超码的任意真子集都不能成为超码,这样最小的超码成为候选码.</li>
+<li><strong>主码</strong>:从多个候选码中选择一个作为实体集的主码.</li>
+</ol>
+<h4 id="②主码选择原则"><a href="#②主码选择原则" class="headerlink" title="②主码选择原则"></a>②主码选择原则</h4><ol>
+<li>选择属性长度最短的候选码</li>
+<li>尽量选择包含单个属性的码,而不是复合候选码</li>
+<li>选择在数据库系统生命周期内属性值最少变化的候选码</li>
+<li>选择在数据库系统生命周期内更可能包含唯一值的候选码</li>
+</ol>
+<h4 id="③联系集的码"><a href="#③联系集的码" class="headerlink" title="③联系集的码"></a>③联系集的码</h4><blockquote>
+<p>每一个联系集必须存在候选码并选择其中的一个候选码作为主码</p>
+</blockquote>
+<p><strong>一对一联系集</strong>:主码可以使用任何一方实体集的主码<br><strong>一对多(多对一)联系集</strong>:主码由”多”的一方实体集的主码组成<br><strong>多对多联系集</strong>:主码由参与联系集中所有实体集的主码组成</p>
+<h4 id="④联系集的属性安置"><a href="#④联系集的属性安置" class="headerlink" title="④联系集的属性安置"></a>④联系集的属性安置</h4><p><strong>一对一联系集的属性</strong>:可安置在任一边的实体集上<br><strong>一对多联系集的属性</strong>:可安置于联系集上,也可安置在多的那一边的实体集上<br><strong>多对多联系集的属性</strong>:只能安置在联系集上,不能放到相关联的实体集上</p>
+<h3 id="3-依赖约束"><a href="#3-依赖约束" class="headerlink" title="3. 依赖约束"></a>3. 依赖约束</h3><p><strong>依赖实体集</strong>:联系中的一种实体的存在依赖于该联系集中联系的存在<br>    如:<strong>销货单</strong>实体集与<strong>商品销售</strong>联系集<br><strong>弱实体集</strong>:联系中的一种实体的存在依赖于其他实体集中实体的存在<br>    如:<strong>开课班</strong>实体集与<strong>课程</strong>实体集</p>
+<h3 id="4-参与约束"><a href="#4-参与约束" class="headerlink" title="4. 参与约束"></a>4. 参与约束</h3><p>实体集与联系集:</p>
+<ol>
+<li>全部参与</li>
+<li>部分参与</li>
+</ol>
+<h3 id="5-多值联系"><a href="#5-多值联系" class="headerlink" title="5. 多值联系"></a>5. 多值联系</h3><p>同一个给定的联系集中,相关联的相同实体之间可能存在多个联系,如<strong>客户</strong>与<strong>银行</strong>之间<strong>多对多</strong>贷款联系集,及同时一个<strong>银行</strong>可以向多个<strong>客户</strong>发放贷款的<strong>一对多</strong>联系集.</p>
+<hr>
+<h2 id="四-弱实体集"><a href="#四-弱实体集" class="headerlink" title="四.弱实体集"></a>四.弱实体集</h2><p>某些实体集的属性不足以形成主码,他们必须依赖于其他实体集的存在而存在.</p>
+<p><strong>部分码</strong>:用来标识弱实体的属性<br>弱实体集中的实体是由标识实体集中的<strong>主码</strong>与其<strong>部分码</strong>共同标识.</p>
+<h2 id="五-扩展E-R特征"><a href="#五-扩展E-R特征" class="headerlink" title="五.扩展E-R特征"></a>五.扩展E-R特征</h2><p><strong>1. 类的层次</strong><br>E-R模型使用实体集的继承和ISA联系来描述这种概念上的继承.<br>ISA关系可以从两个方向进行设计:<br>①自上而下,先设计父类实体集,再将父类具体化为其他子类<br>②自下而上,先具体化子类实体集,再将子类中的共同属性提取出来,泛化为父类</p>
+<p><strong>2. 聚合</strong><br>聚合是一种抽象,它将一个联系集及其相关联的实体集抽象为一个<strong>联系实体集</strong>对待,然后建立该联系实体集与其他实体集之间的联系集.</p>
+<h2 id="六-E-R建模问题"><a href="#六-E-R建模问题" class="headerlink" title="六.E-R建模问题"></a>六.E-R建模问题</h2><h3 id="E-R建模的基本原则"><a href="#E-R建模的基本原则" class="headerlink" title="E-R建模的基本原则"></a>E-R建模的基本原则</h3><p><strong>1.忠实性</strong>: 设计应忠实于应用需求<br><strong>2.简单性</strong>: 除非有绝对需要,否则不要在设计中增加更多成分<br><strong>3.避免冗余</strong>: 一个对象只存放在一个地方<br><strong>4.选择实体集还是属性</strong>:<br>①不可再分<br>②不能和其他实体相联系<br>满足上述两条规则均可作为属性对待<br><strong>5.选择实体集还是联系集</strong>:<br>实体集一般对应现实生活中实际存在的事物<br>联系集一般对应一种动作<br><strong>6.多元联系转化为二元联系</strong>:</p>
+<h3 id="依赖约束的建模"><a href="#依赖约束的建模" class="headerlink" title="依赖约束的建模"></a>依赖约束的建模</h3><h3 id="多值联系的建模"><a href="#多值联系的建模" class="headerlink" title="多值联系的建模"></a>多值联系的建模</h3><ol>
+<li>将多值联系建模为弱实体集</li>
+<li>将多值联系建模为依赖实体集</li>
+</ol>
+<h2 id="E-R模型的表示"><a href="#E-R模型的表示" class="headerlink" title="E-R模型的表示"></a>E-R模型的表示</h2><ol>
+<li>实体集:矩形</li>
+<li>弱实体集:双矩形</li>
+<li>属性:椭圆</li>
+<li>多值属性:双椭圆</li>
+<li>派生属性:虚线椭圆</li>
+<li>联系(集):菱形</li>
+<li>标识联系集:双菱形</li>
+<li>属性与实体之间用连线表示</li>
+<li>加下划线的属性为实体集的主码</li>
+<li>虚下划线表示弱实体的部分码</li>
+<li>“→”指向参与联系集中”一”方实体集,”-“指向参与联系集”多”方实体集</li>
+<li>联系实体集:带菱形的矩形</li>
+</ol>
+
+	
+	</div>
+  <a type="button" href="/2018/01/07/数据库建模/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
 
 		</div>
 
@@ -515,48 +569,48 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/DP/">DP<span>7</span></a></li>
-		
-			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
+			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
 		
 			<li><a href="/tags/尺取法/">尺取法<span>1</span></a></li>
 		
 			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
 		
-			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
+			<li><a href="/tags/DP/">DP<span>7</span></a></li>
 		
-			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
+			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
 		
-			<li><a href="/tags/Algorithm/">Algorithm<span>1</span></a></li>
+			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>7</span></a></li>
 		
-			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
+			<li><a href="/tags/排序/">排序<span>1</span></a></li>
 		
-			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
+			<li><a href="/tags/Math/">Math<span>2</span></a></li>
 		
-			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
-		
-			<li><a href="/tags/Java/">Java<span>4</span></a></li>
-		
-			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
+			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
 		
 			<li><a href="/tags/置换轮换/">置换轮换<span>1</span></a></li>
 		
 			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
 		
-			<li><a href="/tags/翻译/">翻译<span>7</span></a></li>
-		
-			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
-		
-			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
-		
-			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
+			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
 		
 			<li><a href="/tags/匈牙利算法/">匈牙利算法<span>1</span></a></li>
 		
-			<li><a href="/tags/二分图的最大匹配/">二分图的最大匹配<span>1</span></a></li>
+			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
+		
+			<li><a href="/tags/Django/">Django<span>8</span></a></li>
+		
+			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
+		
+			<li><a href="/tags/并查集/">并查集<span>1</span></a></li>
+		
+			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
+		
+			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
+		
+			<li><a href="/tags/Java/">Java<span>4</span></a></li>
 		
 		
-		   <li><a href="/tags">...<span>36</span></a></li>
+		   <li><a href="/tags">...<span>35</span></a></li>
 		 
 		</ul>
 	</div>
@@ -567,10 +621,6 @@ var _hmt = _hmt || [];
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
-    
-      <li>
-        <a href="/2018/09/24/Week-0-GRE/" ><i class="fa fa-file-o"></i>[Week 0]GRE</a>
-      </li>
     
       <li>
         <a href="/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/" ><i class="fa fa-file-o"></i>vue axios post出现&quot;CSRF token...</a>
@@ -586,6 +636,10 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2018/02/12/Django-REST-framework-教程5：关系和超链接API/" ><i class="fa fa-file-o"></i>Django REST framework 教程5：关...</a>
+      </li>
+    
+      <li>
+        <a href="/2018/02/12/Django-REST-framework-教程4：认证与权限/" ><i class="fa fa-file-o"></i>Django REST framework 教程4：认...</a>
       </li>
     
   </ul>

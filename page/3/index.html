@@ -136,97 +136,6 @@ var _hmt = _hmt || [];
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2017/03/11/脑力游戏/" >脑力游戏</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2017-03-11  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-           
-              <div class="thumbnail"><a href="/2017/03/11/脑力游戏/"><img src="http://okc9ihakz.bkt.clouddn.com/jerry-kiesewetter-179264.jpg?slimimage" alt="脑力游戏"  class="nofancybox"></a>
-           
-		</div>
-	
-	
-		<h1 id="脑力游戏"><a href="#脑力游戏" class="headerlink" title="脑力游戏"></a>脑力游戏</h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>给定n个带锁的盒子和n把钥匙，每把钥匙对应着唯一的一个盒子。初始状态下每把钥匙分别放在不同的盒子中，且所有盒子是上锁的。可以通过“暴力”打开某些盒子，取出放在里面的钥匙，然后利用拿到的钥匙去开相应的盒子。问如果只允许“暴力”打开最多k个盒子，那么在多少种状态下，可以最终打开所有盒子。(1≤n≤100, 0≤k≤n)</p>
-<h2 id="涉及知识点"><a href="#涉及知识点" class="headerlink" title="涉及知识点"></a>涉及知识点</h2><h3 id="置换"><a href="#置换" class="headerlink" title="置换"></a>置换</h3><h4 id="1-什么是置换"><a href="#1-什么是置换" class="headerlink" title="1.什么是置换"></a>1.什么是置换</h4><p>假设S={1,2,3,.., n}，σ是S上的双射函数，则S上的n元置换记为σ<br> $$<br> \left(<br> \begin{matrix}<br> 1 &amp; 2 &amp; … &amp; n \<br> σ(1) &amp; σ(2) &amp; … &amp; σ(n)<br> \end{matrix}<br> \right)<br>$$</p>
-<h4 id="2-什么是轮换"><a href="#2-什么是轮换" class="headerlink" title="2.什么是轮换"></a>2.什么是轮换</h4><p>设σ是S上的n元置换，若σ(i<sub>1</sub>)=i<sub>2</sub>,σ(i<sub>2</sub>)=i<sub>3</sub> ,…, σ(i<sub>k-1</sub>)=i<sub>k</sub>,σ(i<sub>k</sub>)=i<sub>1</sub><br>且保持S中的其他元素不变，则称σ为S上的<strong>k阶轮换</strong>，记作(i<sub>1</sub> i<sub>2</sub> … i<sub>k</sub>),若k=2，称σ为S上的<strong>对换</strong>。</p>
-<h4 id="3-置换和轮换的关系"><a href="#3-置换和轮换的关系" class="headerlink" title="3.置换和轮换的关系"></a>3.置换和轮换的关系</h4><p>任何n元置换可以分解为不相交的轮换之积。<br>$$<br> \left(<br> \begin{matrix}<br> 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 &amp; 7 &amp; 8 \<br> 5 &amp; 3 &amp; 6 &amp; 4 &amp; 2 &amp; 1 &amp; 8 &amp; 7<br> \end{matrix}<br> \right)<br>$$<br>拆成(1 5 2 3 6)(4)(7 8)</p>
-<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><h4 id="1-判断一个问题是否可以用动态规划解决"><a href="#1-判断一个问题是否可以用动态规划解决" class="headerlink" title="1.判断一个问题是否可以用动态规划解决"></a>1.判断一个问题是否可以用动态规划解决</h4><ol>
-<li>具有最优子结构</li>
-<li>具有重叠子问题</li>
-<li>无后效性</li>
-</ol>
-<h4 id="2-什么是最优子结构"><a href="#2-什么是最优子结构" class="headerlink" title="2.什么是最优子结构"></a>2.什么是最优子结构</h4><ol>
-<li>一个问题的最优解包含其子问题的最优解</li>
-<li>局部最优解能解决全局最优解</li>
-</ol>
-<h4 id="3-什么重叠子问题"><a href="#3-什么重叠子问题" class="headerlink" title="3.什么重叠子问题"></a>3.什么重叠子问题</h4><ol>
-<li>每次产生的子问题并不总是新问题，有些子问题会被重复计算多少</li>
-<li>而分治产生的子问题都是相互独立的</li>
-</ol>
-<h4 id="4-什么是无后效性"><a href="#4-什么是无后效性" class="headerlink" title="4.什么是无后效性"></a>4.什么是无后效性</h4><ol>
-<li>某个状态以后的过程不会影响到以前的过程</li>
-</ol>
-<h4 id="5-处理动态规划问题的步骤"><a href="#5-处理动态规划问题的步骤" class="headerlink" title="5.处理动态规划问题的步骤"></a>5.处理动态规划问题的步骤</h4><ol>
-<li>定义最优子结构</li>
-<li>把问题看作多阶段决策的过程来求解问题</li>
-<li>递归定义最优解</li>
-<li>按自定向上的方式解最优解</li>
-</ol>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><ol>
-<li><p>n把钥匙的不同放置方法实际上对应1~n的不同的排列。</p>
-</li>
-<li><p>第一次暴力打开一个盒子会出现两种情况：</p>
-<ol>
-<li>拿到的钥匙是该暴力打开的盒子的钥匙。</li>
-<li>拿着该钥匙打开另一个盒子，直到拿到第一次暴力打开的那个盒子的钥匙，而这实际上构成了一个循环。</li>
-</ol>
-</li>
-</ol>
-<ol>
-<li><p>根据离散数学的角度，这里的每种排列情况对应着一个置换，每一个循环对应一个轮换。</p>
-</li>
-<li><p>所以问题转化成 n！个n元置换中，有多少个置换可以分解为不超过k个不相交的轮换。由于100！非常大，所以问题不能单纯的暴力算出答案，而且需要高精度整数运算。</p>
-</li>
-<li><p>f[i][j]表示i元置换中可以分解为j个不相交轮换的个数。</p>
-</li>
-<li><p>f[n][1] + f[n][2] + … + f[n][k]即为问题所求。所以预处理求出所有状态，再将符合题目要求的结果求和。</p>
-</li>
-<li><p>状态转移的时候有两种情况：</p>
-<ol>
-<li>前面i-1个元素组成j-1个轮换，第i个元素单独作为一个一元轮换。</li>
-<li>前面i-1个元素组成j个轮换，第i个元素加入到前面的元素组成的某个轮换中，能加入的位置有i-1个。</li>
-</ol>
-</li>
-</ol>
-<ol>
-<li><p>假设现在有3个元素，这会将隔出4个位置 1□2□3□4 但是位置1和位置4所构成的循环是相同的。</p>
-</li>
-<li><p>状态转移方程 f[i][j] = f[i-1][j-1] + f[i-1][j]*(i-1)，特殊边界情况f[0][0]=1,f[0][j]=0。</p>
-</li>
-</ol>
-<h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">preprocess</span><span class="params">()</span></span>&#123;</div><div class="line">	f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= MAXN; i++)&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j &lt;= MAXN; j++)&#123;</div><div class="line">			f[i][j] = f[i<span class="number">-1</span>][j<span class="number">-1</span>] + f[i<span class="number">-1</span>][j]*(i<span class="number">-1</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-	
-	</div>
-  <a type="button" href="/2017/03/11/脑力游戏/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
 			<a href="/2017/03/10/Merge-Sort归并排序/" >[读薄系列]Merge Sort归并排序</a>
 		</h3>
 		</div>
@@ -670,6 +579,53 @@ var _hmt = _hmt || [];
 </div>
 
 		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2017/02/01/LeetCode419-Battleships-in-a-Board/" >LeetCode419. Battleships in a Board</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2017-02-01  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<a id="more"></a>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给一个二维地图，统计图中战舰的数量，图中“X”表示战舰，“.”表示空地。</p>
+<ol>
+<li>给的图一定是一个合法的地图</li>
+<li>战舰的长度不固定，可以是1XN（1行N列）或者NX1（N行1列）</li>
+<li>两个战舰间在水平或者垂直方向上至少有一个间隔</li>
+</ol>
+<p>要求不申请空间</p>
+<p><strong>合法地图</strong></p>
+<blockquote>
+<p>X..X<br>…X<br>…X</p>
+</blockquote>
+<p>两艘战舰</p>
+<p><strong>不合法地图</strong></p>
+<blockquote>
+<p>…X<br>XXXX<br>…X</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>给一个合法地图，不需要判断合不合法！<br>给一个合法地图，不需要判断合不合法！<br>给一个合法地图，不需要判断合不合法！</p>
+<p>因为船的方向只有垂直和水平，所以假定船头是朝上或者朝左，既只要统计船头数量即可。<br>若一个点是船头，则该点是“X”，且左边为“.”或者上边是“.”</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countBattleships</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;board.length;i++)</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;board[i].length;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(board[i][j]==<span class="string">'X'</span> </div><div class="line">                &amp;&amp; (i==<span class="number">0</span>||board[i-<span class="number">1</span>][j]==<span class="string">'.'</span>) </div><div class="line">                &amp;&amp; (j==<span class="number">0</span>||board[i][j-<span class="number">1</span>]==<span class="string">'.'</span>))</div><div class="line">                    ans++;</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span> ans;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2017/02/01/LeetCode419-Battleships-in-a-Board/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
 
 		</div>
 
@@ -719,48 +675,48 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
+			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
 		
-			<li><a href="/tags/Spring/">Spring<span>1</span></a></li>
+			<li><a href="/tags/RMQ/">RMQ<span>1</span></a></li>
 		
-			<li><a href="/tags/状态压缩/">状态压缩<span>1</span></a></li>
-		
-			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>7</span></a></li>
-		
-			<li><a href="/tags/Algorithm/">Algorithm<span>1</span></a></li>
-		
-			<li><a href="/tags/Java并发/">Java并发<span>1</span></a></li>
-		
-			<li><a href="/tags/杂/">杂<span>3</span></a></li>
-		
-			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
+			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
 		
 			<li><a href="/tags/CodeVs/">CodeVs<span>3</span></a></li>
 		
-			<li><a href="/tags/Django/">Django<span>8</span></a></li>
+			<li><a href="/tags/最短路径/">最短路径<span>1</span></a></li>
 		
-			<li><a href="/tags/Math/">Math<span>2</span></a></li>
+			<li><a href="/tags/KMP/">KMP<span>1</span></a></li>
+		
+			<li><a href="/tags/Django-REST-framework/">Django REST framework<span>7</span></a></li>
+		
+			<li><a href="/tags/LeetCode/">LeetCode<span>10</span></a></li>
 		
 			<li><a href="/tags/CodeForces/">CodeForces<span>7</span></a></li>
 		
+			<li><a href="/tags/数据结构/">数据结构<span>2</span></a></li>
+		
+			<li><a href="/tags/笔记/">笔记<span>1</span></a></li>
+		
 			<li><a href="/tags/读薄系列/">读薄系列<span>6</span></a></li>
+		
+			<li><a href="/tags/杂/">杂<span>3</span></a></li>
+		
+			<li><a href="/tags/置换轮换/">置换轮换<span>1</span></a></li>
+		
+			<li><a href="/tags/mysql/">mysql<span>1</span></a></li>
+		
+			<li><a href="/tags/欧拉图/">欧拉图<span>1</span></a></li>
+		
+			<li><a href="/tags/Spring/">Spring<span>1</span></a></li>
 		
 			<li><a href="/tags/ST/">ST<span>1</span></a></li>
 		
 			<li><a href="/tags/review/">review<span>2</span></a></li>
 		
-			<li><a href="/tags/排序/">排序<span>1</span></a></li>
-		
-			<li><a href="/tags/MVC/">MVC<span>1</span></a></li>
-		
-			<li><a href="/tags/数据库/">数据库<span>3</span></a></li>
-		
-			<li><a href="/tags/HDU/">HDU<span>2</span></a></li>
-		
 			<li><a href="/tags/二分图的最大匹配/">二分图的最大匹配<span>1</span></a></li>
 		
 		
-		   <li><a href="/tags">...<span>36</span></a></li>
+		   <li><a href="/tags">...<span>35</span></a></li>
 		 
 		</ul>
 	</div>
@@ -771,10 +727,6 @@ var _hmt = _hmt || [];
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
-    
-      <li>
-        <a href="/2018/09/24/Week-0-GRE/" ><i class="fa fa-file-o"></i>[Week 0]GRE</a>
-      </li>
     
       <li>
         <a href="/2018/04/08/vue-axios-post出现CSRF-token-missing-or-incorrect/" ><i class="fa fa-file-o"></i>vue axios post出现&quot;CSRF token...</a>
@@ -790,6 +742,10 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2018/02/12/Django-REST-framework-教程5：关系和超链接API/" ><i class="fa fa-file-o"></i>Django REST framework 教程5：关...</a>
+      </li>
+    
+      <li>
+        <a href="/2018/02/12/Django-REST-framework-教程4：认证与权限/" ><i class="fa fa-file-o"></i>Django REST framework 教程4：认...</a>
       </li>
     
   </ul>
